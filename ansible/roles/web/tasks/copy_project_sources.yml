@@ -1,0 +1,7 @@
+- name: Copy project
+  synchronize: mode=pull src=/vagrant/src/{{ application_name }} dest={{ virtualenv_path }}
+
+- name: Delete all .pyc files
+  command: find . -name '*.pyc' -delete
+  args:
+    chdir: "{{ project_path }}"

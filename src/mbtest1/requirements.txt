@@ -1,0 +1,7 @@
+django==1.8
+Unipath==0.2.1
+psycopg2==2.5.1
+gunicorn==18.0
+djangorestframework==3.1.1
+django-model-utils==2.2
+django-fsm==2.2.0
