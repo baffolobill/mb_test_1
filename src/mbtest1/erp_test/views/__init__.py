@@ -15,8 +15,6 @@ def api_root(request, format=None):
         'server-templates': reverse('server-template-list', request=request, format=format),
         'baskets': reverse('basket-list', request=request, format=format),
         'components': reverse('component-list', request=request, format=format),
-
         'servers': reverse('server-list', request=request, format=format),
-
         'properties': reverse('property-list', request=request, format=format),
     })

@@ -1,0 +1,791 @@
+[
+{
+    "fields": {
+        "name": "ams1",
+        "address": "Baika Nur"
+    },
+    "model": "erp_test.node",
+    "pk": 1
+},
+{
+    "fields": {
+        "node": 1,
+        "name": "1st floor"
+    },
+    "model": "erp_test.floor",
+    "pk": 1
+},
+{
+    "fields": {
+        "name": "Room #6",
+        "floor": 1
+    },
+    "model": "erp_test.room",
+    "pk": 1
+},
+{
+    "fields": {
+        "name": "1st row",
+        "room": 1
+    },
+    "model": "erp_test.row",
+    "pk": 1
+},
+{
+    "fields": {
+        "max_gap": 20,
+        "name": "Rack #1",
+        "total_units": 48,
+        "row": 1,
+        "node": 1
+    },
+    "model": "erp_test.rack",
+    "pk": 1
+},
+{
+    "fields": {
+        "kind": 1,
+        "name": "Intel Xeon Haswell-EP",
+        "server": null,
+        "state": "free",
+        "serial_number": "1234",
+        "model_name": "Xeon Haswell-EP",
+        "manufacturer": "Intel"
+    },
+    "model": "erp_test.component",
+    "pk": 1
+},
+{
+    "fields": {
+        "kind": 1,
+        "name": "RAID \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440 LSI 9271-8i SGL (LSI00330)",
+        "server": null,
+        "state": "installed",
+        "serial_number": "1234123412",
+        "model_name": "LSI 9271-8i SGL",
+        "manufacturer": "NoName"
+    },
+    "model": "erp_test.component",
+    "pk": 2
+},
+{
+    "fields": {
+        "kind": 2,
+        "name": "hdd (sas)",
+        "server": null,
+        "state": "free",
+        "serial_number": "2919292",
+        "model_name": "vash dom",
+        "manufacturer": "INtul"
+    },
+    "model": "erp_test.component",
+    "pk": 3
+},
+{
+    "fields": {
+        "kind": 2,
+        "name": "hdd (sata)",
+        "server": null,
+        "state": "free",
+        "serial_number": "2919292",
+        "model_name": "vash dom",
+        "manufacturer": "INtul"
+    },
+    "model": "erp_test.component",
+    "pk": 4
+},
+{
+    "fields": {
+        "kind": 2,
+        "name": "component without properties",
+        "server": null,
+        "state": "free",
+        "serial_number": "undefined",
+        "model_name": "Test",
+        "manufacturer": "NoName"
+    },
+    "model": "erp_test.component",
+    "pk": 5
+},
+{
+    "fields": {
+        "kind": 1,
+        "name": "test",
+        "server": null,
+        "state": "free",
+        "serial_number": "test",
+        "model_name": "test",
+        "manufacturer": "test"
+    },
+    "model": "erp_test.component",
+    "pk": 6
+},
+{
+    "fields": {
+        "kind": 1,
+        "name": "test",
+        "server": null,
+        "state": "free",
+        "serial_number": "test",
+        "model_name": "test",
+        "manufacturer": "test"
+    },
+    "model": "erp_test.component",
+    "pk": 7
+},
+{
+    "fields": {
+        "kind": 1,
+        "name": "test",
+        "server": null,
+        "state": "free",
+        "serial_number": "test",
+        "model_name": "test",
+        "manufacturer": "test"
+    },
+    "model": "erp_test.component",
+    "pk": 8
+},
+{
+    "fields": {
+        "position": 1000,
+        "name": "Base Component Properties",
+        "components": []
+    },
+    "model": "erp_test.propertygroup",
+    "pk": 1
+},
+{
+    "fields": {
+        "position": 1,
+        "name": "cpu",
+        "components": []
+    },
+    "model": "erp_test.propertygroup",
+    "pk": 2
+},
+{
+    "fields": {
+        "position": 3,
+        "name": "ram",
+        "components": []
+    },
+    "model": "erp_test.propertygroup",
+    "pk": 3
+},
+{
+    "fields": {
+        "position": 2,
+        "name": "hdd",
+        "components": []
+    },
+    "model": "erp_test.propertygroup",
+    "pk": 4
+},
+{
+    "fields": {
+        "position": 4,
+        "name": "raid",
+        "components": []
+    },
+    "model": "erp_test.propertygroup",
+    "pk": 5
+},
+{
+    "fields": {
+        "position": 5,
+        "name": "net",
+        "components": []
+    },
+    "model": "erp_test.propertygroup",
+    "pk": 6
+},
+{
+    "fields": {
+        "name": "component.kind",
+        "title": "Kind",
+        "required": true,
+        "position": 1,
+        "type": 3,
+        "unit": ""
+    },
+    "model": "erp_test.property",
+    "pk": 1
+},
+{
+    "fields": {
+        "name": "cpu.socket",
+        "title": "CPU Socket",
+        "required": true,
+        "position": 2,
+        "type": 3,
+        "unit": ""
+    },
+    "model": "erp_test.property",
+    "pk": 2
+},
+{
+    "fields": {
+        "name": "raid.connection_type",
+        "title": "\u0422\u0438\u043f \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f",
+        "required": true,
+        "position": 1,
+        "type": 3,
+        "unit": ""
+    },
+    "model": "erp_test.property",
+    "pk": 3
+},
+{
+    "fields": {
+        "name": "ram.standard",
+        "title": "RAM Standard",
+        "required": true,
+        "position": 5,
+        "type": 3,
+        "unit": ""
+    },
+    "model": "erp_test.property",
+    "pk": 6
+},
+{
+    "fields": {
+        "name": "hdd.form_factor",
+        "title": "HDD Form factor",
+        "required": true,
+        "position": 7,
+        "type": 3,
+        "unit": ""
+    },
+    "model": "erp_test.property",
+    "pk": 8
+},
+{
+    "fields": {
+        "name": "hdd.connection_type",
+        "title": "HDD Connection type",
+        "required": true,
+        "position": 8,
+        "type": 3,
+        "unit": ""
+    },
+    "model": "erp_test.property",
+    "pk": 9
+},
+{
+    "fields": {
+        "name": "hdd.capacity",
+        "title": "\u041e\u0431\u044a\u0435\u043c HDD",
+        "required": false,
+        "position": 3,
+        "type": 1,
+        "unit": "GB"
+    },
+    "model": "erp_test.property",
+    "pk": 10
+},
+{
+    "fields": {
+        "name": "hdd.kind",
+        "title": "\u0422\u0438\u043f HDD",
+        "required": false,
+        "position": 6,
+        "type": 3,
+        "unit": ""
+    },
+    "model": "erp_test.property",
+    "pk": 11
+},
+{
+    "fields": {
+        "name": "ram.capacity",
+        "title": "\u041e\u0431\u044a\u0435\u043c RAM",
+        "required": false,
+        "position": 6,
+        "type": 1,
+        "unit": "GB"
+    },
+    "model": "erp_test.property",
+    "pk": 12
+},
+{
+    "fields": {
+        "name": "net.connection_type",
+        "title": "\u0422\u0438\u043f \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f",
+        "required": false,
+        "position": 1,
+        "type": 3,
+        "unit": ""
+    },
+    "model": "erp_test.property",
+    "pk": 13
+},
+{
+    "fields": {
+        "position": 1,
+        "property": 1,
+        "group": 1
+    },
+    "model": "erp_test.groupspropertiesrelation",
+    "pk": 1
+},
+{
+    "fields": {
+        "position": 2,
+        "property": 2,
+        "group": 1
+    },
+    "model": "erp_test.groupspropertiesrelation",
+    "pk": 2
+},
+{
+    "fields": {
+        "position": 1,
+        "property": 2,
+        "group": 2
+    },
+    "model": "erp_test.groupspropertiesrelation",
+    "pk": 3
+},
+{
+    "fields": {
+        "position": 1,
+        "property": 8,
+        "group": 4
+    },
+    "model": "erp_test.groupspropertiesrelation",
+    "pk": 4
+},
+{
+    "fields": {
+        "position": 2,
+        "property": 12,
+        "group": 3
+    },
+    "model": "erp_test.groupspropertiesrelation",
+    "pk": 7
+},
+{
+    "fields": {
+        "position": 1,
+        "property": 6,
+        "group": 3
+    },
+    "model": "erp_test.groupspropertiesrelation",
+    "pk": 8
+},
+{
+    "fields": {
+        "position": 2,
+        "property": 9,
+        "group": 4
+    },
+    "model": "erp_test.groupspropertiesrelation",
+    "pk": 9
+},
+{
+    "fields": {
+        "position": 3,
+        "property": 10,
+        "group": 4
+    },
+    "model": "erp_test.groupspropertiesrelation",
+    "pk": 10
+},
+{
+    "fields": {
+        "position": 4,
+        "property": 11,
+        "group": 4
+    },
+    "model": "erp_test.groupspropertiesrelation",
+    "pk": 11
+},
+{
+    "fields": {
+        "position": 1,
+        "property": 3,
+        "group": 5
+    },
+    "model": "erp_test.groupspropertiesrelation",
+    "pk": 12
+},
+{
+    "fields": {
+        "position": 1,
+        "property": 13,
+        "group": 6
+    },
+    "model": "erp_test.groupspropertiesrelation",
+    "pk": 13
+},
+{
+    "fields": {
+        "position": 1,
+        "property": 1,
+        "component": 1
+    },
+    "model": "erp_test.componentspropertiesrelation",
+    "pk": 1
+},
+{
+    "fields": {
+        "position": 2,
+        "property": 2,
+        "component": 1
+    },
+    "model": "erp_test.componentspropertiesrelation",
+    "pk": 2
+},
+{
+    "fields": {
+        "position": 1,
+        "property": 3,
+        "component": 2
+    },
+    "model": "erp_test.componentspropertiesrelation",
+    "pk": 3
+},
+{
+    "fields": {
+        "position": 999,
+        "property": 1,
+        "component": 2
+    },
+    "model": "erp_test.componentspropertiesrelation",
+    "pk": 4
+},
+{
+    "fields": {
+        "position": 1,
+        "property": 1,
+        "name": "cpu"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 1
+},
+{
+    "fields": {
+        "position": 2,
+        "property": 1,
+        "name": "hdd"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 2
+},
+{
+    "fields": {
+        "position": 3,
+        "property": 1,
+        "name": "raid"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 3
+},
+{
+    "fields": {
+        "position": 1,
+        "property": 2,
+        "name": "LGA2011-3"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 4
+},
+{
+    "fields": {
+        "position": 1,
+        "property": 3,
+        "name": "SATA+SAS"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 5
+},
+{
+    "fields": {
+        "position": 99,
+        "property": 6,
+        "name": "DDR3"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 6
+},
+{
+    "fields": {
+        "position": 99,
+        "property": 8,
+        "name": "3.5"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 7
+},
+{
+    "fields": {
+        "position": 99,
+        "property": 9,
+        "name": "SAS"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 8
+},
+{
+    "fields": {
+        "position": 2,
+        "property": 3,
+        "name": "SATA"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 9
+},
+{
+    "fields": {
+        "position": 3,
+        "property": 3,
+        "name": "SAS"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 10
+},
+{
+    "fields": {
+        "position": 2,
+        "property": 2,
+        "name": "LGA 775"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 11
+},
+{
+    "fields": {
+        "position": 3,
+        "property": 2,
+        "name": "LGA 1156"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 12
+},
+{
+    "fields": {
+        "position": 99,
+        "property": 6,
+        "name": "DDR4"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 13
+},
+{
+    "fields": {
+        "position": 99,
+        "property": 6,
+        "name": "DDR5"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 14
+},
+{
+    "fields": {
+        "position": 1,
+        "property": 11,
+        "name": "HDD"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 15
+},
+{
+    "fields": {
+        "position": 2,
+        "property": 11,
+        "name": "SSD"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 16
+},
+{
+    "fields": {
+        "position": 3,
+        "property": 11,
+        "name": "Hybrid"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 17
+},
+{
+    "fields": {
+        "position": 99,
+        "property": 8,
+        "name": "2.5"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 18
+},
+{
+    "fields": {
+        "position": 99,
+        "property": 9,
+        "name": "SATA"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 19
+},
+{
+    "fields": {
+        "position": 2,
+        "property": 13,
+        "name": "100Mbit"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 20
+},
+{
+    "fields": {
+        "position": 3,
+        "property": 13,
+        "name": "1Gbit"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 21
+},
+{
+    "fields": {
+        "position": 1,
+        "property": 13,
+        "name": "10Mbit"
+    },
+    "model": "erp_test.propertyoption",
+    "pk": 22
+},
+{
+    "fields": {
+        "value_as_float": 4.0,
+        "option": 4,
+        "component": 1,
+        "value": "4",
+        "property_group": null,
+        "property": 2
+    },
+    "model": "erp_test.componentpropertyvalue",
+    "pk": 1
+},
+{
+    "fields": {
+        "value_as_float": 5.0,
+        "option": 5,
+        "component": 2,
+        "value": "5",
+        "property_group": null,
+        "property": 3
+    },
+    "model": "erp_test.componentpropertyvalue",
+    "pk": 2
+},
+{
+    "fields": {
+        "value_as_float": 10.0,
+        "option": 8,
+        "component": 3,
+        "value": "10",
+        "property_group": 4,
+        "property": 9
+    },
+    "model": "erp_test.componentpropertyvalue",
+    "pk": 3
+},
+{
+    "fields": {
+        "value_as_float": 19.0,
+        "option": 19,
+        "component": 4,
+        "value": "19",
+        "property_group": 4,
+        "property": 9
+    },
+    "model": "erp_test.componentpropertyvalue",
+    "pk": 4
+},
+{
+    "fields": {
+        "value_as_float": 18.0,
+        "option": 18,
+        "component": 3,
+        "value": "18",
+        "property_group": 4,
+        "property": 8
+    },
+    "model": "erp_test.componentpropertyvalue",
+    "pk": 5
+},
+{
+    "fields": {
+        "value_as_float": 7.0,
+        "option": 7,
+        "component": 4,
+        "value": "7",
+        "property_group": 4,
+        "property": 8
+    },
+    "model": "erp_test.componentpropertyvalue",
+    "pk": 6
+},
+{
+    "fields": {
+        "name": "LGA2011-3 / DDR3 / SAS2.5 / SAS3.5",
+        "cpu_socket": 4,
+        "ram_standard": 6,
+        "ram_qty": 20,
+        "unit_takes": 1,
+        "cpu_qty": 10
+    },
+    "model": "erp_test.servertemplate",
+    "pk": 1
+},
+{
+    "fields": {
+        "hdd_form_factor": 18,
+        "hdd_qty": 3,
+        "template": 1,
+        "hdd_connection_type": 8
+    },
+    "model": "erp_test.servertemplatehdd",
+    "pk": 1
+},
+{
+    "fields": {
+        "hdd_form_factor": 7,
+        "hdd_qty": 1,
+        "template": 1,
+        "hdd_connection_type": 8
+    },
+    "model": "erp_test.servertemplatehdd",
+    "pk": 2
+},
+{
+    "fields": {
+        "node": null,
+        "basket": null,
+        "name": "Demo Server #11",
+        "template": 1,
+        "rack": null
+    },
+    "model": "erp_test.server",
+    "pk": 1
+},
+{
+    "fields": {
+        "node": null,
+        "basket": null,
+        "name": "Blade Server #11",
+        "template": 1,
+        "rack": null
+    },
+    "model": "erp_test.server",
+    "pk": 2
+},
+{
+    "fields": {
+        "unit_takes": 4,
+        "slot_qty": 8,
+        "name": "B#1"
+    },
+    "model": "erp_test.basket",
+    "pk": 1
+}
+]

@@ -54,8 +54,6 @@ class TestServersCRUD(APITestCase):
         self.assertEqual(Server.objects.count(), 1)
 
 
-
-
 class TestServerComponents(APITestCase):
     fixtures = ['erp_test/tests/fixtures/server_components.json',]
 
