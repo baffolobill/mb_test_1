@@ -12,8 +12,9 @@ from model_utils.managers import PassThroughManager
 from django_fsm import FSMField, transition
 
 from .exceptions import (
-    ComponentAlreadyInstalled, ComponentNotInstalled,
-    ComponentIsBroken, RackIsFilled, BasketIsFilled, BasketSlotIsBusy)
+    ComponentAlreadyInstalled, ComponentNotInstalled, ComponentNotSupported,
+    ComponentIsBroken, RackIsFilled, BasketIsFilled, BasketSlotIsBusy,
+    ServerHasNoFreeSlotForComponent)
 from .defaults import (
     PROPERTY_TEXT_FIELD, PROPERTY_SELECT_FIELD,
     PROPERTY_NUMBER_FIELD, PROPERTY_FIELD_CHOICES,
@@ -230,11 +231,16 @@ class Rack(NamedModel):
         query = Q(rack=self)
         if basket is not None:
             query &= Q(basket=basket)
+            unit_entity = basket
         elif server is not None:
             query &= Q(server=server)
+            unit_entity = server
         else:
             raise ValuerError('You cannot unmount server and basket at the same time.')
         Unit.objects.filter(query).delete()
+        unit_entity.node = None
+        unit_entity.rack = None
+        unit_entity.save()
 
 
 class Unit(models.Model):
@@ -566,7 +572,7 @@ class PropertyOption(models.Model):
         ordering = ["position"]
 
     def __str__(self):
-        return self.name
+        return "{} property:{}".format(self.name, self.property)
 
 
 @python_2_unicode_compatible
@@ -670,6 +676,43 @@ class ServerTemplate(NamedModel):
     def get_height(self):
         return self.unit_takes
 
+    def is_supported_cpu(self, component):
+        return ComponentPropertyValue.objects\
+                    .filter(
+                        component=component,
+                        property=self.cpu_socket.property,
+                        option=self.cpu_socket)\
+                    .exists()
+
+    def is_supported_ram(self, component):
+        return ComponentPropertyValue.objects\
+                    .filter(
+                        component=component,
+                        property=self.ram_standard.property,
+                        option=self.ram_standard)\
+                    .exists()
+
+    def is_supported_hdd(self, component):
+        hdd_connection_type = set()
+        hdd_form_factor = set()
+        for hdd in self.hdds.all():
+            hdd_connection_type.add(hdd.hdd_connection_type_id)
+            hdd_form_factor.add(hdd.hdd_form_factor_id)
+
+        # вначале оставим только компоненты с валидным connection_type
+        valid_c_ids = ComponentPropertyValue.objects\
+                        .values_list('component_id', flat=True)\
+                        .filter(component=component,
+                                property__name='hdd.connection_type',
+                                option__in=hdd_connection_type)
+
+        # теперь среди оставшихся компонентов ищем с валидным form_factor
+        return ComponentPropertyValue.objects\
+                    .filter(component__in=valid_c_ids,
+                            property__name='hdd.form_factor',
+                            option__in=hdd_form_factor)\
+                    .exists()
+
 
 class ServerTemplateHdd(models.Model):
     template = models.ForeignKey(
@@ -730,12 +773,71 @@ class Server(NamedModel):
 
         return self.template.get_height()
 
+    def is_supported_component(self, component):
+        tmpl = self.template
+        c_kind = component.kind.name
+        if c_kind == 'cpu':
+            return tmpl.is_supported_cpu(component)
+        elif c_kind == 'ram':
+            return tmpl.is_supported_ram(component)
+        elif c_kind == 'hdd':
+            return tmpl.is_supported_hdd(component)
+        return False
+
+    def has_free_slots_for_component(self, component):
+        """
+            Проверяет есть ли свободное место в сервере для указанного компонента.
+
+            Внимание! Прежде, чем вызывать этот метод, необходимо убедиться,
+                      что компонент совместим с сервером (например, с помощью
+                      Server.is_supported_component())
+        """
+        tmpl = self.template
+        c_kind = component.kind.name
+        if c_kind in ('cpu', 'ram'):
+            limit = getattr(tmpl, '{}_qty'.format(c_kind))
+            cnt = self.components.filter(kind=component.kind).count()
+
+        elif c_kind == 'hdd':
+            hdd_connection_type = ComponentPropertyValue.objects\
+                        .filter(component=component,
+                                property__name='hdd.connection_type')[0].option
+            hdd_form_factor = ComponentPropertyValue.objects\
+                        .filter(component=component,
+                                property__name='hdd.form_factor')[0].option
+            limit = tmpl.hdds.filter(hdd_connection_type=hdd_connection_type,
+                                     hdd_form_factor=hdd_form_factor)[0].hdd_qty
+            # вначале оставим только компоненты с валидным connection_type
+            valid_c_ids = ComponentPropertyValue.objects\
+                            .values_list('component_id', flat=True)\
+                            .filter(property__name='hdd.connection_type',
+                                    option=hdd_connection_type)
+            # теперь среди оставшихся компонентов ищем с валидным form_factor
+            cnt = ComponentPropertyValue.objects\
+                        .filter(component__in=valid_c_ids,
+                                property__name='hdd.form_factor',
+                                option=hdd_form_factor)\
+                        .count()
+        else:
+            raise NotImplemented
+
+        if cnt < limit:
+            return True
+        return False
+
     def install_component(self, component):
         if component.is_installed():
             raise ComponentAlreadyInstalled
 
         if component.is_broken():
             raise ComponentIsBroken
+
+        if not self.is_supported_component(component):
+            raise ComponentNotSupported
+
+        # ensure there are empty slots left
+        if not self.has_free_slots_for_component(component):
+            raise ServerHasNoFreeSlotForComponent
 
         component.install(server=self)
         component.save()
@@ -748,7 +850,15 @@ class Server(NamedModel):
         component.save()
 
     def install_components(self, components):
-        map(self.install_component, components)
+        ret = []
+        for component in components:
+            try:
+                self.install_component(component)
+            except Exception as exc:
+                ret.append({'component': component, 'state': 'error', 'message': str(exc)})
+            else:
+                ret.append({'component': component, 'state': 'ok'})
+        return ret
 
     def uninstall_components(self, components):
         map(self.uninstall_component, components)
