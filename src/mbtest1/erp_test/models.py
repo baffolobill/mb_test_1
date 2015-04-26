@@ -331,18 +331,20 @@ class Component(NamedModel):
             Component is broken.
         """
 
-    @property
-    def properties_dict(self):
-        ret = OrderedDict()
-        values = self.property_values.all().order_by('property__position')
-
-        for val in values:
-            prop_value = val.get_value()
-            if val.property.is_select_field:
-                prop_value = prop_value.name
-
-            ret[val.property.name] = prop_value
-
+    def get_properties(self):
+        ret = []
+        group = PropertyGroup.objects.get(name=self.kind.name)
+        values = ComponentPropertyValue.objects.filter(component=self)
+        values_bulk = dict([(v.property_id, v) for v in values])
+        for prop in group.properties.all():
+            ret.append({
+                'id': prop.pk,
+                'name': prop.name,
+                'title': prop.title,
+                'type': prop.type,
+                'property': prop,
+                'value': values_bulk.get(prop.pk, None),
+            })
         return ret
 
     def is_installed(self):

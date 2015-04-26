@@ -3,6 +3,9 @@
 1.1 Пользователь может управлять компонентами и их характеристиками (CRUD).
 1.2 Пользователь может просмотривать свободные компоненты
     (недобавленные к серверу)
+
+TODO:
+    1) add tests for ComponentSerializer.to_internal_value
 """
 import copy
 
@@ -15,28 +18,43 @@ from ..defaults import ComponentState
 
 
 class TestComponentsCRUD(APITestCase):
-    """
-        TODO: не реализована работа с характеристиками
-    """
     fixtures = ['erp_test/tests/fixtures/components_crud.json',]
 
     def test_component_list(self):
         url = reverse('component-list')
         response = self.client.get(url, format='json')
+        prop_value = lambda v: {'id': v.option_id, 'name': v.option.name} if v.option else v.get_value()
         data = [{'id': obj.id, 'name': obj.name, 'manufacturer': obj.manufacturer,
                  'model_name': obj.model_name, 'serial_number': obj.serial_number,
-                 'state': obj.state, 'kind': obj.kind_id}
-                for obj in Component.objects.all()]
+                 'state': obj.state, 'kind': obj.kind_id, 'server': obj.server,
+                 'properties': [{
+                        'id': prop['id'],
+                        'name': prop['name'],
+                        'title': prop['title'],
+                        'type': prop['type'],
+                        'type_str': prop['property'].get_type_display(),
+                        'value': prop_value(prop['value']) if prop['value'] else None,
+                  } for prop in obj.get_properties()]
+                } for obj in Component.objects.all()]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, data)
 
     def test_component_list_of_kind(self):
         url = reverse('component-list-of_kind', args=['cpu'])
         response = self.client.get(url, format='json')
+        prop_value = lambda v: {'id': v.option_id, 'name': v.option.name} if v.option else v.get_value()
         data = [{'id': obj.id, 'name': obj.name, 'manufacturer': obj.manufacturer,
                  'model_name': obj.model_name, 'serial_number': obj.serial_number,
-                 'state': obj.state, 'kind': obj.kind_id}
-                for obj in Component.objects.of_kind(kind='cpu')]
+                 'state': obj.state, 'kind': obj.kind_id, 'server': obj.server,
+                 'properties': [{
+                        'id': prop['id'],
+                        'name': prop['name'],
+                        'title': prop['title'],
+                        'type': prop['type'],
+                        'type_str': prop['property'].get_type_display(),
+                        'value': prop_value(prop['value']) if prop['value'] else None,
+                  } for prop in obj.get_properties()]
+                } for obj in Component.objects.of_kind('cpu')]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, data)
 
@@ -45,15 +63,31 @@ class TestComponentsCRUD(APITestCase):
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data,
-                         {'id': 1,
-                          'name': 'Intel Xeon Haswell-EP',
-                          'state': 'free',
-                          'serial_number': '1234',
-                          'model_name': 'Xeon Haswell-EP',
-                          'manufacturer': 'Intel',
-                          'kind': 1})
+                {
+                    'id': 1,
+                    'name': 'Intel Xeon Haswell-EP',
+                    'state': 'free',
+                    'serial_number': '1234',
+                    'model_name': 'Xeon Haswell-EP',
+                    'manufacturer': 'Intel',
+                    'kind': 1,
+                    'server': None,
+                    'properties': [
+                        {
+                            'id': 2,
+                            'name': 'cpu.socket',
+                            'title': 'CPU Socket',
+                            'type': 3,
+                            'type_str': 'Select field',
+                            'value': {
+                                'id': 4,
+                                'name': 'LGA2011-3',
+                            }
+                        }
+                    ]
+                })
 
-    def test_component_create(self):
+    def test_component_create_valid(self):
         url = reverse('component-list')
         data = {
             'name': 'Intel Outside',
@@ -62,9 +96,33 @@ class TestComponentsCRUD(APITestCase):
             'model_name': 'Outside',
             'manufacturer': 'Intel',
             'kind': 1,
+            'properties': [
+                {'property_id': 2, 'value': 4},
+            ]
         }
-        have_to_return = copy.copy(data)
-        have_to_return['id'] = 5
+        have_to_return = {
+            'id': 5,
+            'kind': 1,
+            'name': u'Intel Outside',
+            'state': 'free',
+            'server': None,
+            'properties': [
+                {
+                    'name': u'cpu.socket',
+                    'title': u'CPU Socket',
+                    'value': {
+                        'id': 4,
+                        'name': u'LGA2011-3'
+                    },
+                    'type_str': u'Select field',
+                    'type': 3,
+                    'id': 2
+                }
+            ],
+            'serial_number': u'4321',
+            'model_name': u'Outside',
+            'manufacturer': u'Intel',
+        }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, have_to_return)
@@ -77,6 +135,9 @@ class TestComponentsCRUD(APITestCase):
             'serial_number': '4321',
             'model_name': 'Outside',
             'manufacturer': 'Intel',
+            'properties': [
+                {'property_id': 2, 'value': 4},
+            ]
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -89,10 +150,33 @@ class TestComponentsCRUD(APITestCase):
             'serial_number': '4321',
             'model_name': 'Outside',
             'manufacturer': 'Intel',
+            'properties': [
+                {'property_id': 2, 'value': 4},
+            ]
         }
-        have_to_return = copy.copy(data)
-        have_to_return['id'] = 5
-        have_to_return['kind'] = 1
+        have_to_return = {
+            'id': 5,
+            'kind': 1,
+            'name': u'Intel Outside',
+            'state': 'free',
+            'server': None,
+            'properties': [
+                {
+                    'name': u'cpu.socket',
+                    'title': u'CPU Socket',
+                    'value': {
+                        'id': 4,
+                        'name': u'LGA2011-3'
+                    },
+                    'type_str': u'Select field',
+                    'type': 3,
+                    'id': 2
+                }
+            ],
+            'serial_number': u'4321',
+            'model_name': u'Outside',
+            'manufacturer': u'Intel',
+        }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, have_to_return)
@@ -111,80 +195,12 @@ class TestComponentsCRUD(APITestCase):
         self.assertEqual(Component.objects.count(), 3)
 
 
-if False:
-    class TestComponentModel(TestCase):
-        fixtures = ['erp_test/tests/fixtures/basket_model_test.json']
 
-        def _create_server(self):
-            template = ServerTemplate.objects.all()[0]
-            return Server.objects.create(template=template)
+class TestComponentModel(TestCase):
+    fixtures = ['erp_test/tests/fixtures/basket_model_test.json']
 
-        def test_find_free_position(self):
-            basket = Basket.objects.all()[0]
-
-            # initial
-            self.assertEqual(basket.slots.count(), 0)
-            self.assertEqual(basket.find_free_position(), 1)
-
-            # with server at position 1
-            basket.mount(server=self._create_server(), position=1)
-            self.assertEqual(basket.slots.count(), 1)
-            self.assertEqual(basket.find_free_position(), 2)
-
-            # with server at position 3
-            basket.mount(server=self._create_server(), position=3)
-            self.assertEqual(basket.slots.count(), 2)
-            self.assertEqual(basket.find_free_position(), 2)
-
-        def test_find_free_position_in_filled_basket(self):
-            basket = Basket.objects.all()[0]
-            for position in xrange(1, 9):
-                basket.mount(server=self._create_server(), position=position)
-
-            with self.assertRaises(BasketIsFilled):
-                basket.mount(server=self._create_server())
-
-        def test_mount(self):
-            basket = Basket.objects.all()[0]
-
-            self.assertEqual(basket.slots.count(), 0)
-            basket.mount(server=self._create_server(), position=1)
-            self.assertEqual(basket.slots.count(), 1)
-
-        def test_mount_at_the_same_position(self):
-            basket = Basket.objects.all()[0]
-
-            self.assertEqual(basket.slots.count(), 0)
-            basket.mount(server=self._create_server(), position=1)
-            self.assertEqual(basket.slots.count(), 1)
-
-            with self.assertRaises(BasketSlotIsBusy):
-                basket.mount(server=self._create_server(), position=1)
-
-        def test_mount_in_filled_basket(self):
-            basket = Basket.objects.all()[0]
-            for position in xrange(1, 9):
-                basket.mount(server=self._create_server(), position=position)
-
-            with self.assertRaises(BasketIsFilled):
-                basket.mount(server=self._create_server())
-
-        def test_mount_with_position_None(self):
-            basket = Basket.objects.all()[0]
-            basket.mount(server=self._create_server(), position=None)
-            self.assertEqual(basket.slots.all()[0].position, 1)
-
-        def test_unmount(self):
-            basket = Basket.objects.all()[0]
-            server_1 = self._create_server()
-
-            self.assertEqual(basket.slots.count(), 0)
-
-            basket.mount(server=server_1, position=1)
-            self.assertEqual(basket.slots.count(), 1)
-
-            basket.unmount(server=server_1)
-            self.assertEqual(basket.slots.count(), 0)
+    def test_get_properties(self):
+        pass
 
 
 class TestComponentActions(APITestCase):
