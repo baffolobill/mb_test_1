@@ -271,15 +271,11 @@ class ComponentQuerySet(QuerySet):
             return self.all()
 
         try:
-            po = PropertyOption.objects.get(property__name='global.kind', name=kind)
+            po = PropertyOption.objects.get(property__name='component.kind', name=kind)
         except PropertyOption.DoesNotExist:
             return self.none()
 
-        ids = ComponentPropertyValue.objects\
-                .values_list('component_id', flat=True)\
-                .filter(property=po.property, value=str(po.pk), component__isnull=False)
-
-        return self.filter(id__in=ids)
+        return self.filter(kind=po)
 
     def with_state(self, state=None):
         if state is None or ComponentState.show_all(state):
@@ -304,6 +300,10 @@ class Component(NamedModel):
         'Server',
         related_name='components',
         blank=True, null=True)
+    kind = models.ForeignKey(
+        'PropertyOption',
+        related_name='kind_opts',
+        limit_choices_to={'property__name': 'component.kind'})
 
     objects = PassThroughManager.for_queryset_class(ComponentQuerySet)()
 
@@ -330,27 +330,6 @@ class Component(NamedModel):
         """
             Component is broken.
         """
-
-    @property
-    def kind(self):
-        return ComponentPropertyValue.objects.get(
-            component=self,
-            property__name='global.kind').value
-
-    def get_kind_str(self):
-        try:
-            return PropertyOption.objects\
-                        .get(property__name='global.kind', id=self.kind)\
-                        .name
-        except PropertyOption.DoesNotExist:
-            return ''
-
-    def set_kind(self, kind):
-        prop_kind = Property.objects.get(name='global.kind')
-        ComponentPropertyValue.objects.get_or_create(
-            component=self,
-            property=prop_kind,
-            value=kind)
 
     @property
     def properties_dict(self):
@@ -681,6 +660,11 @@ class ServerTemplate(NamedModel):
         verbose_name=_('height in units'),
         default=1)
 
+
+    class Meta:
+        verbose_name = _('Server Template')
+        verbose_name_plural = _('Servers Templates')
+
     def get_height(self):
         return self.unit_takes
 
@@ -698,6 +682,10 @@ class ServerTemplateHdd(models.Model):
         PropertyOption,
         related_name='conn_type_opts',
         limit_choices_to={'property__name': 'hdd.connection_type'})
+
+
+    class Meta:
+        unique_together = ('template', 'hdd_form_factor', 'hdd_connection_type')
 
 
 class Server(NamedModel):
@@ -835,7 +823,7 @@ class Basket(NamedModel):
             slots_takes = server.slot_takes
 
         if position is None:
-            position = self.find_position(slots_takes)
+            position = self.find_free_position(slots_takes)
 
         self.validate_position(position)
 
@@ -858,8 +846,7 @@ class Basket(NamedModel):
         server.save()
 
         BasketSlot.objects\
-            .filter(basket=self, node=self.node,
-                    rack=self.rack, server=server)\
+            .filter(basket=self, server=server)\
             .delete()
 
     def find_gaps(self):
@@ -904,7 +891,10 @@ class Basket(NamedModel):
 
         return gaps
 
-    def find_position(self, slots_takes=1):
+    def find_free_position(self, slots_takes=1):
+        if slots_takes > 1:
+            raise NotImplemented
+
         gaps = self.find_gaps()
         if not len(gaps):
             raise BasketIsFilled

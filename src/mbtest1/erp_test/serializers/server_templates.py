@@ -2,54 +2,44 @@ from collections import OrderedDict
 
 from rest_framework import serializers
 
-from ..models import PropertyGroup, ComponentPropertyValue
+from ..models import ServerTemplate, ServerTemplateHdd
 
 
-class ServerTemplateHddSerializer(serializers.Serializer):
+class ServerTemplateHddSerializer(serializers.ModelSerializer):
 
-    def __init__(self, *args, **kwargs):
-        super(ServerTemplateHddSerializer, self).__init__(self, *args, **kwargs)
-
-
-
-    def to_representation(self, value):
-        ret = OrderedDict()
+    class Meta:
+        model = ServerTemplateHdd
+        fields = ('hdd_form_factor', 'hdd_connection_type', 'hdd_qty')
 
 
-        return ret
+class ServerTemplateSerializer(serializers.ModelSerializer):
+    hdds = ServerTemplateHddSerializer(many=True)
 
-    def create(self, validated_data):
-
-
-        return None
-
-    def update(self, instance, validated_data):
-        return None
-
-
-class ServerTemplateSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    name = serializers.CharField(max_length=200)
-    hdd = ServerTemplateHddSerializer(many=True)
-
-    def __init__(self, *args, **kwargs):
-        super(ServerTemplateSerializer, self).__init__(*args, **kwargs)
-
-
-
-    def to_representation(self, value):
-        ret = OrderedDict()
-
-        return ret
+    class Meta:
+        model = ServerTemplate
+        fields = ('id', 'name', 'cpu_socket', 'cpu_qty', 'unit_takes',
+                  'ram_standard', 'ram_qty', 'hdds')
 
     def create(self, validated_data):
-        pass
+        hdds = validated_data.pop('hdds')
+        server_template = ServerTemplate.objects.create(**validated_data)
+        for hdd in hdds:
+            hdd['template'] = server_template
+            ServerTemplateHdd.objects.create(**hdd)
+
+        return server_template
 
     def update(self, instance, validated_data):
-        instance.name = validated_data.get('name', instance.name)
+        hdds = validated_data.pop('hdds', None)
+
+        for k,v in validated_data.items():
+            setattr(instance, k, v)
+
+        if hdds is not None:
+            instance.hdds.all().delete()
+            for hdd in hdds:
+                hdd['template'] = instance
+                ServerTemplateHdd.objects.create(**hdd)
+
         instance.save()
-
-
-
         return instance
-

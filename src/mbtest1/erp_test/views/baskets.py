@@ -5,7 +5,7 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..models import Basket
+from ..models import Basket, Server, Rack
 from ..serializers import BasketSerializer, BasketServerSerializer
 
 
@@ -69,7 +69,16 @@ class BasketActions(APIView):
         return Response(status=status.HTTP_201_CREATED)
 
     def _unmount_from_rack(self):
-        raise NotImplemented
+        data = self.request.data
+        rack_id = data['rack_id']
+        try:
+            rack = Rack.objects.get(id=rack_id)
+        except Rack.DoesNotExist:
+            raise Http404
+
+        basket = self.get_basket()
+        rack.unmount(basket=basket)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     def _install_server(self):
         data = self.request.data
@@ -80,9 +89,18 @@ class BasketActions(APIView):
             raise Http404
 
         basket = self.get_basket()
-        position = data.get('position', basket.find_position())
+        position = data.get('position', basket.find_free_position())
         basket.mount(server, position=position)
         return Response(status=status.HTTP_201_CREATED)
 
     def _uninstall_server(self):
-        raise NotImplemented
+        data = self.request.data
+        server_id = data['server_id']
+        try:
+            server = Server.objects.get(id=server_id)
+        except Server.DoesNotExist:
+            raise Http404
+
+        basket = self.get_basket()
+        basket.unmount(server)
+        return Response(status=status.HTTP_204_NO_CONTENT)

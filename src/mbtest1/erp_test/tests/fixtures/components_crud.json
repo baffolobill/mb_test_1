@@ -649,53 +649,24 @@
 },
 {
     "fields": {
-        "node": 1,
+        "node": null,
         "basket": null,
         "name": "Demo Server #11",
         "template": 1,
-        "rack": 1
+        "rack": null
     },
     "model": "erp_test.server",
     "pk": 1
 },
 {
     "fields": {
-        "node": 1,
-        "basket": 1,
+        "node": null,
+        "basket": null,
         "name": "Blade Server #11",
         "template": 1,
-        "rack": 1
+        "rack": null
     },
     "model": "erp_test.server",
-    "pk": 2
-},
-{
-    "fields": {
-        "unit_takes": 4,
-        "slot_qty": 8,
-        "name": "B#1"
-    },
-    "model": "erp_test.basket",
-    "pk": 1
-},
-{
-    "fields": {
-        "basket": null,
-        "position": 23,
-        "rack": 1,
-        "server": 1
-    },
-    "model": "erp_test.unit",
-    "pk": 1
-},
-{
-    "fields": {
-        "basket": 1,
-        "position": 1,
-        "rack": 1,
-        "server": null
-    },
-    "model": "erp_test.unit",
     "pk": 2
 }
 ]

@@ -12,10 +12,11 @@ def api_root(request, format=None):
         'rooms': reverse('room-list', request=request, format=format),
         'rows': reverse('row-list', request=request, format=format),
         'racks': reverse('rack-list', request=request, format=format),
-
         'server-templates': reverse('server-template-list', request=request, format=format),
         'baskets': reverse('basket-list', request=request, format=format),
+
+        'components': reverse('component-list', request=request, format=format),
+
         'servers': reverse('server-list', request=request, format=format),
         'properties': reverse('property-list', request=request, format=format),
-        'components': reverse('component-list', request=request, format=format),
     })

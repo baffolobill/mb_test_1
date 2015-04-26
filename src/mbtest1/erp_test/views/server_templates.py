@@ -2,8 +2,7 @@
 from rest_framework import generics
 
 from ..models import ServerTemplate
-from ..serializers import (
-    ServerTemplateSerializer, ServerTemplateHddSerializer)
+from ..serializers import ServerTemplateSerializer
 
 
 class ServerTemplateList(generics.ListCreateAPIView):
@@ -14,8 +13,3 @@ class ServerTemplateList(generics.ListCreateAPIView):
 class ServerTemplateDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = ServerTemplate.objects.all()
     serializer_class = ServerTemplateSerializer
-
-
-class ServerTemplateHDD(generics.ListCreateAPIView):
-    queryset = ServerTemplate.objects.all()
-    serializer_class = ServerTemplateHddSerializer

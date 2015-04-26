@@ -11,7 +11,7 @@ urlpatterns = [
         views.ServerTemplateDetail.as_view(),
         name='server-template-detail'),
 
-    url(r'^(?P<pk>\d+)/hdds/$',
-        views.ServerTemplateHDD.as_view(),
-        name='server-template-hdd'),
+    #url(r'^(?P<pk>\d+)/hdds/$',
+    #    views.ServerTemplateHDD.as_view(),
+    #    name='server-template-hdd'),
 ]

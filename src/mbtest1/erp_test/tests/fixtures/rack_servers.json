@@ -82,7 +82,8 @@
         "state": "free",
         "serial_number": "1234",
         "model_name": "Xeon Haswell-EP",
-        "manufacturer": "Intel"
+        "manufacturer": "Intel",
+        "kind": 1
     },
     "model": "erp_test.component",
     "pk": 1
@@ -94,7 +95,8 @@
         "state": "free",
         "serial_number": "1234123412",
         "model_name": "LSI 9271-8i SGL",
-        "manufacturer": "NoName"
+        "manufacturer": "NoName",
+        "kind": 3
     },
     "model": "erp_test.component",
     "pk": 2
@@ -106,7 +108,8 @@
         "state": "free",
         "serial_number": "2919292",
         "model_name": "vash dom",
-        "manufacturer": "INtul"
+        "manufacturer": "INtul",
+        "kind": 2
     },
     "model": "erp_test.component",
     "pk": 3
@@ -118,7 +121,8 @@
         "state": "free",
         "serial_number": "2919292",
         "model_name": "vash dom",
-        "manufacturer": "INtul"
+        "manufacturer": "INtul",
+        "kind": 2
     },
     "model": "erp_test.component",
     "pk": 4
@@ -179,7 +183,7 @@
 },
 {
     "fields": {
-        "name": "global.kind",
+        "name": "component.kind",
         "title": "Kind",
         "required": true,
         "position": 1,
@@ -675,16 +679,6 @@
     },
     "model": "erp_test.servertemplatehdd",
     "pk": 1
-},
-{
-    "fields": {
-        "hdd_form_factor": 7,
-        "hdd_qty": 3,
-        "template": 1,
-        "hdd_connection_type": 8
-    },
-    "model": "erp_test.servertemplatehdd",
-    "pk": 2
 },
 {
     "fields": {
