@@ -6,16 +6,6 @@
 - name: copy local_settings.py
   template: src=local_settings.py.j2 dest={{ application_path }}/local_settings.py
 
-- name: Run the Django syncdb command
-  django_manage:
-    command: syncdb
-    app_path: "{{ project_path }}"
-    virtualenv: "{{ virtualenv_path }}"
-    settings: "{{ django_settings_file }}"
-  environment: django_environment
-  when: run_django_syncdb
-  tags: django.syncdb
-
 - name: Run Django South migrations
   django_manage:
     command: migrate
@@ -25,6 +15,17 @@
   environment: django_environment
   when: run_django_south_migration
   tags: django.migrate
+
+- name: Run the Django loaddata command
+  django_manage:
+    command: loaddata
+    app_path: "{{ project_path }}"
+    virtualenv: "{{ virtualenv_path }}"
+    settings: "{{ django_settings_file }}"
+    fixtures: "{{ django_initial_data }}"
+  environment: django_environment
+  when: run_django_loaddata
+  tags: django.loaddata
 
 - name: Run Django collectstatic
   django_manage:

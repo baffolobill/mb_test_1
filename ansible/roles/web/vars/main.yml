@@ -28,3 +28,4 @@ django_environment:
   DJANGO_SECRET_KEY: "{{ django_secret_key }}"
   DATABASE_USER: "{{ db_user }}"
   DATABASE_PASSWORD: "{{ db_password }}"
+django_initial_data: "initial_data.json"

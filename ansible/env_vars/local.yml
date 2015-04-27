@@ -22,8 +22,8 @@ nginx_server_name: 192.168.33.13
 # Application settings.
 django_debug: True
 django_settings_file: "{{ application_name }}.settings"
-django_secret_key: akr2icmg1n8%z^3fe3c+)5d0(t^cy-2_25rrl35a7@!scna^1#
+django_secret_key: uu@12k8y6m_+_%xgyf()(7hhyfcl$%@=6l6av10*$40rp5dn*d
 
-run_django_syncdb: yes
+run_django_loaddata: yes
 run_django_south_migration: yes
 run_django_collectstatic: yes

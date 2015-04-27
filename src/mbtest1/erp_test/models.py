@@ -1031,36 +1031,6 @@ class BasketSlot(models.Model):
     def slot_takes(self):
         return self.server.slot_takes
 
-if False:
-    # сломал, удалив m2m в Server
-    def server_components_changed(sender, **kwargs):
-        action = kwargs['action']
-        if action not in ('post_add', 'post_remove'):
-            return
-
-        if not kwargs['reverse']:
-            server = kwargs['instance']
-            components = Component.objects.filter(pk__in=kwargs['pk_set'])
-        else:
-            components = [kwargs['instance']]
-            if len(kwargs['pk_set']) > 1:
-                raise ValueError('Component cannot belong to multiple servers.')
-            server = Server.objects.get(pk=kwargs['pk_set'][0])
-
-        if action == 'post_add':
-            for component in components:
-                try:
-                    server.install_component(component)
-                except (ComponentIsBroken, ComponentAlreadyInstalled):
-                    pass
-        elif action == 'post_remove':
-            for component in components:
-                try:
-                    server.uninstall_component(component)
-                except ComponentNotInstalled:
-                    pass
-    m2m_changed.connect(server_components_changed, sender=Server.components.through)
-
 
 def unit_saved(sender, instance, **kwargs):
     rack = instance.rack
