@@ -92,7 +92,7 @@ TODO: Можно вынести производителя компонента 
 
 На Mac'e все можно поставить через Homebrew.
 
-- с помощью Vagrant:  
+#### с помощью Vagrant:  
 $ git clone https://github.com/baffolobill/mb_test_1.git  
 $ cd mb_test_1  
 $ vagrant up  
@@ -102,7 +102,7 @@ $ vagrant up
 Все. После чего заходим в браузере: https://localhost:8443/ или https://localhost:8443/admin/.
 Внимание! Используется https!
 
-- с помощью virtualenv:  
+#### с помощью virtualenv:  
 $ virtualenv --no-site-packages blah_blah_blah  
 $ cd blah_blah_blah  
 $ source bin/activate  
