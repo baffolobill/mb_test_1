@@ -1,0 +1,11 @@
+---
+
+- name: Copy project src
+  file: src=/vagrant/src/{{ application_name }}
+        dest={{ application_path }}
+        state=link
+
+- name: Delete all .pyc files
+  command: find . -name '*.pyc' -delete
+  args:
+    chdir: "{{ project_path }}"

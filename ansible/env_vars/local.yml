@@ -1,29 +1,80 @@
 ---
 
+git_repo: https://github.com/baffolobill/mb_test_1.git
+git_branch: master
+
+project_name: mb-test-1
+application_name: mbtest1
+
+# System options
+user: "vagrant"
+group: webapps
+
+
+# Application settings.
+root_path: "/webapps"
+project_path: "{{ root_path }}/{{ project_name }}"
+etc_path: "{{ project_path }}/etc"
+application_path: "{{ project_path }}/{{ application_name }}"
+application_log_dir: "{{ project_path }}/logs"
+application_run_dir: "{{ project_path }}/run"
+application_log_file: "{{ application_log_dir }}/uwsgi_error.log"
+requirements_file: "{{ application_path }}/requirements.txt"
+
+#-virtualenv_path: "/webapps/{{ application_name }}"
+#-project_path: "{{ virtualenv_path }}/{{ application_name }}"
+#-application_path: "{{ project_path }}/{{ application_name }}"
+
+## virtualenv
+# virtualenv name
+virtualenv_path: "{{ project_path }}/env"
+
+
 # Database settings.
 db_user: "{{ application_name }}"
 db_name: "{{ application_name }}"
 db_password: password
 
 
-# Gunicorn settings. For the number of workers, a good rule to follow is
-# 2 x number of CPUs + 1
-gunicorn_num_workers: 1
+# port for uwsgi, must be unique for each project
+uwsgi_port: 9000
 
-# Setting this to 1 will restart the Gunicorn process each time
-# you make a request, basically reloading the code. Very handy
-# when developing. Set to 0 for unlimited requests (default).
-gunicorn_max_requests: 1
-
-
-# Nginx settings.
-nginx_server_name: 192.168.33.13
 
 # Application settings.
 django_debug: True
 django_settings_file: "{{ application_name }}.settings"
 django_secret_key: uu@12k8y6m_+_%xgyf()(7hhyfcl$%@=6l6av10*$40rp5dn*d
+django_initial_data: "initial_data.json"
 
 run_django_loaddata: yes
-run_django_south_migration: yes
+run_django_db_migrations: yes
 run_django_collectstatic: yes
+
+
+#
+# nginx
+#
+nginx_user: "{{ user }}"
+nginx_ssl: false
+nginx_server_redirect_to_ssl: false
+
+#nginx_ssl_local_path: "" remove this from tasks/main.yml, because it copies from templates directory
+
+# If you are using a signed key from a trusted source then you need to also change:
+nginx_ssl_type: selfsigned
+
+# If your files are not called `sslcert.crt` and `sslkey.key` then overwrite them:
+nginx_ssl_cert_name: sslcert.crt
+nginx_ssl_key_name: sslkey.key
+
+nginx_upstream_name: "{{ application_name }}"
+nginx_upstream_server: "127.0.0.1:{{ uwsgi_port }}"
+nginx_base_redirect_to_www: false
+nginx_server_name: "192.168.33.13"
+nginx_root_path: "{{ project_path }}"
+nginx_error_pages: ''
+nginx_assets_enabled: true
+nginx_assets_regex: "~ ^/(static|media)/"
+nginx_listen: 80
+nginx_access_log_file: "{{ application_log_dir }}/nginx_access.log"
+nginx_error_log_file: "{{ application_log_dir }}/nginx_error.log"

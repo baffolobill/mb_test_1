@@ -7,9 +7,13 @@
 - include: setup_virtualenv.yml
 
 - include: setup_git_repo.yml
+  when: symlink_sources is not defined or not symlink_sources
+
+- include: copy_sources.yml
+  when: symlink_sources is defined and symlink_sources
 
 - include: setup_django_app.yml
 
-- include: setup_supervisor.yml
-
 - include: set_file_permissions.yml
+
+- include: setup_supervisor.yml

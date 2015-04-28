@@ -27,3 +27,5 @@ make deploy
 ```bash
 vagrant up
 ```
+
+После чего, ресурс будет доступен по адресу: `http://localhost:8083/`
