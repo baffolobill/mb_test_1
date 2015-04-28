@@ -93,8 +93,8 @@ TODO: Можно вынести производителя компонента 
 На Mac'e все можно поставить через Homebrew.
 
 #### с помощью Vagrant:
-$ git clone https://github.com/baffolobill/mb_test_1.git
-$ cd mb_test_1
+$ git clone https://github.com/baffolobill/mb_test_1.git  
+$ cd mb_test_1  
 $ vagrant up
 
 Может попросить ввести пароль для монтирования nfs. По этой же причине может упасть.
@@ -103,14 +103,14 @@ $ vagrant up
 
 
 #### с помощью virtualenv:
-$ virtualenv --no-site-packages blah_blah_blah
-$ cd blah_blah_blah
-$ source bin/activate
-$ mkdir current && cd current
-$ git clone https://github.com/baffolobill/mb_test_1.git
-$ cd src
-$ python manage.py migrate
-$ python manage.py loaddata initial_data.json
+$ virtualenv --no-site-packages blah_blah_blah  
+$ cd blah_blah_blah  
+$ source bin/activate  
+$ mkdir current && cd current  
+$ git clone https://github.com/baffolobill/mb_test_1.git  
+$ cd src  
+$ python manage.py migrate  
+$ python manage.py loaddata initial_data.json  
 $ python manage.py runserver
 
 Для входа в админку логин/пароль: admin/test
