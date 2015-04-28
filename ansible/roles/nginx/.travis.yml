@@ -1,0 +1,39 @@
+---
+language: "python"
+python: "2.7"
+
+env:
+  - SITE_AND_INVENTORY="tests/test.yml -i tests/inventory"
+
+before_install:
+  - "sudo apt-get update -qq"
+
+install:
+  - "pip install ansible==1.8.3"
+  - "echo '[defaults]' > ansible.cfg"
+  - "echo 'roles_path = ../' >> ansible.cfg"
+
+before_script:
+  - "cd tests && node server &"
+  - "sleep 3"
+  - "chmod 777 /tmp/testproject.sock"
+  - "openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -subj '/C=US/ST=Foo/L=Bar/O=Baz/CN=qux.com' -keyout /tmp/sslkey.key -out /tmp/sslcert.crt"
+
+script:
+  - "ansible-playbook $SITE_AND_INVENTORY --syntax-check"
+  - "ansible-playbook $SITE_AND_INVENTORY --connection=local -vvvv"
+  - >
+    ansible-playbook $SITE_AND_INVENTORY --connection=local
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+  - >
+    curl -s -o /dev/null -w "%{http_code}" http://localhost:8080
+    | grep -q '200'
+    && (echo 'HTTP test: pass' && exit 0)
+    || (echo 'HTTP test: fail' && exit 1)
+  - >
+    curl -k -s -o /dev/null -w "%{http_code}" https://localhost:8081
+    | grep -q '200'
+    && (echo 'HTTPs test: pass' && exit 0)
+    || (echo 'HTTPs test: fail' && exit 1)

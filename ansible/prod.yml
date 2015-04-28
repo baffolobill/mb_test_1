@@ -1,0 +1,17 @@
+---
+
+- name: Create a {{ application_name }} production server
+  hosts: droplets
+  sudo: yes
+  sudo_user: root
+  remote_user: root
+  vars:
+    - setup_git_repo: yes
+    - update_apt_cache: yes
+  vars_files:
+    - env_vars/production.yml
+
+  roles:
+    - db
+    - django_project
+    - nginx

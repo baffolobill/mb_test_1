@@ -1,0 +1,13 @@
+[uwsgi]
+chdir = {{ application_path }}
+pythonpath = {{ application_path }}
+env = DJANGO_SETTINGS_MODULE={{ application_name }}.settings
+socket = 127.0.0.1:{{ uwsgi_port }}
+protocol = http
+module = {{ application_name }}.wsgi:application
+master = True
+pidfile = {{ application_run_dir }}/{{ application_name }}.pid
+home = {{ virtualenv_path }}
+logger = file:{{ application_log_file }}
+vacuum = True
+plugins = python27,logfile

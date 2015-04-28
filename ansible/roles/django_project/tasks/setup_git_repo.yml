@@ -1,0 +1,25 @@
+---
+
+- name: Install git
+  apt: pkg=git state=present
+
+- name: Setup the Git repo
+  git: repo={{ git_repo }}
+       version="{{ git_branch }}"
+       dest="/tmp/git_repo"
+       accept_hostkey=yes
+  when: setup_git_repo is defined and setup_git_repo
+  tags: git
+
+- name: Copy project sources to the application_path
+  command: mv /tmp/git_repo/src/{{ application_name }} {{ project_path }}
+           creates="{{ application_path }}/{{ application_name }}"
+
+- name: Delete sources from /tmp
+  command: rm -rf /tmp/git_repo
+
+- name: Delete all .pyc files
+  command: find . -name '*.pyc' -delete
+  args:
+    chdir: "{{ application_path }}"
+  tags: git

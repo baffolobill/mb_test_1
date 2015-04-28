@@ -1,0 +1,11 @@
+[program:{{ application_name }}]
+user = {{ user }}
+command = /usr/bin/uwsgi --ini {{ etc_path }}/uwsgi.{{ application_name }}.ini
+stdout_logfile = {{ application_log_dir }}/supervisor.log
+stderr_logfile = {{ application_log_dir }}/supervisor.log
+directory = {{ application_path }}
+autostart = true
+autorestart = true
+redirect_stderr = true
+numprocs=1
+stopsignal = QUIT

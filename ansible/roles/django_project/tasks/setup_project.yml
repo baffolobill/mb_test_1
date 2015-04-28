@@ -1,0 +1,78 @@
+---
+
+- name: Create the root folder
+  file: path={{ root_path }}
+        owner={{ user }}
+        group={{ group }}
+        mode=0774
+        state=directory
+
+- name: Create the project folder
+  file: path={{ project_path }}
+        owner={{ user }}
+        group={{ group }}
+        mode=0774
+        state=directory
+
+- name: Create the etc folder
+  file: path={{ etc_path }}
+        owner={{ user }}
+        group={{ group }}
+        mode=0774
+        state=directory
+
+- name: Create the application log folder
+  file: path={{ application_log_dir }}
+        owner={{ user }}
+        group={{ group }}
+        mode=0774
+        state=directory
+
+- name: Create the application run folder
+  file: path={{ application_run_dir }}
+        owner={{ user }}
+        group={{ group }}
+        mode=0774
+        state=directory
+
+- name: Create the application log file
+  command: touch {{ application_log_file }}
+           creates={{ application_log_file }}
+
+- name: Set permission to the application log file
+  file: path={{ application_log_file }}
+        owner={{ user }}
+        group={{ group }}
+        mode=0664
+        state=file
+
+- name: create media directory
+  file: path={{ project_path }}/media
+        state=directory
+        mode="0777"
+
+- name: create `uploads` directory
+  file: path={{ project_path }}/media/uploads
+        state=directory
+        mode="0777"
+
+
+- name: updating the system
+  apt: update_cache=yes cache_valid_time=86400
+  notify:
+  - restart server
+
+- name: install packages
+  apt: pkg={{ item.name }} state=present
+  with_items:
+    - name: python-virtualenv
+    - name: python-dev
+    - name: python-pip
+    - name: supervisor
+    - name: uwsgi
+    - name: uwsgi-plugin-python
+
+- name: copy uwsgi file
+  template: src=uwsgi.ini.j2 dest={{ etc_path }}/uwsgi.{{ application_name }}.ini
+  notify:
+    - restart nginx

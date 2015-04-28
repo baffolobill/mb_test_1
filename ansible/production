@@ -1,0 +1,2 @@
+[droplets]
+46.101.149.14   ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/digitalocean_rsa
