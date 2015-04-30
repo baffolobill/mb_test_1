@@ -5,3 +5,6 @@ gunicorn==18.0
 djangorestframework==3.1.1
 django-model-utils==2.2
 django-fsm==2.2.0
+
+# erp_client
+git+https://github.com/maraujop/django-crispy-forms.git

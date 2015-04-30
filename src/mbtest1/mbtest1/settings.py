@@ -38,8 +38,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'erp_test',
-    'erp_client',
     'rest_framework',
+
+    # client requirements
+    'erp_client',
+    'crispy_forms',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -104,6 +107,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# erp_client settings
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 try:
     from local_settings import *

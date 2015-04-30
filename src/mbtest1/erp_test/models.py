@@ -64,6 +64,9 @@ class Floor(NamedModel):
         verbose_name = _('Floor')
         verbose_name_plural = _('Floors')
 
+    def get_node(self):
+        return self.node
+
 
 class Room(NamedModel):
     """
@@ -75,6 +78,9 @@ class Room(NamedModel):
         verbose_name = _('Room')
         verbose_name_plural = _('Rooms')
 
+    def get_node(self):
+        return self.floor.get_node()
+
 
 class Row(NamedModel):
     """
@@ -85,6 +91,9 @@ class Row(NamedModel):
     class Meta:
         verbose_name = _('Row')
         verbose_name_plural = _('Rows')
+
+    def get_node(self):
+        return self.room.get_node()
 
 
 class RackQuerySet(QuerySet):
@@ -120,7 +129,8 @@ class Rack(NamedModel):
     """
         Стойка
     """
-    node = models.ForeignKey(Node)
+    node = models.ForeignKey(Node,
+        blank=True, null=True)
     row = models.ForeignKey(Row)
     total_units = models.PositiveSmallIntegerField(
         verbose_name=_('total units'),
@@ -144,8 +154,11 @@ class Rack(NamedModel):
             except:
                 gaps = []
             self.max_gap = max(gaps) if len(gaps) else 0
-
+        self.node = self.row.get_node()
         return super(Rack, self).save(*args, **kwargs)
+
+    def get_node(self):
+        return self.node
 
     def find_gaps(self):
         last_unit = None
@@ -748,6 +761,19 @@ class Server(NamedModel):
         ServerTemplate,
         related_name='servers')
 
+    class Meta:
+        verbose_name = _('Server')
+        verbose_name_plural = _('Servers')
+
+    def save(self, *args, **kwargs):
+        node = None
+        if self.rack:
+            node = self.rack.get_node()
+        elif self.basket:
+            node = self.basket.get_node()
+        self.node = node
+        return super(Server, self).save(*args, **kwargs)
+
     @property
     def slot_takes(self):
         """
@@ -931,6 +957,18 @@ class Basket(NamedModel):
     unit_takes = models.PositiveSmallIntegerField(
         verbose_name=_('height in units'),
         default=1)
+
+    class Meta:
+        verbose_name = _('Basket')
+        verbose_name_plural = _('Baskets')
+
+    def save(self, *args, **kwargs):
+        if self.rack:
+            self.node = self.rack.get_node()
+        super(Basket, self).save(*args, **kwargs)
+
+    def get_node(self):
+        return self.node
 
     def get_height(self):
         return self.unit_takes

@@ -1,0 +1,15 @@
+{% extends 'erp_client/base.html' %}
+{% load crispy_forms_tags %}
+{% load erp_client_tags %}
+
+{% block content %}
+<div class="page-header">
+  <h1>{{ section_name}} Update</h1>
+</div>
+
+{% render_breadcrumbs object %}
+
+<form method="post" action="." enctype="multipart/form-data">
+    {% crispy form %}
+</form>
+{% endblock %}

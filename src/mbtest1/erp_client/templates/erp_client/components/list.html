@@ -1,7 +1,14 @@
 {% extends 'erp_client/base.html' %}
 
 {% block content %}
-<h1>Component List</h1>
+<div class="page-header">
+    <h1>Component List</h1>
+</div>
+
+<a href="{% url 'component-create' %}" class="btn btn-primary">Create Component</a>
+
+<hr>
+
 {% if object_list %}
 <table class="table table-bordered table-striped">
     <thead>

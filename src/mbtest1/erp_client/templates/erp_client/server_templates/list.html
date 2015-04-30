@@ -1,7 +1,14 @@
 {% extends 'erp_client/base.html' %}
 
 {% block content %}
-<h1>Server Template List</h1>
+<div class="page-header">
+    <h1>Server Template List</h1>
+</div>
+
+<a href="{% url 'servertemplate-create' %}" class="btn btn-primary">Create Server Template</a>
+
+<hr>
+
 {% if object_list %}
 <table class="table table-condensed table-striped">
     <thead>
@@ -14,7 +21,7 @@
     {% for object in object_list %}
         <tr>
             <td>{{ object.pk }}</td>
-            <td><a href="{% url 'server-template-detail' object.pk %}">{{ object.name }}</a></td>
+            <td><a href="{% url 'servertemplate-detail' object.pk %}">{{ object.name }}</a></td>
         </tr>
     {% endfor %}
     </tbody>

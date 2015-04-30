@@ -1,7 +1,14 @@
 {% extends 'erp_client/base.html' %}
 
 {% block content %}
-<h1>Row List</h1>
+<div class="page-header">
+    <h1>Row List</h1>
+</div>
+
+<a href="{% url 'row-create' %}" class="btn btn-primary">Create Row</a>
+
+<hr>
+
 {% if object_list %}
 <table class="table table-condensed table-striped">
     <thead>

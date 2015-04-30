@@ -2,7 +2,9 @@
 {% load erp_client_tags %}
 
 {% block content %}
-<h1>Server Detail</h1>
+<div class="page-header">
+    <h1>Server Detail <small>[<a href="{% url 'server-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'server-delete' object.pk %}">delete</a>]</small></h1>
+</div>
 
 {% render_breadcrumbs object %}
 

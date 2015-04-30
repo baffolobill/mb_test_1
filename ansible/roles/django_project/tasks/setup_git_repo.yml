@@ -1,8 +1,5 @@
 ---
 
-- name: Install git
-  apt: pkg=git state=present
-
 - name: Setup the Git repo
   git: repo={{ git_repo }}
        version="{{ git_branch }}"
