@@ -1,0 +1,89 @@
+{% extends 'erp_client/base.html' %}
+{% load erp_client_tags %}
+
+{% block content %}
+<h1>Server Detail</h1>
+
+{% render_breadcrumbs object %}
+
+<table class="table table-condensed">
+    <tbody>
+        <tr>
+            <th width="100">Basket</th>
+            <td>{% if object.bakset %}<a href="{% url 'basket-detail' object.basket.pk %}">{{ object.basket.name }}</a>{% else %}---{% endif %}</td>
+        </tr>
+        {% with rack=object.get_rack %}
+        <tr>
+            <th width="100">Rack</th>
+            <td>{% if rack %}<a href="{% url 'rack-detail' rack.pk %}">{{ rack.name }}</a>{% else %}---{% endif %}</td>
+        </tr>
+        <tr>
+            <th width="100">Row</th>
+            <td>{% if rack %}<a href="{% url 'row-detail' rack.row.pk %}">{{ rack.row.name }}</a>{% else %}---{% endif %}</td>
+        </tr>
+        <tr>
+            <th width="100">Room</th>
+            <td>{% if rack %}<a href="{% url 'room-detail' rack.row.room.pk %}">{{ rack.row.room.name }}</a>{% else %}---{% endif %}</td>
+        </tr>
+        <tr>
+            <th width="100">Floor</th>
+            <td>{% if rack %}<a href="{% url 'floor-detail' rack.row.room.floor.pk %}">{{ rack.row.room.floor.name }}</a>{% else %}---{% endif %}</td>
+        </tr>
+        <tr>
+            <th width="100">Node</th>
+            <td>{% if rack %}<a href="{% url 'node-detail' object.node.pk %}">{{ object.node.name }}</a>{% else %}---{% endif %}</td>
+        </tr>
+        {% endwith %}
+    </tbody>
+</table>
+
+<h2>Component List</h2>
+{% with components=object.get_installed_components %}
+{% if components %}
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Kind</th>
+            <th>Manufacturer</th>
+            <th>Model Name</th>
+            <th>Serial Number</th>
+            <th>Properties</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for component in components %}
+    <tr>
+        <td>{{ component.pk }}</td>
+        <td>{{ component.kind.name }}</td>
+        <td>{{ component.manufacturer }}</td>
+        <td>{{ component.model_name }}</td>
+        <td>{{ component.serial_number }}</td>
+        <td>
+            <ul>
+            {% for prop in component.get_properties %}
+            {% with value=prop.value.get_value %}
+                <li>{{ prop.title }}:
+                    {% if value %}
+                        {% if prop.property.is_select_field %}
+                            {{ value.name }}
+                        {% else %}
+                            {{ value }}
+                        {% endif %}
+                    {% else %}
+                    ---
+                    {% endif %}
+                </li>
+            {% endwith %}
+            {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-info">There are no installed components.</div>
+{% endif %}
+{% endwith %}
+{% endblock %}

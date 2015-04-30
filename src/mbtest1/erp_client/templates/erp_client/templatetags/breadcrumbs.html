@@ -1,0 +1,5 @@
+<ol class="breadcrumb">
+{% for crumb in crumbs %}
+  <li><a{% if forloop.last %} class="active"{% endif %} href="{{ crumb.url }}">{{ crumb.name }}</a></li>
+{% endfor %}
+</ol>

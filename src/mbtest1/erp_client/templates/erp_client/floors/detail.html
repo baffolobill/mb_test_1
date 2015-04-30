@@ -1,0 +1,21 @@
+{% extends 'erp_client/base.html' %}
+{% load erp_client_tags %}
+
+{% block content %}
+<h1>Floor Detail</h1>
+
+{% render_breadcrumbs object %}
+
+<table class="table table-condensed">
+    <tbody>
+        <tr>
+            <th width="100">Node</th>
+            <td><a href="{% url 'node-detail' object.node.pk %}">{{ object.node.name }}</a></td>
+        </tr>
+        <tr>
+            <th>Rooms</th>
+            <td>{% for obj in object.room_set.all %}<a href="{% url 'room-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% endfor %}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

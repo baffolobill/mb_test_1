@@ -767,6 +767,15 @@ class Server(NamedModel):
         """
         return 1
 
+    def get_rack(self):
+        if self.rack:
+            return self.rack
+
+        if self.basket:
+            return self.basket.rack
+
+        return None
+
     def get_height(self):
         if self.basket:
             return self.basket.get_height()

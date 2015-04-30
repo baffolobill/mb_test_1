@@ -1,0 +1,75 @@
+{% extends 'erp_client/base.html' %}
+{% load erp_client_tags %}
+
+{% block content %}
+<h1>Server Template Detail</h1>
+
+{% render_breadcrumbs object %}
+
+<table class="table table-condensed">
+    <tbody>
+        <tr>
+            <th width="100">Name</th>
+            <td>{{ object.name }}</td>
+        </tr>
+        <tr>
+            <th>CPU</th>
+            <td><table class="table table-condensed table-bordered table-striped" style="width:auto;">
+                <thead>
+                    <tr>
+                        <th>Socket</th>
+                        <th>Qty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ object.cpu_socket.name }}</td>
+                    <td>{{ object.cpu_qty }}</td>
+                </tr>
+                </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th>RAM</th>
+            <td><table class="table table-condensed table-bordered table-striped" style="width:auto;">
+                <thead>
+                    <tr>
+                        <th>Standard</th>
+                        <th>Qty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ object.ram_standard.name }}</td>
+                    <td>{{ object.ram_qty }}</td>
+                </tr>
+                </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th>HDDs</th>
+            <td><table class="table table-condensed table-bordered table-striped" style="width:auto;">
+                <thead>
+                    <tr>
+                        <th>Connection Type</th>
+                        <th>Form Factor</th>
+                        <th>Qty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for hdd in object.hdds.all %}
+                <tr>
+                    <td>{{ hdd.hdd_connection_type.name }}</td>
+                    <td>{{ hdd.hdd_form_factor.name }}</td>
+                    <td>{{ hdd.hdd_qty }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

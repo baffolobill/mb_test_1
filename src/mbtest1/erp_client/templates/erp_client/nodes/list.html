@@ -1,0 +1,27 @@
+{% extends 'erp_client/base.html' %}
+
+{% block content %}
+<h1>Node List</h1>
+{% if object_list %}
+<table class="table table-condensed table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Server Qty</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for object in object_list %}
+        <tr>
+            <td>{{ object.pk }}</td>
+            <td><a href="{% url 'node-detail' object.pk %}">{{ object.name }}</a></td>
+            <td>{{ object.servers.count }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <div class="alert alert-info">There is no Nodes defined yet.</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% if basket %}
+<table class="table table-bordered" style="width:300px;">
+    <tbody>
+        <tr>
+            <td style="padding: 3px 3px 0px;line-height:1.2;height:15px;" colspan="{{ object.slot_qty }}"><a href="{% url 'basket-detail' object.pk %}">{{ object.get_name }}</a></td>
+        </tr>
+        <tr>
+        {% for slot in basket.slots %}
+            <td height="10" class="text-center">{{ slot.id }}</td>
+        {% endfor %}
+        </tr>
+        <tr>
+        {% for slot in basket.slots %}
+            <td style="padding:2px;text-align:center;height:100px;">
+            {% if slot.server %}
+            <div style="width:100%;height:100%;overflow:auto;background-color:#3c3c3c;color:#fff;">&times;</div></td>
+
+            {% else %}
+            <div style="width:100%;height:100%;overflow:auto;background-color:green;color:#fff;">+</div>
+            {% endif %}
+            </td>
+        {% endfor %}
+        </tr>
+    </tbody>
+</table>
+
+{% else %}
+<div class="alert alert-error">Cannot render scheme.</div>
+{% endif %}

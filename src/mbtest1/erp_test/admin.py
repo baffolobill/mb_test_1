@@ -32,6 +32,15 @@ class PropertyAdmin(admin.ModelAdmin):
     inlines = [PropertyOptionsInline,]
 
 
+class BasketSlotInline(admin.TabularInline):
+    model = BasketSlot
+
+
+class BasketSlotAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'slot_qty', 'unit_takes', 'rack', 'node')
+    inlines = [BasketSlotInline,]
+
+
 # Register your models here.
 admin.site.register(Node)
 admin.site.register(Floor)
@@ -49,4 +58,4 @@ admin.site.register(ComponentPropertyValue)
 admin.site.register(ServerTemplate, ServerTemplateAdmin)
 admin.site.register(ServerTemplateHdd)
 admin.site.register(Server)
-admin.site.register(Basket)
+admin.site.register(Basket, BasketSlotAdmin)

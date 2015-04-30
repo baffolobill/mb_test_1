@@ -1,0 +1,17 @@
+{% load erp_client_tags %}
+
+<table class="table table-bordered table-condensed pull-left" style="width:200px; zoom:0.5; margin-right:10px;">
+    <tbody>
+        <tr>
+            <th colspan="2"><a href="{% url 'rack-detail' rack.pk %}">{{ rack.name }}</a></th>
+        </tr>
+        {% for unit in units %}
+        <tr>
+            <td width="10">{{ unit.id }}</td>
+            {% if unit.unit_takes > 0 %}
+            <td rowspan="{{ unit.unit_takes }}"{% if unit.basket %} style="height:1px;"{% endif %}>{% render_unit unit %}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

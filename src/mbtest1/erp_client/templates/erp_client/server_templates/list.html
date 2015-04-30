@@ -1,0 +1,25 @@
+{% extends 'erp_client/base.html' %}
+
+{% block content %}
+<h1>Server Template List</h1>
+{% if object_list %}
+<table class="table table-condensed table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for object in object_list %}
+        <tr>
+            <td>{{ object.pk }}</td>
+            <td><a href="{% url 'server-template-detail' object.pk %}">{{ object.name }}</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <div class="alert alert-info">There is no Server Templates defined yet.</div>
+{% endif %}
+{% endblock %}

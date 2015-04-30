@@ -1,0 +1,40 @@
+{% extends 'erp_client/base.html' %}
+{% load erp_client_tags %}
+
+{% block content %}
+<h1>Rack Detail</h1>
+
+{% render_breadcrumbs object %}
+
+<table class="table table-condensed">
+    <tbody>
+        <tr>
+            <th width="100">Row</th>
+            <td><a href="{% url 'row-detail' object.row.pk %}">{{ object.row.name }}</a></td>
+        </tr>
+        <tr>
+            <th width="100">Room</th>
+            <td><a href="{% url 'room-detail' object.row.room.pk %}">{{ object.row.room.name }}</a></td>
+        </tr>
+        <tr>
+            <th width="100">Floor</th>
+            <td><a href="{% url 'floor-detail' object.row.room.floor.pk %}">{{ object.row.room.floor.name }}</a></td>
+        </tr>
+        <tr>
+            <th width="100">Node</th>
+            <td><a href="{% url 'node-detail' object.node.pk %}">{{ object.node.name }}</a></td>
+        </tr>
+        <tr>
+            <th>Servers</th>
+            <td>{% for obj in object.servers.all %}<a href="{% url 'server-detail' obj.pk %}">{{ obj.name }}</a>{% if obj.basket %} (<a href="{% url 'basket-detail' obj.basket.pk %}">{{ obj.basket.get_name }}</a>){% endif %}{% if not forloop.last %},{% endif %}{% empty %}No servers assigned yet.{% endfor %}</td>
+        </tr>
+        <tr>
+            <th>Baskets</th>
+            <td>{% for obj in object.baskets.all %}<a href="{% url 'basket-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% empty %}No baskets assigned yet.{% endfor %}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Scheme</h2>
+{% render_rack_scheme object %}
+{% endblock %}

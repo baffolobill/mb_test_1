@@ -1,0 +1,34 @@
+{% extends 'erp_client/base.html' %}
+{% load erp_client_tags %}
+
+{% block content %}
+<h1>Row Detail</h1>
+
+{% render_breadcrumbs object %}
+
+<table class="table table-condensed">
+    <tbody>
+        <tr>
+            <th width="100">Room</th>
+            <td><a href="{% url 'room-detail' object.room.pk %}">{{ object.room.name }}</a></td>
+        </tr>
+        <tr>
+            <th width="100">Floor</th>
+            <td><a href="{% url 'floor-detail' object.room.floor.pk %}">{{ object.room.floor.name }}</a></td>
+        </tr>
+        <tr>
+            <th width="100">Node</th>
+            <td><a href="{% url 'node-detail' object.room.floor.node.pk %}">{{ object.room.floor.node.name }}</a></td>
+        </tr>
+        <tr>
+            <th>Racks</th>
+            <td>{% for obj in object.rack_set.all %}<a href="{% url 'rack-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% endfor %}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Scheme</h2>
+{% for rack in object.rack_set.all %}
+    {% render_rack_scheme rack %}
+{% endfor %}
+{% endblock %}

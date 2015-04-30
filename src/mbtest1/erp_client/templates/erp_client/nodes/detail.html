@@ -1,0 +1,63 @@
+{% extends 'erp_client/base.html' %}
+{% load erp_client_tags %}
+
+{% block content %}
+<h1>Node Detail</h1>
+
+{% render_breadcrumbs object %}
+
+<table class="table table-condensed">
+    <tbody>
+        <tr>
+            <th width="100">Name</th>
+            <td>{{ node.get_name }}</td>
+        </tr>
+        <tr>
+            <th width="100">Address</th>
+            <td>{{ node.address }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Server List</h2>
+<p><a href="#" class="btn btn-primary">Add server</a></p>
+{% with server_list=node.get_server_list %}
+{% if server_list %}
+    <table class="table table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Basket</th>
+                <th>Rack</th>
+                <th>Row</th>
+                <th>Room</th>
+                <th>Floor</th>
+                <td>Date Installed</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for server in node.get_server_list %}
+            <tr>
+                <td>{{ server.pk }}</td>
+                <td><a href="{% url 'server-detail' server.pk %}">{{ server.name }}</a></td>
+
+                <td>{% if server.basket %}<a href="{% url 'basket-detail' server.basket.pk %}">{{ server.basket.get_name }}</a>{% else %}---{% endif %}</td>
+
+                {% with rack=server.get_rack %}
+                <td><a href="{% url 'rack-detail' rack.pk %}">{{ rack.name }}</a></td>
+                <td><a href="{% url 'row-detail' rack.row.pk %}">{{ rack.row.name }}</a></td>
+                <td><a href="{% url 'room-detail' rack.row.room.pk %}">{{ rack.row.room.name }}</a></td>
+                <td><a href="{% url 'floor-detail' rack.row.room.floor.pk %}">{{ rack.row.room.floor }}</a></td>
+                {% endwith %}
+                <td>Not Implemented</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-info">There are no Servers yet. Add <a href="#">one?</a></div>
+{% endif %}
+
+{% endwith %}
+{% endblock %}

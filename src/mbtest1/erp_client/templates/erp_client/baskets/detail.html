@@ -1,0 +1,40 @@
+{% extends 'erp_client/base.html' %}
+{% load erp_client_tags %}
+
+{% block content %}
+<h1>Basket Detail</h1>
+
+{% render_breadcrumbs object %}
+
+<table class="table table-condensed">
+    <tbody>
+        <tr>
+            <th width="100">Rack</th>
+            <td>{% if object.rack %}<a href="{% url 'rack-detail' object.rack.pk %}">{{ object.rack.name }}</a>{% else %}---{% endif %}</td>
+        </tr>
+        <tr>
+            <th width="100">Row</th>
+            <td>{% if object.rack %}<a href="{% url 'row-detail' object.rack.row.pk %}">{{ object.rack.row.name }}</a>{% else %}---{% endif %}</td>
+        </tr>
+        <tr>
+            <th width="100">Room</th>
+            <td>{% if object.rack %}<a href="{% url 'room-detail' object.rack.row.room.pk %}">{{ object.rack.row.room.name }}</a>{% else %}---{% endif %}</td>
+        </tr>
+        <tr>
+            <th width="100">Floor</th>
+            <td>{% if object.rack %}<a href="{% url 'floor-detail' object.rack.row.room.floor.pk %}">{{ object.rack.row.room.floor.name }}</a>{% else %}---{% endif %}</td>
+        </tr>
+        <tr>
+            <th width="100">Node</th>
+            <td>{% if object.rack %}<a href="{% url 'node-detail' object.node.pk %}">{{ object.node.name }}</a>{% else %}---{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Servers</th>
+            <td>{% for obj in object.servers.all %}<a href="{% url 'server-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% empty %}No servers assigned yet.{% endfor %}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Scheme</h2>
+{% render_basket_scheme object %}
+{% endblock %}

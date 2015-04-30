@@ -1,0 +1,32 @@
+{% if unit.server %}
+<div style="width:100%;height:100%;border:1px solid #000;background-color:#c3c3c3;overflow:auto;">{{ unit.server.name }}</div>
+
+{% elif unit.basket %}
+<table class="table table-bordered" style="height:100%;min-height:120px;">
+    <tbody>
+        <tr>
+            <td style="padding: 3px 3px 0px;line-height:1.2;height:15px;" colspan="{{ unit.basket.slot_qty }}"><a href="{% url 'basket-detail' unit.basket.pk %}">{{ unit.basket.get_name }}</a></td>
+        </tr>
+        <tr>
+        {% for slot in basket.slots %}
+            <td height="10">{{ slot.id }}</td>
+        {% endfor %}
+        </tr>
+        <tr>
+        {% for slot in basket.slots %}
+            <td style="padding:2px;text-align:center;">
+            {% if slot.server %}
+            <div style="width:100%;height:100%;overflow:auto;background-color:#3c3c3c;color:#fff;">&times;</div></td>
+
+            {% else %}
+            <div style="width:100%;height:100%;overflow:auto;background-color:green;color:#fff;">+</div>
+            {% endif %}
+            </td>
+        {% endfor %}
+        </tr>
+    </tbody>
+</table>
+
+{% else %}
+<div style="width:100%;height:100%;border:1px solid dark-green;background-color:green;overflow:auto;color:#fff;padding-left:5px;">empty</div>
+{% endif %}
