@@ -107,7 +107,7 @@ class RackActionsView(RackModelMixin, DetailView):
         except Exception as exc:
             messages.error(self.request, str(exc))
         else:
-            messages.success(self.request, 'Basket "{}" has been mounted to the rack {}.'.format(basket.get_name, rack.get_name()))
+            messages.success(self.request, u'Basket "{}" has been mounted to the rack {}.'.format(basket.get_name, rack.get_name()))
 
         return redirect(self.get_success_url())
 
@@ -115,7 +115,7 @@ class RackActionsView(RackModelMixin, DetailView):
         rack = self.get_object()
         basket = self.get_basket()
         if not basket.rack:
-            messages.error(self.request, 'Basket is not mounted.')
+            messages.error(self.request, u'Basket is not mounted.')
             return
 
         try:
@@ -123,7 +123,7 @@ class RackActionsView(RackModelMixin, DetailView):
         except Exception as exc:
             messages.error(self.request, str(exc))
         else:
-            messages.success(self.request, 'Basket "{}" has been unmounted.'.format(basket.get_name()))
+            messages.success(self.request, u'Basket "{}" has been unmounted.'.format(basket.get_name()))
 
     def _mount_server(self):
         """
@@ -151,7 +151,7 @@ class RackActionsView(RackModelMixin, DetailView):
         except Exception as exc:
             messages.error(self.request, str(exc))
         else:
-            messages.success(self.request, 'Server "{}" has been mounted to the rack {}.'.format(server.get_name(), rack.get_name()))
+            messages.success(self.request, u'Server "{}" has been mounted to the rack {}.'.format(server.get_name(), rack.get_name()))
 
         return redirect(self.get_success_url())
 
@@ -159,7 +159,7 @@ class RackActionsView(RackModelMixin, DetailView):
         rack = self.get_object()
         server = self.get_server()
         if not server.is_mounted():
-            messages.error(self.request, 'Server is not mounted.')
+            messages.error(self.request, u'Server is not mounted.')
             return
 
         try:
@@ -167,7 +167,7 @@ class RackActionsView(RackModelMixin, DetailView):
         except Exception as exc:
             messages.error(self.request, str(exc))
         else:
-            messages.success(self.request, 'Server "{}" has been unmounted from the Rack "{}".'.format(server.get_name(), rack.get_name()))
+            messages.success(self.request, u'Server "{}" has been unmounted from the Rack "{}".'.format(server.get_name(), rack.get_name()))
 
     def get_context_data(self, **kwargs):
         ctx = super(RackActionsView, self).get_context_data(**kwargs)

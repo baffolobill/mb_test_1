@@ -94,7 +94,7 @@ class ServerActionsView(ServerModelMixin, DetailView):
         except Exception as exc:
             messages.error(self.request, str(exc))
         else:
-            messages.success(self.request, 'Component "{}" has been installed.'.format(component.get_name()))
+            messages.success(self.request, u'Component "{}" has been installed.'.format(component.get_name()))
 
         return redirect(reverse('server-detail', args=[self.kwargs['pk']]))
 
@@ -108,7 +108,7 @@ class ServerActionsView(ServerModelMixin, DetailView):
         except Exception as exc:
             messages.error(self.request, str(exc))
         else:
-            messages.success(self.request, 'Component "{}" has been uninstalled.'.format(component.get_name()))
+            messages.success(self.request, u'Component "{}" has been uninstalled.'.format(component.get_name()))
 
     def _mount(self):
         """
@@ -139,7 +139,7 @@ class ServerActionsView(ServerModelMixin, DetailView):
         except Exception as exc:
             messages.error(self.request, str(exc))
         else:
-            messages.success(self.request, 'Server "{}" has been installed to the basket {}.'.format(server.get_name(), basket.get_name()))
+            messages.success(self.request, u'Server "{}" has been installed to the basket {}.'.format(server.get_name(), basket.get_name()))
 
         return redirect(self.get_success_url())
 
@@ -167,7 +167,7 @@ class ServerActionsView(ServerModelMixin, DetailView):
         except Exception as exc:
             messages.error(self.request, str(exc))
         else:
-            messages.success(self.request, 'Server "{}" has been mounted to the rack {}.'.format(server.get_name(), rack.get_name()))
+            messages.success(self.request, u'Server "{}" has been mounted to the rack {}.'.format(server.get_name(), rack.get_name()))
 
         return redirect(self.get_success_url())
 

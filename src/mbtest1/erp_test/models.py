@@ -293,9 +293,6 @@ class Unit(models.Model):
 
         raise AttributeError
 
-###############
- # # # # # # #
-###############
 
 class ComponentQuerySet(QuerySet):
 
@@ -848,6 +845,10 @@ class Server(NamedModel):
             return tmpl.is_supported_ram(component)
         elif c_kind == 'hdd':
             return tmpl.is_supported_hdd(component)
+        elif c_kind == 'raid':
+            return True
+        elif c_kind == 'net':
+            return True
         return False
 
     def has_free_slots_for_component(self, component):
@@ -884,8 +885,10 @@ class Server(NamedModel):
                                 property__name='hdd.form_factor',
                                 option=hdd_form_factor)\
                         .count()
+        elif c_kind in ('net', 'raid'):
+            return True
         else:
-            raise NotImplemented
+            raise NotImplementedError
 
         if cnt < limit:
             return True
@@ -933,49 +936,58 @@ class Server(NamedModel):
         return self.components.filter(state=ComponentState.INSTALLED)
 
     def find_all_valid_components(self):
-        """
-        FIXME: возвращаются несовместимые HDD (см. ServerTemplate.is_supported_hdd)
-        """
-        tmpl = self.template
-        cpu_socket_prop = Property.objects.get(name='cpu.socket')
-        ram_standard_prop = Property.objects.get(name='ram.standard')
-        hdd_connection_type_prop = Property.objects.get(name='hdd.connection_type')
-        hdd_form_factor_prop = Property.objects.get(name='hdd.form_factor')
-
-        cpu_socket = tmpl.cpu_socket
-        ram_standard = tmpl.ram_standard
-        hdd_connection_type = []
-        hdd_form_factor = []
-        for hdd in tmpl.hdds.all():
-            hdd_connection_type.append(hdd.hdd_connection_type)
-            hdd_form_factor.append(hdd.hdd_form_factor)
-
-        query = (Q(property=cpu_socket_prop)&Q(option=cpu_socket))
-        query |= (Q(property=ram_standard_prop)&Q(option=ram_standard))
-        query |= (Q(property=hdd_connection_type_prop)&Q(option__in=hdd_connection_type))
-        query |= (Q(property=hdd_form_factor_prop)&Q(option__in=hdd_form_factor))
-
-        component_ids = ComponentPropertyValue.objects\
-                    .values_list('component', flat=True)\
-                    .select_related('component')\
-                    .filter(query)
-
-        return Component.objects.filter(state=ComponentState.FREE, id__in=component_ids)
+        return list(self.find_valid_cpu_components()) + \
+               list(self.find_valid_ram_components()) + \
+               list(self.find_valid_hdd_components()) + \
+               list(self.find_valid_net_components()) + \
+               list(self.find_valid_raid_components())
 
     def find_valid_cpu_components(self):
-        raise NotImplemented
+        query = Q(property__name='cpu.socket')
+        query &= Q(option=self.template.cpu_socket)
+        component_ids = ComponentPropertyValue.objects\
+                    .values_list('component_id', flat=True)\
+                    .filter(query)
+        return Component.objects.filter(state=ComponentState.FREE, id__in=component_ids)
 
     def find_valid_hdd_components(self):
-        raise NotImplemented
+        hdd_connection_type = set()
+        hdd_form_factor = set()
+        for hdd in self.template.hdds.all():
+            hdd_connection_type.add(hdd.hdd_connection_type_id)
+            hdd_form_factor.add(hdd.hdd_form_factor_id)
+
+        # вначале оставим только компоненты с валидным connection_type
+        valid_c_ids = ComponentPropertyValue.objects\
+                        .values_list('component_id', flat=True)\
+                        .filter(property__name='hdd.connection_type',
+                                option__in=hdd_connection_type)
+
+        # теперь среди оставшихся компонентов ищем с валидным form_factor
+        component_ids = ComponentPropertyValue.objects\
+                            .values_list('component_id', flat=True)\
+                            .filter(component__in=valid_c_ids,
+                                    property__name='hdd.form_factor',
+                                    option__in=hdd_form_factor)
+        return Component.objects.filter(state=ComponentState.FREE, id__in=component_ids)
 
     def find_valid_ram_components(self):
-        raise NotImplemented
+        query = Q(property__name='ram.standard')
+        query &= Q(option=self.template.ram_standard)
+        component_ids = ComponentPropertyValue.objects\
+                            .values_list('component_id', flat=True)\
+                            .filter(query)
+        return Component.objects.filter(state=ComponentState.FREE, id__in=component_ids)
 
     def find_valid_raid_components(self):
-        raise NotImplemented
+        return Component.objects.filter(
+            state=ComponentState.FREE,
+            kind__name='raid')
 
     def find_valid_net_components(self):
-        raise NotImplemented
+        return Component.objects.filter(
+            state=ComponentState.FREE,
+            kind__name='net')
 
 
 class BasketQuerySet(QuerySet):
@@ -1109,7 +1121,7 @@ class Basket(NamedModel):
 
     def find_free_position(self, slots_takes=1):
         if slots_takes > 1:
-            raise NotImplemented
+            raise NotImplementedError
 
         gaps = self.find_gaps()
         if not len(gaps):

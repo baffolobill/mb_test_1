@@ -82,7 +82,7 @@ class BasketActionsView(BasketModelMixin, DetailView):
         except Exception as exc:
             messages.error(self.request, str(exc))
         else:
-            messages.success(self.request, 'Basket "{}" has been mount to the rack {}.'.format(basket.get_name, rack.get_name()))
+            messages.success(self.request, u'Basket "{}" has been mount to the rack {}.'.format(basket.get_name, rack.get_name()))
 
         return redirect(self.get_success_url())
 
@@ -97,7 +97,7 @@ class BasketActionsView(BasketModelMixin, DetailView):
         except Exception as exc:
             messages.error(self.request, str(exc))
         else:
-            messages.success(self.request, 'Basket "{}" has been unmounted.'.format(basket.get_name()))
+            messages.success(self.request, u'Basket "{}" has been unmounted.'.format(basket.get_name()))
 
     def _install_server(self):
         """
@@ -125,7 +125,7 @@ class BasketActionsView(BasketModelMixin, DetailView):
         except Exception as exc:
             messages.error(self.request, str(exc))
         else:
-            messages.success(self.request, 'Server "{}" has been installed to the basket {}.'.format(server.get_name(), basket.get_name()))
+            messages.success(self.request, u'Server "{}" has been installed to the basket {}.'.format(server.get_name(), basket.get_name()))
 
         return redirect(self.get_success_url())
 
@@ -133,7 +133,7 @@ class BasketActionsView(BasketModelMixin, DetailView):
         basket = self.get_object()
         server = self.get_server()
         if not server.is_mounted():
-            messages.error(self.request, 'Server is not mounted/installed.')
+            messages.error(self.request, u'Server is not mounted/installed.')
             return
 
         try:
@@ -141,7 +141,7 @@ class BasketActionsView(BasketModelMixin, DetailView):
         except Exception as exc:
             messages.error(self.request, str(exc))
         else:
-            messages.success(self.request, 'Server "{}" has been uninstalled from Basket "{}".'.format(server.get_name(), basket.get_name()))
+            messages.success(self.request, u'Server "{}" has been uninstalled from Basket "{}".'.format(server.get_name(), basket.get_name()))
 
     def get_context_data(self, **kwargs):
         ctx = super(BasketActionsView, self).get_context_data(**kwargs)
