@@ -71,7 +71,10 @@ def render_basket_scheme(basket_obj):
 
 @register.inclusion_tag('erp_client/templatetags/breadcrumbs.html')
 def render_breadcrumbs(obj):
-    crumbs = []
+    crumbs = [{
+        'url': reverse('{}-list'.format(obj._meta.model_name.lower())),
+        'name': obj._meta.verbose_name_plural,
+    }]
     object_path = OrderedDict([(k, None)
                                for k in ['node', 'floor', 'room', 'row', 'rack',
                                          'basket', 'server', 'server-template',
