@@ -1,8 +1,8 @@
 [
 {
     "fields": {
-        "name": "ams1",
-        "address": "Baika Nur"
+        "name": "\u0426\u041e\u0414 \u00ab\u041a\u041e\u041c\u041f\u0420\u0415\u0421\u0421\u041e\u0420\u00bb",
+        "address": "2-\u044f \u0443\u043b\u0438\u0446\u0430 \u042d\u043d\u0442\u0443\u0437\u0438\u0430\u0441\u0442\u043e\u0432, 5, \u043a\u043e\u0440\u043f. 6"
     },
     "model": "erp_test.node",
     "pk": 1
@@ -17,6 +17,14 @@
 },
 {
     "fields": {
+        "node": 1,
+        "name": "2nd floor"
+    },
+    "model": "erp_test.floor",
+    "pk": 2
+},
+{
+    "fields": {
         "name": "Room #6",
         "floor": 1
     },
@@ -25,11 +33,27 @@
 },
 {
     "fields": {
+        "name": "#1 room",
+        "floor": 2
+    },
+    "model": "erp_test.room",
+    "pk": 2
+},
+{
+    "fields": {
         "name": "1st row",
         "room": 1
     },
     "model": "erp_test.row",
     "pk": 1
+},
+{
+    "fields": {
+        "name": "1st row",
+        "room": 2
+    },
+    "model": "erp_test.row",
+    "pk": 2
 },
 {
     "fields": {
@@ -42,6 +66,18 @@
     },
     "model": "erp_test.servertemplate",
     "pk": 1
+},
+{
+    "fields": {
+        "name": "test update",
+        "cpu_socket": 4,
+        "ram_standard": 6,
+        "ram_qty": 1,
+        "unit_takes": 1,
+        "cpu_qty": 1
+    },
+    "model": "erp_test.servertemplate",
+    "pk": 2
 },
 {
     "fields": {
@@ -65,19 +101,61 @@
 },
 {
     "fields": {
-        "node": null,
+        "hdd_form_factor": 7,
+        "hdd_qty": 112,
+        "template": 2,
+        "hdd_connection_type": 8
+    },
+    "model": "erp_test.servertemplatehdd",
+    "pk": 3
+},
+{
+    "fields": {
+        "hdd_form_factor": 18,
+        "hdd_qty": 122,
+        "template": 2,
+        "hdd_connection_type": 8
+    },
+    "model": "erp_test.servertemplatehdd",
+    "pk": 8
+},
+{
+    "fields": {
+        "node": 1,
         "unit_takes": 4,
         "name": "B#1",
         "slot_qty": 8,
-        "rack": null
+        "rack": 1
     },
     "model": "erp_test.basket",
     "pk": 1
 },
 {
     "fields": {
+        "node": null,
+        "unit_takes": 6,
+        "name": "Basket #2",
+        "slot_qty": 8,
+        "rack": null
+    },
+    "model": "erp_test.basket",
+    "pk": 2
+},
+{
+    "fields": {
         "node": 1,
-        "basket": 1,
+        "unit_takes": 6,
+        "name": "Basket #3",
+        "slot_qty": 8,
+        "rack": 2
+    },
+    "model": "erp_test.basket",
+    "pk": 3
+},
+{
+    "fields": {
+        "node": 1,
+        "basket": null,
         "name": "Demo Server #11",
         "template": 1,
         "rack": 1
@@ -87,11 +165,11 @@
 },
 {
     "fields": {
-        "node": null,
-        "basket": null,
-        "name": "test",
+        "node": 1,
+        "basket": 3,
+        "name": "Blade sever #1",
         "template": 1,
-        "rack": null
+        "rack": 2
     },
     "model": "erp_test.server",
     "pk": 2
@@ -99,13 +177,35 @@
 {
     "fields": {
         "node": 1,
-        "max_gap": 20,
+        "basket": 1,
+        "name": "test server",
+        "template": 2,
+        "rack": 1
+    },
+    "model": "erp_test.server",
+    "pk": 3
+},
+{
+    "fields": {
+        "node": 1,
+        "max_gap": 22,
         "name": "Rack #1",
         "total_units": 48,
         "row": 1
     },
     "model": "erp_test.rack",
     "pk": 1
+},
+{
+    "fields": {
+        "node": 1,
+        "max_gap": 36,
+        "name": "Rack #2",
+        "total_units": 48,
+        "row": 1
+    },
+    "model": "erp_test.rack",
+    "pk": 2
 },
 {
     "fields": {
@@ -119,20 +219,30 @@
 },
 {
     "fields": {
-        "basket": 1,
+        "basket": 3,
         "position": 1,
+        "rack": 2,
+        "server": null
+    },
+    "model": "erp_test.unit",
+    "pk": 5
+},
+{
+    "fields": {
+        "basket": 1,
+        "position": 24,
         "rack": 1,
         "server": null
     },
     "model": "erp_test.unit",
-    "pk": 2
+    "pk": 6
 },
 {
     "fields": {
         "kind": 1,
         "name": "Intel Xeon Haswell-EP",
-        "server": null,
-        "state": "free",
+        "server": 1,
+        "state": "installed",
         "serial_number": "1234",
         "model_name": "Xeon Haswell-EP",
         "manufacturer": "Intel"
@@ -142,9 +252,9 @@
 },
 {
     "fields": {
-        "kind": 1,
+        "kind": 3,
         "name": "RAID \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440 LSI 9271-8i SGL (LSI00330)",
-        "server": null,
+        "server": 1,
         "state": "installed",
         "serial_number": "1234123412",
         "model_name": "LSI 9271-8i SGL",
@@ -157,8 +267,8 @@
     "fields": {
         "kind": 2,
         "name": "hdd (sas)",
-        "server": null,
-        "state": "free",
+        "server": 1,
+        "state": "installed",
         "serial_number": "2919292",
         "model_name": "vash dom",
         "manufacturer": "INtul"
@@ -170,8 +280,8 @@
     "fields": {
         "kind": 2,
         "name": "hdd (sata)",
-        "server": null,
-        "state": "free",
+        "server": 2,
+        "state": "installed",
         "serial_number": "2919292",
         "model_name": "vash dom",
         "manufacturer": "INtul"
@@ -230,6 +340,19 @@
     },
     "model": "erp_test.component",
     "pk": 8
+},
+{
+    "fields": {
+        "kind": 2,
+        "name": "new component",
+        "server": null,
+        "state": "free",
+        "serial_number": "123456",
+        "model_name": "NoName",
+        "manufacturer": "Chine"
+    },
+    "model": "erp_test.component",
+    "pk": 9
 },
 {
     "fields": {
@@ -776,10 +899,10 @@
 },
 {
     "fields": {
-        "value_as_float": 19.0,
-        "option": 19,
+        "value_as_float": 8.0,
+        "option": 8,
         "component": 4,
-        "value": "19",
+        "value": "8",
         "property_group": 4,
         "property": 9
     },
@@ -809,6 +932,78 @@
     },
     "model": "erp_test.componentpropertyvalue",
     "pk": 6
+},
+{
+    "fields": {
+        "value_as_float": 100.0,
+        "option": null,
+        "component": 4,
+        "value": "100",
+        "property_group": null,
+        "property": 10
+    },
+    "model": "erp_test.componentpropertyvalue",
+    "pk": 7
+},
+{
+    "fields": {
+        "value_as_float": 15.0,
+        "option": 15,
+        "component": 4,
+        "value": "15",
+        "property_group": null,
+        "property": 11
+    },
+    "model": "erp_test.componentpropertyvalue",
+    "pk": 8
+},
+{
+    "fields": {
+        "value_as_float": 1000.0,
+        "option": null,
+        "component": 9,
+        "value": "1000",
+        "property_group": 4,
+        "property": 10
+    },
+    "model": "erp_test.componentpropertyvalue",
+    "pk": 9
+},
+{
+    "fields": {
+        "value_as_float": 17.0,
+        "option": 17,
+        "component": 9,
+        "value": "17",
+        "property_group": 4,
+        "property": 11
+    },
+    "model": "erp_test.componentpropertyvalue",
+    "pk": 10
+},
+{
+    "fields": {
+        "value_as_float": 18.0,
+        "option": 18,
+        "component": 9,
+        "value": "18",
+        "property_group": 4,
+        "property": 8
+    },
+    "model": "erp_test.componentpropertyvalue",
+    "pk": 11
+},
+{
+    "fields": {
+        "value_as_float": 19.0,
+        "option": 19,
+        "component": 9,
+        "value": "19",
+        "property_group": 4,
+        "property": 9
+    },
+    "model": "erp_test.componentpropertyvalue",
+    "pk": 12
 },
 {
     "fields": {
