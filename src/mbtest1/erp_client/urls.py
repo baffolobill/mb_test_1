@@ -78,5 +78,6 @@ urlpatterns = [
         url(r'^(?P<pk>\d+)/$', views.ComponentDetailView.as_view(), name='component-detail'),
         url(r'^(?P<pk>\d+)/update/$', views.ComponentUpdateView.as_view(), name='component-update'),
         url(r'^(?P<pk>\d+)/delete/$', views.ComponentDeleteView.as_view(), name='component-delete'),
+        url(r'^(?P<pk>\d+)/update-properties/$', views.ComponentUpdatePropertiesView.as_view(), name='component-update-properties'),
     ])),
 ]

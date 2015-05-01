@@ -875,9 +875,11 @@ class Server(NamedModel):
             limit = tmpl.hdds.filter(hdd_connection_type=hdd_connection_type,
                                      hdd_form_factor=hdd_form_factor)[0].hdd_qty
             # вначале оставим только компоненты с валидным connection_type
+            all_server_components_ids = self.components.filter(kind=component.kind).values_list('id', flat=True)
             valid_c_ids = ComponentPropertyValue.objects\
                             .values_list('component_id', flat=True)\
-                            .filter(property__name='hdd.connection_type',
+                            .filter(component__in=all_server_components_ids,
+                                    property__name='hdd.connection_type',
                                     option=hdd_connection_type)
             # теперь среди оставшихся компонентов ищем с валидным form_factor
             cnt = ComponentPropertyValue.objects\

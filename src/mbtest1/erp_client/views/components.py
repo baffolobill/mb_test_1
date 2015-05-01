@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView
 from erp_test.models import Component
 from erp_client.views.common import (
     BaseDeleteView, BaseUpdateView, BaseCreateView)
-from erp_client.forms import ComponentForm, ComponentFilterForm
+from erp_client.forms import ComponentForm, ComponentFilterForm, ComponentPropertiesForm
 
 
 class ComponentModelMixin(object):
@@ -40,3 +40,7 @@ class ComponentCreateView(ComponentModelMixin, BaseCreateView):
 
 class ComponentDeleteView(ComponentModelMixin, BaseDeleteView):
     pass
+
+
+class ComponentUpdatePropertiesView(ComponentModelMixin, BaseUpdateView):
+    form_class = ComponentPropertiesForm
