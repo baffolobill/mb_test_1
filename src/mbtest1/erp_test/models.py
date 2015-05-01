@@ -1,8 +1,8 @@
-# encoding: utf-8
+# coding: utf-8
 from collections import OrderedDict
 
 from django.db import models
-from django.db.models import F, Q
+from django.db.models import F, Q, Count
 from django.db.models.query import QuerySet
 from django.db.models.signals import post_save, pre_delete, m2m_changed
 from django.utils.encoding import python_2_unicode_compatible
@@ -14,7 +14,7 @@ from django_fsm import FSMField, transition
 from .exceptions import (
     ComponentAlreadyInstalled, ComponentNotInstalled, ComponentNotSupported,
     ComponentIsBroken, RackIsFilled, BasketIsFilled, BasketSlotIsBusy,
-    ServerHasNoFreeSlotForComponent)
+    ServerHasNoFreeSlotForComponent, RackUnitIsBusy)
 from .defaults import (
     PROPERTY_TEXT_FIELD, PROPERTY_SELECT_FIELD,
     PROPERTY_NUMBER_FIELD, PROPERTY_FIELD_CHOICES,
@@ -102,7 +102,7 @@ class RackQuerySet(QuerySet):
         """
             Valid values for 'fullness': all | empty | has_empty | filled | has_empty_height
         """
-        if fullness is None or fullness == 'all':
+        if not fullness or fullness == 'all':
             return self.all()
 
         elif fullness == 'empty':
@@ -209,6 +209,10 @@ class Rack(NamedModel):
 
         raise RackIsFilled
 
+    def validate_position(self, position):
+        if self.units.filter(position=position).exists():
+            raise RackUnitIsBusy
+
     def mount(self, server=None, basket=None, position=None, height=None):
         if height is None:
             if server:
@@ -220,6 +224,8 @@ class Rack(NamedModel):
 
         if position is None:
             position = self.find_position_of_height(height)
+
+        self.validate_position(position)
 
         unit_kwargs = {
             'rack': self,
@@ -260,10 +266,18 @@ class Unit(models.Model):
     """
         Описывает юнит
     """
-    rack = models.ForeignKey(Rack, related_name='units')
+    rack = models.ForeignKey(
+        Rack,
+        related_name='units')
     position = models.PositiveSmallIntegerField(default=1)
-    basket = models.ForeignKey('Basket', blank=True, null=True)
-    server = models.ForeignKey('Server', blank=True, null=True)
+    basket = models.ForeignKey(
+        'Basket',
+        related_name='units',
+        blank=True, null=True)
+    server = models.ForeignKey(
+        'Server',
+        related_name='units',
+        blank=True, null=True)
 
     class Meta:
         verbose_name = _('Unit')
@@ -286,18 +300,24 @@ class Unit(models.Model):
 class ComponentQuerySet(QuerySet):
 
     def of_kind(self, kind=None):
-        if kind is None:
+        if not kind:
             return self.all()
 
+        query = Q(property__name='component.kind')
         try:
-            po = PropertyOption.objects.get(property__name='component.kind', name=kind)
+            query &= Q(id=int(kind))
+        except ValueError:
+            query &= Q(name=kind)
+
+        try:
+            po = PropertyOption.objects.get(query)
         except PropertyOption.DoesNotExist:
             return self.none()
 
         return self.filter(kind=po)
 
     def with_state(self, state=None):
-        if state is None or ComponentState.show_all(state):
+        if not state or ComponentState.show_all(state):
             return self.all()
 
         if not ComponentState.is_valid(state):
@@ -746,6 +766,12 @@ class ServerTemplateHdd(models.Model):
         unique_together = ('template', 'hdd_form_factor', 'hdd_connection_type')
 
 
+class ServerQuerySet(QuerySet):
+
+    def uninstalled(self):
+        return self.filter(basket__isnull=True, rack__isnull=True)
+
+
 class Server(NamedModel):
     node = models.ForeignKey(Node,
         related_name='servers',
@@ -761,6 +787,8 @@ class Server(NamedModel):
         ServerTemplate,
         related_name='servers')
 
+    objects = PassThroughManager.for_queryset_class(ServerQuerySet)()
+
     class Meta:
         verbose_name = _('Server')
         verbose_name_plural = _('Servers')
@@ -773,6 +801,9 @@ class Server(NamedModel):
             node = self.basket.get_node()
         self.node = node
         return super(Server, self).save(*args, **kwargs)
+
+    def is_mounted(self):
+        return self.basket or self.rack
 
     @property
     def slot_takes(self):
@@ -902,6 +933,9 @@ class Server(NamedModel):
         return self.components.filter(state=ComponentState.INSTALLED)
 
     def find_all_valid_components(self):
+        """
+        FIXME: возвращаются несовместимые HDD (см. ServerTemplate.is_supported_hdd)
+        """
         tmpl = self.template
         cpu_socket_prop = Property.objects.get(name='cpu.socket')
         ram_standard_prop = Property.objects.get(name='ram.standard')
@@ -944,6 +978,16 @@ class Server(NamedModel):
         raise NotImplemented
 
 
+class BasketQuerySet(QuerySet):
+
+    def uninstalled(self):
+        return self.filter(rack__isnull=True)
+
+    def with_empty_slots(self):
+        return self.annotate(slots_taken=Count('slots'))\
+                   .filter(slots_taken__lt=F('slot_qty'))
+
+
 class Basket(NamedModel):
     node = models.ForeignKey(Node,
         related_name='baskets',
@@ -958,6 +1002,8 @@ class Basket(NamedModel):
         verbose_name=_('height in units'),
         default=1)
 
+    objects = PassThroughManager.for_queryset_class(BasketQuerySet)()
+
     class Meta:
         verbose_name = _('Basket')
         verbose_name_plural = _('Baskets')
@@ -967,11 +1013,22 @@ class Basket(NamedModel):
             self.node = self.rack.get_node()
         super(Basket, self).save(*args, **kwargs)
 
+    def has_free_slot(self):
+        taken = self.slots.count()
+        if taken < self.slot_qty:
+            return True
+        return False
+
     def get_node(self):
         return self.node
 
     def get_height(self):
         return self.unit_takes
+
+    def get_position_in_rack(self):
+        if self.rack:
+            return self.units.all()[0].position
+        return None
 
     def validate_position(self, position):
         if self.slots.filter(position=position).exists():

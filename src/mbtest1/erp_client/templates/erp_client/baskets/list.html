@@ -20,6 +20,7 @@
             <th>Room</th>
             <th>Floor</th>
             <th>Node</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -34,10 +35,13 @@
             <td><a href="{% url 'room-detail' rack.row.room.pk %}">{{ rack.row.room.name }}</a></td>
             <td><a href="{% url 'floor-detail' rack.row.room.floor.pk %}">{{ rack.row.room.floor.name }}</a></td>
             <td><a href="{% url 'node-detail' rack.node.pk %}">{{ rack.node.name }}</a></td>
+
+            <td><form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'basket-actions' object.pk %}?action=unmount_from_rack">{% csrf_token %}[<button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link">unmount</button>]</form>&nbsp;[<a href="{% url 'basket-actions' object.pk %}?action=mount_to_rack">change rack</a>]</td>
             {% endwith %}
 
             {% else %}
             <td colspan="5" class="text-center">---</td>
+            <td>[<a href="{% url 'basket-actions' object.pk %}?action=mount_to_rack">mount</a>]</td>
             {% endif %}
         </tr>
     {% endfor %}

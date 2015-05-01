@@ -43,6 +43,7 @@ urlpatterns = [
         url(r'^(?P<pk>\d+)/$', views.RackDetailView.as_view(), name='rack-detail'),
         url(r'^(?P<pk>\d+)/update/$', views.RackUpdateView.as_view(), name='rack-update'),
         url(r'^(?P<pk>\d+)/delete/$', views.RackDeleteView.as_view(), name='rack-delete'),
+        url(r'^(?P<pk>\d+)/actions/$', views.RackActionsView.as_view(), name='rack-actions'),
     ])),
 
     url(r'^baskets/', include([
@@ -51,6 +52,7 @@ urlpatterns = [
         url(r'^(?P<pk>\d+)/$', views.BasketDetailView.as_view(), name='basket-detail'),
         url(r'^(?P<pk>\d+)/update/$', views.BasketUpdateView.as_view(), name='basket-update'),
         url(r'^(?P<pk>\d+)/delete/$', views.BasketDeleteView.as_view(), name='basket-delete'),
+        url(r'^(?P<pk>\d+)/actions/$', views.BasketActionsView.as_view(), name='basket-actions'),
     ])),
 
     url(r'^servers/', include([
@@ -59,6 +61,7 @@ urlpatterns = [
         url(r'^(?P<pk>\d+)/$', views.ServerDetailView.as_view(), name='server-detail'),
         url(r'^(?P<pk>\d+)/update/$', views.ServerUpdateView.as_view(), name='server-update'),
         url(r'^(?P<pk>\d+)/delete/$', views.ServerDeleteView.as_view(), name='server-delete'),
+        url(r'^(?P<pk>\d+)/actions/$', views.ServerActionsView.as_view(), name='server-actions'),
     ])),
 
     url(r'^server-templates/', include([

@@ -8,8 +8,11 @@
         {% for unit in units %}
         <tr>
             <td width="10">{{ unit.id }}</td>
-            {% if unit.unit_takes > 0 %}
-            <td rowspan="{{ unit.unit_takes }}"{% if unit.basket %} style="height:1px;"{% endif %}>{% render_unit unit %}</td>
+            {% if unit.unit_takes == 1 %}
+            <td>{% render_unit unit %}</td>
+
+            {% elif unit.unit_takes > 1 %}
+            <td rowspan="{{ unit.unit_takes }}"{% if unit.basket %} style="height:{{ unit.unit_takes|multiply:30 }}px;"{% endif %}>{% render_unit unit %}</td>
             {% endif %}
         </tr>
         {% endfor %}

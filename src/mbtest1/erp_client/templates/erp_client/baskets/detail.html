@@ -12,7 +12,7 @@
     <tbody>
         <tr>
             <th width="100">Rack</th>
-            <td>{% if object.rack %}<a href="{% url 'rack-detail' object.rack.pk %}">{{ object.rack.name }}</a>{% else %}---{% endif %}</td>
+            <td>{% if object.rack %}<a href="{% url 'rack-detail' object.rack.pk %}">{{ object.rack.name }}</a> [<a href="{% url 'basket-actions' object.pk %}?action=mount_to_rack">change</a>]&nbsp;<form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'basket-actions' object.pk %}?action=unmount_from_rack">{% csrf_token %}[<button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link">unmount</button>]</form>{% else %}[<a href="{% url 'basket-actions' object.pk %}?action=mount_to_rack">mount</a>]{% endif %}</td>
         </tr>
         <tr>
             <th width="100">Row</th>

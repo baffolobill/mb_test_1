@@ -6,7 +6,22 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 
-from erp_test.models import Component
+from erp_test.models import Component, PropertyOption
+from erp_test.defaults import ComponentState
+
+
+class ComponentFilterForm(forms.Form):
+    def _kind_choices():
+        return PropertyOption.objects\
+            .values_list('id', 'name')\
+            .filter(property__name='component.kind')
+
+    kind = forms.ChoiceField(
+        choices=[('', 'All')]+list(_kind_choices()),
+        required=False)
+    state = forms.ChoiceField(
+        choices=[(ComponentState._ALL, 'All')]+list(ComponentState.CHOICES),
+        required=False)
 
 
 class ComponentForm(forms.ModelForm):

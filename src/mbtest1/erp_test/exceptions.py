@@ -29,6 +29,10 @@ class RackIsFilled(Base400Exception):
     default_detail = _('Rack is filled.')
 
 
+class RackUnitIsBusy(Base400Exception):
+    default_detail = _('Rack unit is busy.')
+
+
 class BasketIsFilled(Base400Exception):
     default_detail = _('Basket is filled.')
 
@@ -38,7 +42,7 @@ class BasketSlotIsBusy(Base400Exception):
 
 
 class ServerHasNoFreeSlotForComponent(Base400Exception):
-    default_detail = _('Server does not have free slot for component.')
+    default_detail = _('Server does not have free slot for the component.')
 
 
 class ComponentPlugFailed(ValidationError):

@@ -5,7 +5,18 @@
     <h1>Rack List</h1>
 </div>
 
-<a href="{% url 'rack-create' %}" class="btn btn-primary">Create Rack</a>
+<div class="row-fluid clearfix">
+    <div class="col-xs-5 pull-left">
+        <a href="{% url 'rack-create' %}" class="btn btn-primary">Create Rack</a>
+    </div>
+
+    <div class="col-xs-7 pull-right">
+        <form class="form-inline" method="get" action=".">
+            {{ filter_form }}
+            <input class="btn btn-xs btn-default" type="submit" value="Filter"/>
+        </form>
+    </div>
+</div>
 
 <hr>
 

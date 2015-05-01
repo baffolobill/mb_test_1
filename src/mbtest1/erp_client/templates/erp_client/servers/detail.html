@@ -11,8 +11,12 @@
 <table class="table table-condensed">
     <tbody>
         <tr>
+            <th width="100">Template</th>
+            <td><a href="{% url 'servertemplate-detail' object.template.pk %}">{{ object.template.name }}</a></td>
+        </tr>
+        <tr>
             <th width="100">Basket</th>
-            <td>{% if object.bakset %}<a href="{% url 'basket-detail' object.basket.pk %}">{{ object.basket.name }}</a>{% else %}---{% endif %}</td>
+            <td>{% if object.basket %}<a href="{% url 'basket-detail' object.basket.pk %}">{{ object.basket.name }}</a>{% else %}---{% endif %}</td>
         </tr>
         {% with rack=object.get_rack %}
         <tr>
@@ -36,13 +40,38 @@
             <td>{% if rack %}<a href="{% url 'node-detail' object.node.pk %}">{{ object.node.name }}</a>{% else %}---{% endif %}</td>
         </tr>
         {% endwith %}
+        <tr>
+            <th>Actions</th>
+            <td>
+                {% if object.basket %}
+                <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'basket-actions' object.basket.pk %}?action=uninstall_server&amp;server_id={{ object.pk }}">{% csrf_token %}
+                    [<button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link">uninstall</button>]
+                </form>
+                {% elif object.rack %}
+                <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'rack-actions' object.rack.pk %}?action=unmount_server&amp;server_id={{ object.pk }}">{% csrf_token %}
+                    [<button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link">unmount</button>]
+                </form>
+                {% else %}
+                [<a href="{% url 'server-actions' object.pk %}?action=mount">mount</a>]
+                {% endif %}
+            </td>
+        </tr>
     </tbody>
 </table>
 
-<h2>Component List</h2>
+<h2>Component List <small>[<a href="{% url 'server-actions' object.pk %}?action=install_component">install component</a>]</small></h2>
+
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-info{% if message.tags %} {{ message.tags }}{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+{% endif %}
+
 {% with components=object.get_installed_components %}
 {% if components %}
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-condensed table-striped">
     <thead>
         <tr>
             <th>ID</th>
@@ -51,6 +80,7 @@
             <th>Model Name</th>
             <th>Serial Number</th>
             <th>Properties</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -80,6 +110,7 @@
             {% endfor %}
             </ul>
         </td>
+        <td><form method="post" action="{% url 'server-actions' object.pk %}?action=uninstall_component&amp;component_id={{ component.pk }}">{% csrf_token %}<input class="btn btn-link" type="submit" value="uninstall"></form></td>
     </tr>
     {% endfor %}
     </tbody>

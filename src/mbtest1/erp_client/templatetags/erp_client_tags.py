@@ -11,9 +11,17 @@ from erp_test.models import (
 register = template.Library()
 
 
+@register.filter
+def multiply(value, m):
+    try:
+        return int(value) * m
+    except ValueError:
+        return ''
+
+
 @register.inclusion_tag('erp_client/templatetags/rack_scheme.html', takes_context=True)
 def render_rack_scheme(context, rack):
-    units = dict([(u, {'id': u, 'unit_takes': 1, 'server': None, 'basket': None})
+    units = dict([(u, {'id': u, 'rack': rack, 'unit_takes': 1, 'server': None, 'basket': None})
              for u in xrange(1, rack.total_units+1)])
 
     for runit in rack.units.all():

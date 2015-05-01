@@ -21,6 +21,7 @@
             <th>Room</th>
             <th>Floor</th>
             <th>Node</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -28,17 +29,8 @@
         <tr>
             <td>{{ object.pk }}</td>
             <td><a href="{% url 'server-detail' object.pk %}">{{ object.name }}</a></td>
-            {% if object.rack %}
-            {% with rack=object.rack %}
-            <td>---</td>
-            <td><a href="{% url 'rack-detail' rack.pk %}">{{ rack.name }}</a></td>
-            <td><a href="{% url 'row-detail' rack.row.pk %}">{{ rack.row.name }}</a></td>
-            <td><a href="{% url 'room-detail' rack.row.room.pk %}">{{ rack.row.room.name }}</a></td>
-            <td><a href="{% url 'floor-detail' rack.row.room.floor.pk %}">{{ rack.row.room.floor.name }}</a></td>
-            <td><a href="{% url 'node-detail' rack.node.pk %}">{{ rack.node.name }}</a></td>
-            {% endwith %}
 
-            {% elif object.basket %}
+            {% if object.basket %}
             <td><a href="{% url 'basket-detail' object.basket.pk %}">{{ object.basket.get_name }}</a></td>
             {% with rack=object.basket.rack %}
             <td><a href="{% url 'rack-detail' rack.pk %}">{{ rack.name }}</a></td>
@@ -46,10 +38,31 @@
             <td><a href="{% url 'room-detail' rack.row.room.pk %}">{{ rack.row.room.name }}</a></td>
             <td><a href="{% url 'floor-detail' rack.row.room.floor.pk %}">{{ rack.row.room.floor.name }}</a></td>
             <td><a href="{% url 'node-detail' rack.node.pk %}">{{ rack.node.name }}</a></td>
+            <td>
+                <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'basket-actions' object.basket.pk %}?action=uninstall_server&amp;server_id={{ object.pk }}">{% csrf_token %}
+                    [<button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link">uninstall</button>]
+                </form>
+            </td>
+            {% endwith %}
+
+            {% elif object.rack %}
+            {% with rack=object.rack %}
+            <td>---</td>
+            <td><a href="{% url 'rack-detail' rack.pk %}">{{ rack.name }}</a></td>
+            <td><a href="{% url 'row-detail' rack.row.pk %}">{{ rack.row.name }}</a></td>
+            <td><a href="{% url 'room-detail' rack.row.room.pk %}">{{ rack.row.room.name }}</a></td>
+            <td><a href="{% url 'floor-detail' rack.row.room.floor.pk %}">{{ rack.row.room.floor.name }}</a></td>
+            <td><a href="{% url 'node-detail' rack.node.pk %}">{{ rack.node.name }}</a></td>
+            <td>
+                <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'rack-actions' rack.pk %}?action=unmount_server&amp;server_id={{ object.pk }}">{% csrf_token %}
+                    [<button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link">unmount</button>]
+                </form>
+            </td>
             {% endwith %}
 
             {% else %}
-            <td colspan="5" class="text-center">---</td>
+            <td colspan="6" class="text-center">---</td>
+            <td>[<a href="{% url 'server-actions' object.pk %}?action=mount">mount</a>]</td>
             {% endif %}
         </tr>
     {% endfor %}
