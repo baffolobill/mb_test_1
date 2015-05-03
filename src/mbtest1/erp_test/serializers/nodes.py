@@ -7,11 +7,7 @@ class NodeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Node
-        fields = ('id', 'name', 'address')
-
-
-class NodeServerSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Server
-        fields = ('id', 'name', 'template', 'rack')
+        fields = ('id', 'name', 'address', 'servers')
+        extra_kwargs = {
+            'servers': {'read_only': True},
+        }
