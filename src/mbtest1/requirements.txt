@@ -8,3 +8,6 @@ django-fsm==2.2.0
 
 # erp_client
 git+https://github.com/maraujop/django-crispy-forms.git
+
+# erp_client_ember
+git+https://github.com/ottoyiu/django-cors-headers.git

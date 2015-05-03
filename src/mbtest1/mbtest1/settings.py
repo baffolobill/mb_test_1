@@ -25,7 +25,7 @@ SECRET_KEY = 'uu@12k8y6m_+_%xgyf()(7hhyfcl$%@=6l6av10*$40rp5dn*d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -43,10 +43,12 @@ INSTALLED_APPS = (
     # client requirements
     'erp_client',
     'crispy_forms',
+    'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -109,6 +111,9 @@ STATIC_URL = '/static/'
 
 # erp_client settings
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# erp_client_emberjs
+CORS_ORIGIN_ALLOW_ALL = True
 
 try:
     from local_settings import *
