@@ -9,6 +9,6 @@
 
 {% render_breadcrumbs object %}
 <p>Where do you want to mount the Server?</p>
-<a href="{% url 'server-actions' object.pk %}?action=install_server&amp;position={{ position|default:'' }}">Basket</a> OR
-<a href="{% url 'server-actions' object.pk %}?action=mount_server&amp;position={{ position|default:'' }}">Rack</a>
+<a href="{% url 'client:server-actions' object.pk %}?action=install_server&amp;position={{ position|default:'' }}">Basket</a> OR
+<a href="{% url 'client:server-actions' object.pk %}?action=mount_server&amp;position={{ position|default:'' }}">Rack</a>
 {% endblock %}

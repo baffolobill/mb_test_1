@@ -113,7 +113,29 @@ STATIC_URL = '/static/'
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # erp_client_emberjs
+APPEND_SLASH = False
 CORS_ORIGIN_ALLOW_ALL = True
+REST_FRAMEWORK = {
+    'PAGINATE_BY': 10,
+    'PAGINATE_BY_PARAM': 'page_size',
+    'MAX_PAGINATE_BY': 100,
+    'URL_FIELD_NAME': 'href',
+    # DRF v3.1+
+    #'DEFAULT_PAGINATION_CLASS':
+    #    'rest_framework_ember.pagination.PageNumberPagination',
+    'DEFAULT_PARSER_CLASSES': (
+        "rest_framework_json_api.parsers.JsonApiParser",
+        #'rest_framework_ember.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser'
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        "rest_framework_json_api.renderers.JsonApiRenderer",
+        #'rest_framework_ember.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+}
+
 
 try:
     from local_settings import *

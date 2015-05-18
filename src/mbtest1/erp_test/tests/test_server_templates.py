@@ -16,7 +16,7 @@ class TestServerTemplateCRUD(APITestCase):
     fixtures = ['erp_test/tests/fixtures/server_templates_crud.json',]
 
     def test_server_template_list(self):
-        url = reverse('server-template-list')
+        url = reverse('api:server-template-list')
         response = self.client.get(url, format='json')
         data = [{'id': obj.id, 'name': obj.name, 'cpu_socket': obj.cpu_socket_id,
                  'cpu_qty': obj.cpu_qty, 'ram_standard': obj.ram_standard_id,
@@ -28,7 +28,7 @@ class TestServerTemplateCRUD(APITestCase):
         self.assertEqual(response.data, data)
 
     def test_server_template_detail(self):
-        url = reverse('server-template-detail', args=[1])
+        url = reverse('api:server-template-detail', args=[1])
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'id': 1, 'name': 'Base Server', 'cpu_socket': 4,
@@ -36,7 +36,7 @@ class TestServerTemplateCRUD(APITestCase):
                  'hdds': [{'hdd_qty': 3, 'hdd_form_factor': 7, 'hdd_connection_type': 8}]})
 
     def test_server_template_create(self):
-        url = reverse('server-template-list')
+        url = reverse('api:server-template-list')
         data = {'name': 'Create Server Template via API', 'cpu_socket': 4,
                  'cpu_qty': 1, 'ram_standard': 6, 'ram_qty': 2, 'unit_takes': 10,
                  'hdds': [{'hdd_qty': 99, 'hdd_form_factor': 7, 'hdd_connection_type': 8}]}
@@ -48,21 +48,21 @@ class TestServerTemplateCRUD(APITestCase):
         self.assertEqual(response.data, have_to_return)
 
     def test_server_template_update(self):
-        url = reverse('server-template-detail', args=[1])
+        url = reverse('api:server-template-detail', args=[1])
         data = {'name': 'ST #4'}
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['name'], data['name'])
 
     def test_server_template_update_hdds(self):
-        url = reverse('server-template-detail', args=[1])
+        url = reverse('api:server-template-detail', args=[1])
         data = {'hdds': [{'hdd_qty': 999, 'hdd_form_factor': 7, 'hdd_connection_type': 8}]}
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['hdds'], data['hdds'])
 
     def test_server_template_delete(self):
-        url = reverse('server-template-detail', args=[1])
+        url = reverse('api:server-template-detail', args=[1])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(ServerTemplate.objects.count(), 0)

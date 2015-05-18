@@ -5,7 +5,7 @@
     <h1>Server Template List</h1>
 </div>
 
-<a href="{% url 'servertemplate-create' %}" class="btn btn-primary">Create Server Template</a>
+<a href="{% url 'client:servertemplate-create' %}" class="btn btn-primary">Create Server Template</a>
 
 <hr>
 
@@ -21,7 +21,7 @@
     {% for object in object_list %}
         <tr>
             <td>{{ object.pk }}</td>
-            <td><a href="{% url 'servertemplate-detail' object.pk %}">{{ object.name }}</a></td>
+            <td><a href="{% url 'client:servertemplate-detail' object.pk %}">{{ object.name }}</a></td>
         </tr>
     {% endfor %}
     </tbody>

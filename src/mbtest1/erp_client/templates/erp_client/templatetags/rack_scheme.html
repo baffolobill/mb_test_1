@@ -3,7 +3,7 @@
 <table class="table table-bordered table-condensed pull-left" style="width:200px; zoom:0.5; margin-right:10px;">
     <tbody>
         <tr>
-            <th colspan="2"><a href="{% url 'rack-detail' rack.pk %}">{{ rack.name }}</a></th>
+            <th colspan="2"><a href="{% url 'client:rack-detail' rack.pk %}">{{ rack.name }}</a></th>
         </tr>
         {% for unit in units %}
         <tr>

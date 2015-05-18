@@ -2,10 +2,10 @@
 
 {% if unit.server %}
 <div style="width:100%;height:100%;overflow:auto;padding-left:5px;" class="bg-info">
-    <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'rack-actions' unit.server.rack.pk %}?action=uninstall_server&amp;server_id={{ unit.server.pk }}">{% csrf_token %}
+    <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'client:rack-actions' unit.server.rack.pk %}?action=uninstall_server&amp;server_id={{ unit.server.pk }}">{% csrf_token %}
         <button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link"><i class="fa fa-times text-danger" title="Uninstall the server"></i></button>
     </form> |
-    <a href="{% url 'server-detail' unit.server.pk %}" title="Go to the Server detail page.">{{ unit.server.get_name }}</a>
+    <a href="{% url 'client:server-detail' unit.server.pk %}" title="Go to the Server detail page.">{{ unit.server.get_name }}</a>
 </div>
 
 {% elif unit.basket %}
@@ -13,10 +13,10 @@
     <tbody>
         <tr>
             <td style="padding: 0px 3px;line-height:20px;height:20px;" colspan="{{ unit.basket.slot_qty }}">
-                <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'basket-actions' unit.basket.pk %}?action=unmount_from_rack&amp;rack_id={{ unit.rack.pk }}">{% csrf_token %}
+                <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'client:basket-actions' unit.basket.pk %}?action=unmount_from_rack&amp;rack_id={{ unit.rack.pk }}">{% csrf_token %}
                     <button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link"><i class="fa fa-times text-danger" title="Unmount from the rack"></i></button>
                 </form>
-                <a href="{% url 'basket-detail' unit.basket.pk %}">{{ unit.basket.get_name }}</a>
+                <a href="{% url 'client:basket-detail' unit.basket.pk %}">{{ unit.basket.get_name }}</a>
             </td>
         </tr>
         <tr>
@@ -29,16 +29,16 @@
             <td style="padding:2px;text-align:center;height:100px;">
             {% if slot.server %}
                 <div style="width:100%;height:100%;overflow:auto;" class="bg-info">
-                    <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'basket-actions' unit.basket.pk %}?action=uninstall_server&amp;server_id={{ slot.server.pk }}">{% csrf_token %}
+                    <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'client:basket-actions' unit.basket.pk %}?action=uninstall_server&amp;server_id={{ slot.server.pk }}">{% csrf_token %}
                         <button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link"><i class="fa fa-times text-danger" title="Uninstall the server"></i></button>
                     </form>
                     <br/>
-                    <a href="{% url 'server-detail' slot.server.pk %}" title="Go to the Server detail page."><i class="fa fa-server"></i></a>
+                    <a href="{% url 'client:server-detail' slot.server.pk %}" title="Go to the Server detail page."><i class="fa fa-server"></i></a>
                 </div>
 
             {% else %}
                 <div style="width:100%;height:100%;overflow:auto;" class="bg-success">
-                    <a href="{% url 'basket-actions' unit.basket.pk %}?action=install_server&amp;position={{ slot.id }}" title="Install server"><i class="text-primary fa fa-plus"></i></a>
+                    <a href="{% url 'client:basket-actions' unit.basket.pk %}?action=install_server&amp;position={{ slot.id }}" title="Install server"><i class="text-primary fa fa-plus"></i></a>
                 </div>
             {% endif %}
             </td>
@@ -49,6 +49,6 @@
 
 {% else %}
 <div style="width:100%;height:100%;overflow:auto;padding-left:5px;" class="bg-success">
-    <a href="{% url 'rack-actions' unit.rack.pk %}?action=mount&amp;position={{ unit.id }}" title="Install server/basket"><i class="text-primary fa fa-plus"></i></a>
+    <a href="{% url 'client:rack-actions' unit.rack.pk %}?action=mount&amp;position={{ unit.id }}" title="Install server/basket"><i class="text-primary fa fa-plus"></i></a>
 </div>
 {% endif %}

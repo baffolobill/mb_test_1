@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Rack Detail <small>[<a href="{% url 'rack-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'rack-delete' object.pk %}">delete</a>]</small></h1>
+    <h1>Rack Detail <small>[<a href="{% url 'client:rack-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'client:rack-delete' object.pk %}">delete</a>]</small></h1>
 </div>
 
 {% render_breadcrumbs object %}
@@ -12,27 +12,27 @@
     <tbody>
         <tr>
             <th width="100">Row</th>
-            <td><a href="{% url 'row-detail' object.row.pk %}">{{ object.row.name }}</a></td>
+            <td><a href="{% url 'client:row-detail' object.row.pk %}">{{ object.row.name }}</a></td>
         </tr>
         <tr>
             <th width="100">Room</th>
-            <td><a href="{% url 'room-detail' object.row.room.pk %}">{{ object.row.room.name }}</a></td>
+            <td><a href="{% url 'client:room-detail' object.row.room.pk %}">{{ object.row.room.name }}</a></td>
         </tr>
         <tr>
             <th width="100">Floor</th>
-            <td><a href="{% url 'floor-detail' object.row.room.floor.pk %}">{{ object.row.room.floor.name }}</a></td>
+            <td><a href="{% url 'client:floor-detail' object.row.room.floor.pk %}">{{ object.row.room.floor.name }}</a></td>
         </tr>
         <tr>
             <th width="100">Node</th>
-            <td><a href="{% url 'node-detail' object.node.pk %}">{{ object.node.name }}</a></td>
+            <td><a href="{% url 'client:node-detail' object.node.pk %}">{{ object.node.name }}</a></td>
         </tr>
         <tr>
             <th>Servers</th>
-            <td>{% for obj in object.servers.all %}<a href="{% url 'server-detail' obj.pk %}">{{ obj.name }}</a>{% if obj.basket %} (<a href="{% url 'basket-detail' obj.basket.pk %}">{{ obj.basket.get_name }}</a>){% endif %}{% if not forloop.last %},{% endif %}{% empty %}No servers assigned yet.{% endfor %}</td>
+            <td>{% for obj in object.servers.all %}<a href="{% url 'client:server-detail' obj.pk %}">{{ obj.name }}</a>{% if obj.basket %} (<a href="{% url 'client:basket-detail' obj.basket.pk %}">{{ obj.basket.get_name }}</a>){% endif %}{% if not forloop.last %},{% endif %}{% empty %}No servers assigned yet.{% endfor %}</td>
         </tr>
         <tr>
             <th>Baskets</th>
-            <td>{% for obj in object.baskets.all %}<a href="{% url 'basket-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% empty %}No baskets assigned yet.{% endfor %}</td>
+            <td>{% for obj in object.baskets.all %}<a href="{% url 'client:basket-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% empty %}No baskets assigned yet.{% endfor %}</td>
         </tr>
     </tbody>
 </table>

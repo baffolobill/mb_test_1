@@ -6,22 +6,25 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ..models import Basket, Server, Rack
-from ..serializers import BasketSerializer, BasketServerSerializer
+from ..serializers import BasketSerializer, NodeServerSerializer
 
 
 class BasketList(generics.ListCreateAPIView):
     queryset = Basket.objects.all()
     serializer_class = BasketSerializer
+    resource_name = 'basket'
 
 
 class BasketDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Basket.objects.all()
     serializer_class = BasketSerializer
+    resource_name = 'basket'
 
 
 class BasketServerList(generics.ListAPIView):
     queryset = Basket.objects.all()
-    serializer_class = BasketServerSerializer
+    serializer_class = NodeServerSerializer
+    resource_name = 'server'
 
     def get_queryset(self):
         basket = Basket.objects.get(pk=self.kwargs['pk'])

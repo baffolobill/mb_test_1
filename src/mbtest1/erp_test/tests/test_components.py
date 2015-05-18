@@ -21,7 +21,7 @@ class TestComponentsCRUD(APITestCase):
     fixtures = ['erp_test/tests/fixtures/components_crud.json',]
 
     def test_component_list(self):
-        url = reverse('component-list')
+        url = reverse('api:component-list')
         response = self.client.get(url, format='json')
         prop_value = lambda v: {'id': v.option_id, 'name': v.option.name} if v.option else v.get_value()
         data = [{'id': obj.id, 'name': obj.name, 'manufacturer': obj.manufacturer,
@@ -40,7 +40,7 @@ class TestComponentsCRUD(APITestCase):
         self.assertEqual(response.data, data)
 
     def test_component_list_of_kind(self):
-        url = reverse('component-list-of_kind', args=['cpu'])
+        url = reverse('api:component-list-of_kind', args=['cpu'])
         response = self.client.get(url, format='json')
         prop_value = lambda v: {'id': v.option_id, 'name': v.option.name} if v.option else v.get_value()
         data = [{'id': obj.id, 'name': obj.name, 'manufacturer': obj.manufacturer,
@@ -59,7 +59,7 @@ class TestComponentsCRUD(APITestCase):
         self.assertEqual(response.data, data)
 
     def test_component_detail(self):
-        url = reverse('component-detail', args=[1])
+        url = reverse('api:component-detail', args=[1])
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data,
@@ -88,7 +88,7 @@ class TestComponentsCRUD(APITestCase):
                 })
 
     def test_component_create_valid(self):
-        url = reverse('component-list')
+        url = reverse('api:component-list')
         data = {
             'name': 'Intel Outside',
             'state': 'free',
@@ -128,7 +128,7 @@ class TestComponentsCRUD(APITestCase):
         self.assertEqual(response.data, have_to_return)
 
     def test_component_create__kind_required(self):
-        url = reverse('component-list')
+        url = reverse('api:component-list')
         data = {
             'name': 'Intel Outside',
             'state': 'free',
@@ -143,7 +143,7 @@ class TestComponentsCRUD(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_component_create_of_kind(self):
-        url = reverse('component-list-of_kind', args=['cpu'])
+        url = reverse('api:component-list-of_kind', args=['cpu'])
         data = {
             'name': 'Intel Outside',
             'state': 'free',
@@ -182,14 +182,14 @@ class TestComponentsCRUD(APITestCase):
         self.assertEqual(response.data, have_to_return)
 
     def test_component_update(self):
-        url = reverse('component-detail', args=[2])
+        url = reverse('api:component-detail', args=[2])
         data = {'state': 'installed'}
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['state'], data['state'])
 
     def test_component_delete(self):
-        url = reverse('component-detail', args=[3])
+        url = reverse('api:component-detail', args=[3])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Component.objects.count(), 3)
@@ -207,14 +207,14 @@ class TestComponentActions(APITestCase):
     fixtures = ['erp_test/tests/fixtures/component_actions.json']
 
     def test_list_all_free_components(self):
-        url = reverse('component-list')
+        url = reverse('api:component-list')
         url = "{}?state=free".format(url)
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Component.objects.with_state(ComponentState.FREE).count(), 4)
 
     def test_list_free_components_of_kind(self):
-        url = reverse('component-list')
+        url = reverse('api:component-list')
         url = "{}?state=free".format(url)
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)

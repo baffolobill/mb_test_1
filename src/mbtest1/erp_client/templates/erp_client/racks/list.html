@@ -7,7 +7,7 @@
 
 <div class="row-fluid clearfix">
     <div class="col-xs-5 pull-left">
-        <a href="{% url 'rack-create' %}" class="btn btn-primary">Create Rack</a>
+        <a href="{% url 'client:rack-create' %}" class="btn btn-primary">Create Rack</a>
     </div>
 
     <div class="col-xs-7 pull-right">
@@ -36,11 +36,11 @@
     {% for object in object_list %}
         <tr>
             <td>{{ object.pk }}</td>
-            <td><a href="{% url 'rack-detail' object.pk %}">{{ object.name }}</a></td>
-            <td><a href="{% url 'row-detail' object.row.pk %}">{{ object.row.name }}</a></td>
-            <td><a href="{% url 'room-detail' object.row.room.pk %}">{{ object.row.room.name }}</a></td>
-            <td><a href="{% url 'floor-detail' object.row.room.floor.pk %}">{{ object.row.room.floor.name }}</a></td>
-            <td><a href="{% url 'node-detail' object.node.pk %}">{{ object.node.name }}</a></td>
+            <td><a href="{% url 'client:rack-detail' object.pk %}">{{ object.name }}</a></td>
+            <td><a href="{% url 'client:row-detail' object.row.pk %}">{{ object.row.name }}</a></td>
+            <td><a href="{% url 'client:room-detail' object.row.room.pk %}">{{ object.row.room.name }}</a></td>
+            <td><a href="{% url 'client:floor-detail' object.row.room.floor.pk %}">{{ object.row.room.floor.name }}</a></td>
+            <td><a href="{% url 'client:node-detail' object.node.pk %}">{{ object.node.name }}</a></td>
         </tr>
     {% endfor %}
     </tbody>

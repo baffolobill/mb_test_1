@@ -5,7 +5,7 @@
     <h1>Row List</h1>
 </div>
 
-<a href="{% url 'row-create' %}" class="btn btn-primary">Create Row</a>
+<a href="{% url 'client:row-create' %}" class="btn btn-primary">Create Row</a>
 
 <hr>
 
@@ -24,10 +24,10 @@
     {% for object in object_list %}
         <tr>
             <td>{{ object.pk }}</td>
-            <td><a href="{% url 'row-detail' object.pk %}">{{ object.name }}</a></td>
-            <td><a href="{% url 'room-detail' object.room.pk %}">{{ object.room.name }}</a></td>
-            <td><a href="{% url 'floor-detail' object.room.floor.pk %}">{{ object.room.floor.name }}</a></td>
-            <td><a href="{% url 'node-detail' object.room.floor.node.pk %}">{{ object.room.floor.node.name }}</a></td>
+            <td><a href="{% url 'client:row-detail' object.pk %}">{{ object.name }}</a></td>
+            <td><a href="{% url 'client:room-detail' object.room.pk %}">{{ object.room.name }}</a></td>
+            <td><a href="{% url 'client:floor-detail' object.room.floor.pk %}">{{ object.room.floor.name }}</a></td>
+            <td><a href="{% url 'client:node-detail' object.room.floor.node.pk %}">{{ object.room.floor.node.name }}</a></td>
         </tr>
     {% endfor %}
     </tbody>

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import Property, PropertyGroup
+from ..models import Property, PropertyGroup, PropertyOption
 
 
 class PropertySerializer(serializers.ModelSerializer):
@@ -25,3 +25,10 @@ class PropertyGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = PropertyGroup
         fields = ('id', 'name', 'properties')
+
+
+class PropertyOptionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PropertyOption
+        fields = ('id', 'name')

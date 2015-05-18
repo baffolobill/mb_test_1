@@ -44,7 +44,7 @@ class TestRowCRUD(APITestCase):
             Row.objects.create(**item)
 
     def test_row_list(self):
-        url = reverse('row-list')
+        url = reverse('api:row-list')
         response = self.client.get(url, format='json')
         data = [{'id': obj.id, 'name': obj.name, 'room': obj.room_id}
                 for obj in Row.objects.all()]
@@ -52,27 +52,27 @@ class TestRowCRUD(APITestCase):
         self.assertEqual(response.data, data)
 
     def test_row_detail(self):
-        url = reverse('row-detail', args=[1])
+        url = reverse('api:row-detail', args=[1])
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'id': 1, 'name': '#1', 'room': 1})
 
     def test_row_create(self):
-        url = reverse('row-list')
+        url = reverse('api:row-list')
         data = {'name': 'baz', 'room': 3}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, {'id': 4, 'name': 'baz', 'room': 3})
 
     def test_row_update(self):
-        url = reverse('row-detail', args=[2])
+        url = reverse('api:row-detail', args=[2])
         data = {'room': 3}
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['room'], data['room'])
 
     def test_row_delete(self):
-        url = reverse('row-detail', args=[3])
+        url = reverse('api:row-detail', args=[3])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Row.objects.count(), 2)

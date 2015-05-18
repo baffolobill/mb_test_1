@@ -18,7 +18,7 @@ class TestPropertiesCRUD(APITestCase):
     fixtures = ['erp_test/tests/fixtures/properties_crud.json',]
 
     def test_property_list(self):
-        url = reverse('property-list')
+        url = reverse('api:property-list')
         response = self.client.get(url, format='json')
         data = [{'id': obj.id, 'name': obj.name, 'title': obj.title,
                  'required': obj.required, 'position': obj.position,
@@ -28,20 +28,20 @@ class TestPropertiesCRUD(APITestCase):
         self.assertEqual(response.data, data)
 
     def test_property_create(self):
-        url = reverse('property-list')
+        url = reverse('api:property-list')
         data = {'name': 'test', 'title': 'Test', 'required': False,
                 'position': 999, 'type': PROPERTY_TEXT_FIELD}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_server_update(self):
-        url = reverse('property-detail', args=[1])
+        url = reverse('api:property-detail', args=[1])
         data = {'name': 'new server'}
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_server_delete(self):
-        url = reverse('property-detail', args=[1])
+        url = reverse('api:property-detail', args=[1])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
@@ -50,7 +50,7 @@ class TestPropertyGroupCRUD(APITestCase):
     fixtures = ['erp_test/tests/fixtures/property_groups.json',]
 
     def test_property_group_list(self):
-        url = reverse('property-group-list')
+        url = reverse('api:property-group-list')
         data = [{'id': obj.id, 'name': obj.name}
                 for obj in PropertyGroup.objects.all()]
         response = self.client.get(url, format='json')
@@ -58,7 +58,7 @@ class TestPropertyGroupCRUD(APITestCase):
         self.assertEqual(response.data, data)
 
     def test_property_group_detail_by_pk(self):
-        url = reverse('property-group-detail', args=[2])
+        url = reverse('api:property-group-detail', args=[2])
         data = {'id': 2, 'name': 'cpu',
                 'properties': [
                     {'id': 2, 'name': 'cpu.socket',
@@ -70,7 +70,7 @@ class TestPropertyGroupCRUD(APITestCase):
         self.assertEqual(response.data, data)
 
     def test_property_group_detail_by_name(self):
-        url = reverse('property-group-detail-by_name', args=['cpu'])
+        url = reverse('api:property-group-detail-by_name', args=['cpu'])
         data = {'id': 2, 'name': 'cpu',
                 'properties': [
                     {'id': 2, 'name': 'cpu.socket',

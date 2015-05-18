@@ -39,7 +39,7 @@ class TestRoomCRUD(APITestCase):
             Room.objects.create(**item)
 
     def test_room_list(self):
-        url = reverse('room-list')
+        url = reverse('api:room-list')
         response = self.client.get(url, format='json')
         data = [{'id': obj.id, 'name': obj.name, 'floor': obj.floor_id}
                 for obj in Room.objects.all()]
@@ -47,27 +47,27 @@ class TestRoomCRUD(APITestCase):
         self.assertEqual(response.data, data)
 
     def test_room_detail(self):
-        url = reverse('room-detail', args=[1])
+        url = reverse('api:room-detail', args=[1])
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'id': 1, 'name': '#1', 'floor': 1})
 
     def test_room_create(self):
-        url = reverse('room-list')
+        url = reverse('api:room-list')
         data = {'name': 'baz', 'floor': 3}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, {'id': 4, 'name': 'baz', 'floor': 3})
 
     def test_room_update(self):
-        url = reverse('room-detail', args=[2])
+        url = reverse('api:room-detail', args=[2])
         data = {'floor': 3}
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['floor'], data['floor'])
 
     def test_room_delete(self):
-        url = reverse('room-detail', args=[3])
+        url = reverse('api:room-detail', args=[3])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Room.objects.count(), 2)

@@ -8,17 +8,45 @@ from ..models import (
     Component, PropertyOption, PropertyGroup,
     ComponentPropertyValue, Property)
 from ..defaults import ComponentState
+from .servers import ServerSerializer
+
+class ComponentPropertySerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()
+    title = serializers.CharField()
+    type = serializers.CharField()
+    value = serializers.CharField()
+
+    #def to_representation(self, instance):
+    #    pass
+
+    #def to_internal_value(self, data):
+    #    pass
+
+    def create(self, validated_data):
+        pass
+
+    def update(self, instance, validated_data):
+        pass
 
 
-class ComponentSerializer(serializers.ModelSerializer):
+class ComponentKindSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PropertyOption
+        fields = ('id', 'name')
+
+
+class ComponentSerializer(serializers.HyperlinkedModelSerializer):
+    kind = ComponentKindSerializer(many=False, read_only=False)
+    server = ServerSerializer(many=False, read_only=True)
 
     class Meta:
         model = Component
         fields = ('id', 'name', 'manufacturer', 'model_name',
-                  'serial_number', 'kind', 'state', 'server')
+                  'serial_number', 'kind', 'state', 'server', 'href')
         extra_kwargs = {
             'kind': {'required': False},
-            'server': {'read_only': True},
+            'href': {'read_only': True},
         }
 
     def _get_properties_for_kind(self, kind):

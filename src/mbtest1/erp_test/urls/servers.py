@@ -7,15 +7,15 @@ urlpatterns = [
         views.ServerList.as_view(),
         name='server-list'),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^/(?P<pk>\d+)/?$',
         views.ServerDetail.as_view(),
         name='server-detail'),
 
-    url(r'^(?P<pk>\d+)/components/$',
+    url(r'^/(?P<pk>\d+)/components/?$',
         views.ServerComponentList.as_view(),
         name='server-component-list'),
 
-    url(r'^(?P<pk>\d+)/actions/$',
+    url(r'^/(?P<pk>\d+)/actions/?$',
         views.ServerActions.as_view(),
         name='server-actions'),
 ]

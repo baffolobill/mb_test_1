@@ -13,17 +13,20 @@ from ..exceptions import ComponentPlugFailed
 class ServerList(generics.ListCreateAPIView):
     queryset = Server.objects.all()
     serializer_class = ServerSerializer
+    resource_name = 'server'
 
 
 class ServerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Server.objects.all()
     serializer_class = ServerSerializer
+    resource_name = 'server'
 
 
 class ServerComponentList(mixins.DestroyModelMixin,
                           generics.ListCreateAPIView):
     queryset = Server.objects
     serializer_class = ComponentSerializer
+    resource_name = 'component'
 
     def get_queryset(self):
         server = self.queryset.get(pk=self.kwargs['pk'])

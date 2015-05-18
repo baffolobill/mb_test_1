@@ -52,7 +52,7 @@ class TestRackCRUD(APITestCase):
             Rack.objects.create(**item)
 
     def test_rack_list(self):
-        url = reverse('rack-list')
+        url = reverse('api:rack-list')
         response = self.client.get(url, format='json')
         data = [{'id': obj.id, 'name': obj.name, 'row': obj.row_id,
                  'total_units': obj.total_units, 'max_gap': obj.max_gap,
@@ -62,14 +62,14 @@ class TestRackCRUD(APITestCase):
         self.assertEqual(response.data, data)
 
     def test_rack_detail(self):
-        url = reverse('rack-detail', args=[1])
+        url = reverse('api:rack-detail', args=[1])
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'id': 1, 'name': 'rack #1', 'row': 1,
                                          'total_units': 48, 'max_gap': 48, 'node': 1})
 
     def test_rack_create(self):
-        url = reverse('rack-list')
+        url = reverse('api:rack-list')
         data = {'name': 'baz', 'row': 2, 'node': 1, 'total_units': 48}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -78,14 +78,14 @@ class TestRackCRUD(APITestCase):
                           'total_units': 48, 'max_gap': 48})
 
     def test_rack_update(self):
-        url = reverse('rack-detail', args=[2])
+        url = reverse('api:rack-detail', args=[2])
         data = {'row': 1}
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['row'], data['row'])
 
     def test_rack_delete(self):
-        url = reverse('rack-detail', args=[3])
+        url = reverse('api:rack-detail', args=[3])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Rack.objects.count(), 2)
@@ -230,42 +230,42 @@ class TestRackServer(APITestCase):
     fixtures = ['erp_test/tests/fixtures/rack_servers.json',]
 
     def test_rack_fullness__all(self):
-        url = reverse('rack-list')
+        url = reverse('api:rack-list')
         url = "{}?fullness=all".format(url)
         response = self.client.get(url, format='json')
         # тупая проверка количеством
         self.assertEqual(len(response.data), 4)
 
     def test_rack_fullness__empty(self):
-        url = reverse('rack-list')
+        url = reverse('api:rack-list')
         url = "{}?fullness=empty".format(url)
         response = self.client.get(url, format='json')
         # тупая проверка количеством
         self.assertEqual(len(response.data), 1)
 
     def test_rack_fullness__has_empty(self):
-        url = reverse('rack-list')
+        url = reverse('api:rack-list')
         url = "{}?fullness=has_empty".format(url)
         response = self.client.get(url, format='json')
         # тупая проверка количеством
         self.assertEqual(len(response.data), 3)
 
     def test_rack_fullness__filled(self):
-        url = reverse('rack-list')
+        url = reverse('api:rack-list')
         url = "{}?fullness=filled".format(url)
         response = self.client.get(url, format='json')
         # тупая проверка количеством
         self.assertEqual(len(response.data), 1)
 
     def test_rack_fullness__has_empty_height__ret_1(self):
-        url = reverse('rack-list')
+        url = reverse('api:rack-list')
         url = "{}?fullness=has_empty_height&height=3".format(url)
         response = self.client.get(url, format='json')
         # тупая проверка количеством
         self.assertEqual(len(response.data), 2)
 
     def test_rack_fullness__has_empty_height__ret_0(self):
-        url = reverse('rack-list')
+        url = reverse('api:rack-list')
         url = "{}?fullness=has_empty_height&height=50".format(url)
         response = self.client.get(url, format='json')
         # тупая проверка количеством

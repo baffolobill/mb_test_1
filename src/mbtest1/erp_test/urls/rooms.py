@@ -7,7 +7,11 @@ urlpatterns = [
         views.RoomList.as_view(),
         name='room-list'),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^/(?P<pk>\d+)/?$',
         views.RoomDetail.as_view(),
         name='room-detail'),
+
+    url(r'^/(?P<pk>\d+)/servers/?$',
+        views.RoomServerList.as_view(),
+        name='room-server-list'),
 ]

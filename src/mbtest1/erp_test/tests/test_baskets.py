@@ -22,7 +22,7 @@ class TestBasketCRUD(APITestCase):
             Basket.objects.create(**item)
 
     def test_basket_list(self):
-        url = reverse('basket-list')
+        url = reverse('api:basket-list')
         response = self.client.get(url, format='json')
         data = [{'id': obj.id, 'name': obj.name, 'slot_qty': obj.slot_qty, 'unit_takes': obj.unit_takes}
                 for obj in Basket.objects.all()]
@@ -30,13 +30,13 @@ class TestBasketCRUD(APITestCase):
         self.assertEqual(response.data, data)
 
     def test_basket_detail(self):
-        url = reverse('basket-detail', args=[1])
+        url = reverse('api:basket-detail', args=[1])
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'id': 1, 'name': 'basket #1', 'slot_qty': 8, 'unit_takes': 4})
 
     def test_basket_create(self):
-        url = reverse('basket-list')
+        url = reverse('api:basket-list')
         data = {'name': 'baz', 'slot_qty': 8, 'unit_takes': 4}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -44,14 +44,14 @@ class TestBasketCRUD(APITestCase):
                          {'id': 4, 'name': 'baz', 'slot_qty': 8, 'unit_takes': 4})
 
     def test_basket_update(self):
-        url = reverse('basket-detail', args=[2])
+        url = reverse('api:basket-detail', args=[2])
         data = {'name': 'basket #4'}
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['name'], data['name'])
 
     def test_basket_delete(self):
-        url = reverse('basket-detail', args=[3])
+        url = reverse('api:basket-detail', args=[3])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Basket.objects.count(), 2)
@@ -136,7 +136,7 @@ class TestBasketActions(APITestCase):
     fixtures = ['erp_test/tests/fixtures/basket_actions.json']
 
     def test_action_install_server(self):
-        url = reverse('basket-actions', args=[1])
+        url = reverse('api:basket-actions', args=[1])
         data = {'type': 'install_server', 'server_id': 1}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -145,7 +145,7 @@ class TestBasketActions(APITestCase):
         self.assertEqual(basket.slots.count(), 1)
 
     def test_action_install_server_at_position(self):
-        url = reverse('basket-actions', args=[1])
+        url = reverse('api:basket-actions', args=[1])
         data = {'type': 'install_server', 'server_id': 1, 'position': 3}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -155,7 +155,7 @@ class TestBasketActions(APITestCase):
         self.assertEqual(basket.slots.get(id=1).position, 3)
 
     def test_action_install_server_with_wrong_server_id(self):
-        url = reverse('basket-actions', args=[1])
+        url = reverse('api:basket-actions', args=[1])
         data = {'type': 'install_server', 'server_id': 199999}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -164,7 +164,7 @@ class TestBasketActions(APITestCase):
         self.assertEqual(basket.slots.count(), 0)
 
     def test_action_mount_to_rack(self):
-        url = reverse('basket-actions', args=[1])
+        url = reverse('api:basket-actions', args=[1])
         data = {'type': 'mount_to_rack', 'rack_id': 1}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -173,7 +173,7 @@ class TestBasketActions(APITestCase):
         self.assertEqual(rack.units.count(), 1)
 
     def test_action_mount_to_rack_at_position(self):
-        url = reverse('basket-actions', args=[1])
+        url = reverse('api:basket-actions', args=[1])
         data = {'type': 'mount_to_rack', 'rack_id': 1, 'position': 3}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -183,7 +183,7 @@ class TestBasketActions(APITestCase):
         self.assertEqual(rack.units.get(id=1).position, 3)
 
     def test_action_mount_at_rack_with_wrong_rack_id(self):
-        url = reverse('basket-actions', args=[1])
+        url = reverse('api:basket-actions', args=[1])
         data = {'type': 'mount_to_rack', 'rack_id': 199999}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -197,7 +197,7 @@ class TestBasketActions(APITestCase):
         basket.mount(server=server)
         self.assertEqual(basket.slots.count(), 1)
 
-        url = reverse('basket-actions', args=[1])
+        url = reverse('api:basket-actions', args=[1])
         data = {'type': 'uninstall_server', 'server_id': 1}
         response = self.client.delete(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -209,7 +209,7 @@ class TestBasketActions(APITestCase):
         basket.mount(server=server)
         self.assertEqual(basket.slots.count(), 1)
 
-        url = reverse('basket-actions', args=[1])
+        url = reverse('api:basket-actions', args=[1])
         data = {'type': 'uninstall_server', 'server_id': 12112}
         response = self.client.delete(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -221,7 +221,7 @@ class TestBasketActions(APITestCase):
         rack.mount(basket=basket, position=1)
         self.assertEqual(rack.units.count(), 1)
 
-        url = reverse('basket-actions', args=[1])
+        url = reverse('api:basket-actions', args=[1])
         data = {'type': 'unmount_from_rack', 'rack_id': 1}
         response = self.client.delete(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -234,7 +234,7 @@ class TestBasketActions(APITestCase):
         rack.mount(basket=basket, position=1)
         self.assertEqual(rack.units.count(), 1)
 
-        url = reverse('basket-actions', args=[1])
+        url = reverse('api:basket-actions', args=[1])
         data = {'type': 'unmount_from_rack', 'rack_id': 11212}
         response = self.client.delete(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

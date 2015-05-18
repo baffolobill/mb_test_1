@@ -11,3 +11,7 @@ git+https://github.com/maraujop/django-crispy-forms.git
 
 # erp_client_ember
 git+https://github.com/ottoyiu/django-cors-headers.git
+
+#git+https://github.com/django-json-api/rest_framework_ember.git
+#git+https://github.com/kevin-brown/drf-json-api.git
+git+https://github.com/lucacorti/drf-json-api.git

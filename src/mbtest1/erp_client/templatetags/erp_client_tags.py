@@ -80,7 +80,7 @@ def render_basket_scheme(basket_obj):
 @register.inclusion_tag('erp_client/templatetags/breadcrumbs.html')
 def render_breadcrumbs(obj):
     crumbs = [{
-        'url': reverse('{}-list'.format(obj._meta.model_name.lower())),
+        'url': reverse('client:{}-list'.format(obj._meta.model_name.lower())),
         'name': obj._meta.verbose_name_plural,
     }]
     object_path = OrderedDict([(k, None)
@@ -146,7 +146,7 @@ def render_breadcrumbs(obj):
     for k, v in object_path.items():
         if v is not None:
             crumbs.append({
-                'url': reverse('{}-detail'.format(k), args=[v.pk]),
+                'url': reverse('client:{}-detail'.format(k), args=[v.pk]),
                 'name': v.get_name(),
                 })
 

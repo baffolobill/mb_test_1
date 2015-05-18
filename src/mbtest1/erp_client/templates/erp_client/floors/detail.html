@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Floor Detail <small>[<a href="{% url 'floor-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'floor-delete' object.pk %}">delete</a>]</small></h1>
+    <h1>Floor Detail <small>[<a href="{% url 'client:floor-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'client:floor-delete' object.pk %}">delete</a>]</small></h1>
 </div>
 
 {% render_breadcrumbs object %}
@@ -12,11 +12,11 @@
     <tbody>
         <tr>
             <th width="100">Node</th>
-            <td><a href="{% url 'node-detail' object.node.pk %}">{{ object.node.name }}</a></td>
+            <td><a href="{% url 'client:node-detail' object.node.pk %}">{{ object.node.name }}</a></td>
         </tr>
         <tr>
             <th>Rooms</th>
-            <td>{% for obj in object.room_set.all %}<a href="{% url 'room-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% endfor %}</td>
+            <td>{% for obj in object.room_set.all %}<a href="{% url 'client:room-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% endfor %}</td>
         </tr>
     </tbody>
 </table>

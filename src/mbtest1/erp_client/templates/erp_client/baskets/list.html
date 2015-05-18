@@ -5,7 +5,7 @@
     <h1>Basket List</h1>
 </div>
 
-<a href="{% url 'basket-create' %}" class="btn btn-primary">Create Basket</a>
+<a href="{% url 'client:basket-create' %}" class="btn btn-primary">Create Basket</a>
 
 <hr>
 
@@ -27,21 +27,21 @@
     {% for object in object_list %}
         <tr>
             <td>{{ object.pk }}</td>
-            <td><a href="{% url 'basket-detail' object.pk %}">{{ object.name }}</a></td>
+            <td><a href="{% url 'client:basket-detail' object.pk %}">{{ object.name }}</a></td>
             {% if object.rack %}
             {% with rack=object.rack %}
-            <td><a href="{% url 'rack-detail' rack.pk %}">{{ rack.name }}</a></td>
-            <td><a href="{% url 'row-detail' rack.row.pk %}">{{ rack.row.name }}</a></td>
-            <td><a href="{% url 'room-detail' rack.row.room.pk %}">{{ rack.row.room.name }}</a></td>
-            <td><a href="{% url 'floor-detail' rack.row.room.floor.pk %}">{{ rack.row.room.floor.name }}</a></td>
-            <td><a href="{% url 'node-detail' rack.node.pk %}">{{ rack.node.name }}</a></td>
+            <td><a href="{% url 'client:rack-detail' rack.pk %}">{{ rack.name }}</a></td>
+            <td><a href="{% url 'client:row-detail' rack.row.pk %}">{{ rack.row.name }}</a></td>
+            <td><a href="{% url 'client:room-detail' rack.row.room.pk %}">{{ rack.row.room.name }}</a></td>
+            <td><a href="{% url 'client:floor-detail' rack.row.room.floor.pk %}">{{ rack.row.room.floor.name }}</a></td>
+            <td><a href="{% url 'client:node-detail' rack.node.pk %}">{{ rack.node.name }}</a></td>
 
-            <td><form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'basket-actions' object.pk %}?action=unmount_from_rack">{% csrf_token %}[<button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link">unmount</button>]</form>&nbsp;[<a href="{% url 'basket-actions' object.pk %}?action=mount_to_rack">change rack</a>]</td>
+            <td><form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'client:basket-actions' object.pk %}?action=unmount_from_rack">{% csrf_token %}[<button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link">unmount</button>]</form>&nbsp;[<a href="{% url 'client:basket-actions' object.pk %}?action=mount_to_rack">change rack</a>]</td>
             {% endwith %}
 
             {% else %}
             <td colspan="5" class="text-center">---</td>
-            <td>[<a href="{% url 'basket-actions' object.pk %}?action=mount_to_rack">mount</a>]</td>
+            <td>[<a href="{% url 'client:basket-actions' object.pk %}?action=mount_to_rack">mount</a>]</td>
             {% endif %}
         </tr>
     {% endfor %}

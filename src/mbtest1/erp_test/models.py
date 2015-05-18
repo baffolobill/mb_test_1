@@ -1,6 +1,7 @@
 # coding: utf-8
 from collections import OrderedDict
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import F, Q, Count
 from django.db.models.query import QuerySet
@@ -53,6 +54,10 @@ class Node(NamedModel):
     def get_server_list(self):
         return self.servers.all()
 
+    @property
+    def servers_count(self):
+        return self.servers.count()
+
 
 class Floor(NamedModel):
     """
@@ -67,33 +72,78 @@ class Floor(NamedModel):
     def get_node(self):
         return self.node
 
+    @property
+    def href(self):
+        return reverse('api:floor-detail', args=[self.pk])
+
+    def get_server_list(self):
+        return self.servers.all()
+
 
 class Room(NamedModel):
     """
         Помещение
     """
+    node = models.ForeignKey(Node, blank=True, null=True)
     floor = models.ForeignKey(Floor)
 
     class Meta:
         verbose_name = _('Room')
         verbose_name_plural = _('Rooms')
 
+    @property
+    def href(self):
+        return reverse('api:room-detail', args=[self.pk])
+
+    def save(self, *args, **kwargs):
+        if self.floor:
+            self.node = self.floor.get_node()
+
+        return super(Room, self).save(*args, **kwargs)
+
     def get_node(self):
-        return self.floor.get_node()
+        return self.node
+
+    def get_floor(self):
+        return self.floor
+
+    def get_server_list(self):
+        return self.servers.all()
 
 
 class Row(NamedModel):
     """
         Ряд
     """
+    node = models.ForeignKey(Node, blank=True, null=True)
+    floor = models.ForeignKey(Floor, blank=True, null=True)
     room = models.ForeignKey(Room)
 
     class Meta:
         verbose_name = _('Row')
         verbose_name_plural = _('Rows')
 
+    @property
+    def href(self):
+        return reverse('api:row-detail', args=[self.pk])
+
+    def save(self, *args, **kwargs):
+        if self.room:
+            self.node = self.room.get_node()
+            self.floor = self.room.get_floor()
+        return super(Row, self).save(*args, **kwargs)
+
     def get_node(self):
-        return self.room.get_node()
+        return self.node
+
+    def get_floor(self):
+        return self.floor
+
+    def get_room(self):
+        return self.room
+
+    def get_server_list(self):
+        return self.servers.all()
 
 
 class RackQuerySet(QuerySet):
@@ -145,6 +195,18 @@ class Rack(NamedModel):
         verbose_name = _('Rack')
         verbose_name_plural = _('Racks')
 
+    @property
+    def href(self):
+        return reverse('api:rack-detail', args=[self.pk])
+
+    @property
+    def floor(self):
+        return self.get_floor()
+
+    @property
+    def room(self):
+        return self.get_room()
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.max_gap = self.total_units
@@ -159,6 +221,18 @@ class Rack(NamedModel):
 
     def get_node(self):
         return self.node
+
+    def get_floor(self):
+        return self.row.get_floor()
+
+    def get_room(self):
+        return self.row.get_room()
+
+    def get_row(self):
+        return self.row
+
+    def get_server_list(self):
+        return self.servers.all()
 
     def find_gaps(self):
         last_unit = None
@@ -346,6 +420,10 @@ class Component(NamedModel):
     class Meta:
         verbose_name = _('Component')
         verbose_name_plural = _('Components')
+
+    @property
+    def href(self):
+        return reverse('api:component-detail', args=[self.pk])
 
     @transition(field=state, source=[ComponentState.FREE], target=ComponentState.INSTALLED)
     def install(self, server=None):
@@ -600,6 +678,8 @@ class PropertyOption(models.Model):
 
     class Meta:
         ordering = ["position"]
+        verbose_name = 'Propepty Option'
+        verbose_name_plural = 'Propepty Options'
 
     def __str__(self):
         return "{} property:{}".format(self.name, self.property)
@@ -701,10 +781,21 @@ class ServerTemplate(NamedModel):
 
     class Meta:
         verbose_name = _('Server Template')
-        verbose_name_plural = _('Servers Templates')
+        verbose_name_plural = _('Server Templates')
+
+    @property
+    def href(self):
+        return reverse('api:server-template-detail', args=[self.pk])
+
+    @property
+    def servers_uses(self):
+        return self.servers.count()
 
     def get_height(self):
         return self.unit_takes
+
+    def get_server_list(self):
+        return self.servers.all()
 
     def is_supported_cpu(self, component):
         return ComponentPropertyValue.objects\
@@ -773,6 +864,15 @@ class Server(NamedModel):
     node = models.ForeignKey(Node,
         related_name='servers',
         blank=True, null=True)
+    floor = models.ForeignKey(Floor,
+        related_name='servers',
+        blank=True, null=True)
+    room = models.ForeignKey(Room,
+        related_name='servers',
+        blank=True, null=True)
+    row = models.ForeignKey(Row,
+        related_name='servers',
+        blank=True, null=True)
     rack = models.ForeignKey(Rack,
         related_name='servers',
         blank=True, null=True)
@@ -790,13 +890,24 @@ class Server(NamedModel):
         verbose_name = _('Server')
         verbose_name_plural = _('Servers')
 
+    @property
+    def href(self):
+        return reverse('api:server-detail', args=[self.pk])
+
     def save(self, *args, **kwargs):
-        node = None
+        extra_args = ['node', 'floor', 'row', 'room']
+        holder = None
         if self.rack:
-            node = self.rack.get_node()
+            holder = self.rack
         elif self.basket:
-            node = self.basket.get_node()
-        self.node = node
+            holder = self.basket
+
+        if holder:
+            for ea in extra_args:
+                setattr(self, ea, getattr(holder, 'get_{}'.format(ea))())
+        else:
+            for ea in extra_args:
+                setattr(self, ea, None)
         return super(Server, self).save(*args, **kwargs)
 
     def is_mounted(self):
@@ -1022,10 +1133,28 @@ class Basket(NamedModel):
         verbose_name = _('Basket')
         verbose_name_plural = _('Baskets')
 
+    @property
+    def href(self):
+        return reverse('api:basket-detail', args=[self.pk])
+
+    @property
+    def floor(self):
+        return self.get_floor()
+
+    @property
+    def room(self):
+        return self.get_room()
+
+    @property
+    def row(self):
+        return self.get_row()
+
     def save(self, *args, **kwargs):
         if self.rack:
             self.node = self.rack.get_node()
-        super(Basket, self).save(*args, **kwargs)
+        else:
+            self.node = None
+        return super(Basket, self).save(*args, **kwargs)
 
     def has_free_slot(self):
         taken = self.slots.count()
@@ -1036,6 +1165,15 @@ class Basket(NamedModel):
     def get_node(self):
         return self.node
 
+    def get_floor(self):
+        return self.rack and self.rack.get_floor() or None
+
+    def get_room(self):
+        return self.rack and self.rack.get_room() or None
+
+    def get_row(self):
+        return self.rack and self.rack.get_row() or None
+
     def get_height(self):
         return self.unit_takes
 
@@ -1043,6 +1181,9 @@ class Basket(NamedModel):
         if self.rack:
             return self.units.all()[0].position
         return None
+
+    def get_server_list(self):
+        return self.servers.all()
 
     def validate_position(self, position):
         if self.slots.filter(position=position).exists():

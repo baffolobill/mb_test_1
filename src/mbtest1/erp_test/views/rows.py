@@ -2,14 +2,25 @@
 from rest_framework import generics
 
 from ..models import Row
-from ..serializers import RowSerializer
+from ..serializers import RowSerializer, NodeServerSerializer
 
 
 class RowList(generics.ListCreateAPIView):
     queryset = Row.objects.all()
     serializer_class = RowSerializer
+    resource_name = 'row'
 
 
 class RowDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Row.objects.all()
     serializer_class = RowSerializer
+    resource_name = 'row'
+
+
+class RowServerList(generics.ListAPIView):
+    queryset = Row.objects.all()
+    serializer_class = NodeServerSerializer
+
+    def get_queryset(self):
+        obj = Row.objects.get(id=self.kwargs['pk'])
+        return obj.get_server_list()

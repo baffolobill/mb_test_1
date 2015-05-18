@@ -21,7 +21,7 @@ class TestNodeCRUD(APITestCase):
             Node.objects.create(**item)
 
     def test_node_list(self):
-        url = reverse('node-list')
+        url = reverse('api:node-list')
         response = self.client.get(url, format='json')
         data = [{'id': obj.id, 'name': obj.name, 'address': obj.address}
                 for obj in Node.objects.all()]
@@ -29,13 +29,13 @@ class TestNodeCRUD(APITestCase):
         self.assertEqual(response.data, data)
 
     def test_node_detail(self):
-        url = reverse('node-detail', args=[1])
+        url = reverse('api:node-detail', args=[1])
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'id': 1, 'name': 'ams1', 'address': 'Washington DC'})
 
     def test_node_create(self):
-        url = reverse('node-list')
+        url = reverse('api:node-list')
         data = {'name': 'nyc2', 'address': 'New York'}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -44,14 +44,14 @@ class TestNodeCRUD(APITestCase):
         self.assertEqual(response_data, data)
 
     def test_node_update(self):
-        url = reverse('node-detail', args=[2])
+        url = reverse('api:node-detail', args=[2])
         data = {'address': 'New York, New York'}
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['address'], data['address'])
 
     def test_node_delete(self):
-        url = reverse('node-detail', args=[3])
+        url = reverse('api:node-detail', args=[3])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Node.objects.count(), 2)
@@ -65,7 +65,7 @@ class TestNodeServer(APITestCase):
     fixtures = ['erp_test/tests/fixtures/node_servers.json',]
 
     def test_node_server_list(self):
-        url = reverse('node-server-list', args=[1])
+        url = reverse('api:node-server-list', args=[1])
         response = self.client.get(url, format='json')
         # тупая проверка количеством
         self.assertEqual(len(response.data), 2)

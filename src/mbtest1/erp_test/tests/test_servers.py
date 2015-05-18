@@ -21,7 +21,7 @@ class TestServersCRUD(APITestCase):
     fixtures = ['erp_test/tests/fixtures/servers_crud.json',]
 
     def test_server_list(self):
-        url = reverse('server-list')
+        url = reverse('api:server-list')
         response = self.client.get(url, format='json')
         data = [{'id': obj.id, 'name': obj.name, 'template': obj.template_id,
                 } for obj in Server.objects.all()]
@@ -29,7 +29,7 @@ class TestServersCRUD(APITestCase):
         self.assertEqual(response.data, data)
 
     def test_server_create(self):
-        url = reverse('server-list')
+        url = reverse('api:server-list')
         data = {'template': 1, 'name': 'test server create via api'}
         have_to_return = {
             'template': 1,
@@ -41,14 +41,14 @@ class TestServersCRUD(APITestCase):
         self.assertEqual(response.data, have_to_return)
 
     def test_server_update(self):
-        url = reverse('server-detail', args=[2])
+        url = reverse('api:server-detail', args=[2])
         data = {'name': 'new server'}
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['name'], data['name'])
 
     def test_server_delete(self):
-        url = reverse('server-detail', args=[1])
+        url = reverse('api:server-detail', args=[1])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Server.objects.count(), 1)
@@ -58,7 +58,7 @@ class TestServerComponents(APITestCase):
     fixtures = ['erp_test/tests/fixtures/server_components.json',]
 
     def test_server_component_list(self):
-        url = reverse('server-component-list', args=[1])
+        url = reverse('api:server-component-list', args=[1])
         response = self.client.get(url, format='json')
         server = Server.objects.get(id=1)
         data = [{'id': obj.id, 'name': obj.name, 'manufacturer': obj.manufacturer,
@@ -82,7 +82,7 @@ class TestServerComponents(APITestCase):
         server.uninstall_components(server.get_installed_components())
         self.assertEqual(list(server.get_installed_components()), [])
 
-        url = reverse('server-component-list', args=[1])
+        url = reverse('api:server-component-list', args=[1])
         data = {'type': 'plug', 'component_id': 1}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -94,7 +94,7 @@ class TestServerComponents(APITestCase):
         server.uninstall_components(server.get_installed_components())
         self.assertEqual(list(server.get_installed_components()), [])
 
-        url = reverse('server-component-list', args=[1])
+        url = reverse('api:server-component-list', args=[1])
         data = {'type': 'plug', 'component_ids': [1,3]}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -112,7 +112,7 @@ class TestServerComponents(APITestCase):
         server.install_component(component)
         self.assertEqual(list(server.get_installed_components()), [component])
 
-        url = reverse('server-component-list', args=[1])
+        url = reverse('api:server-component-list', args=[1])
         data = {'type': 'unplug', 'component_id': 1}
         response = self.client.delete(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -130,7 +130,7 @@ class TestServerComponents(APITestCase):
         self.assertEqual(list(server.get_installed_components()), components)
 
         # unplug via API request
-        url = reverse('server-component-list', args=[1])
+        url = reverse('api:server-component-list', args=[1])
         data = {'type': 'unplug', 'component_ids': [1,3]}
         response = self.client.delete(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -143,7 +143,7 @@ class TestServerComponents(APITestCase):
         server.uninstall_components(server.get_installed_components())
         self.assertEqual(list(server.get_installed_components()), [])
 
-        url = reverse('server-component-list', args=[1])
+        url = reverse('api:server-component-list', args=[1])
         data = {'type': 'plug', 'component_id': 4}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -155,7 +155,7 @@ class TestServerComponents(APITestCase):
         server.uninstall_components(server.get_installed_components())
         self.assertEqual(list(server.get_installed_components()), [])
 
-        url = reverse('server-component-list', args=[1])
+        url = reverse('api:server-component-list', args=[1])
         data = {'type': 'plug', 'component_ids': [3,4]}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -167,7 +167,7 @@ class TestServerActions(APITestCase):
     fixtures = ['erp_test/tests/fixtures/server_actions.json']
 
     def test_mount_to_rack(self):
-        url = reverse('server-actions', args=[1])
+        url = reverse('api:server-actions', args=[1])
         data = {'type': 'mount_to_rack', 'rack_id': 1}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -181,7 +181,7 @@ class TestServerActions(APITestCase):
         rack.mount(server=server, position=1)
         self.assertEqual(rack.units.count(), 1)
 
-        url = reverse('server-actions', args=[1])
+        url = reverse('api:server-actions', args=[1])
         data = {'type': 'unmount_from_rack', 'rack_id': 1}
         response = self.client.delete(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -189,7 +189,7 @@ class TestServerActions(APITestCase):
         self.assertEqual(Server.objects.get(id=1).rack, None)
 
     def test_mount_to_basket(self):
-        url = reverse('server-actions', args=[1])
+        url = reverse('api:server-actions', args=[1])
         data = {'type': 'mount_to_basket', 'basket_id': 1}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -203,7 +203,7 @@ class TestServerActions(APITestCase):
         basket.mount(server=server)
         self.assertEqual(basket.slots.count(), 1)
 
-        url = reverse('server-actions', args=[1])
+        url = reverse('api:server-actions', args=[1])
         data = {'type': 'unmount_from_basket', 'basket_id': 1}
         response = self.client.delete(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

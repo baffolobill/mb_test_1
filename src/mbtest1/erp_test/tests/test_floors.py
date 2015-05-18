@@ -30,7 +30,7 @@ class TestFloorCRUD(APITestCase):
             Floor.objects.create(**item)
 
     def test_floor_list(self):
-        url = reverse('floor-list')
+        url = reverse('api:floor-list')
         response = self.client.get(url, format='json')
         data = [{'id': obj.id, 'name': obj.name, 'node': obj.node_id}
                 for obj in Floor.objects.all()]
@@ -38,27 +38,27 @@ class TestFloorCRUD(APITestCase):
         self.assertEqual(response.data, data)
 
     def test_floor_detail(self):
-        url = reverse('floor-detail', args=[1])
+        url = reverse('api:floor-detail', args=[1])
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'id': 1, 'name': '#1', 'node': 1})
 
     def test_floor_create(self):
-        url = reverse('floor-list')
+        url = reverse('api:floor-list')
         data = {'name': 'baz', 'node': 3}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, {'id': 4, 'name': 'baz', 'node': 3})
 
     def test_floor_update(self):
-        url = reverse('floor-detail', args=[2])
+        url = reverse('api:floor-detail', args=[2])
         data = {'node': 3}
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['node'], data['node'])
 
     def test_floor_delete(self):
-        url = reverse('floor-detail', args=[3])
+        url = reverse('api:floor-detail', args=[3])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Floor.objects.count(), 2)

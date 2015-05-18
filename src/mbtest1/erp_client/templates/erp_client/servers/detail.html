@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Server Detail <small>[<a href="{% url 'server-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'server-delete' object.pk %}">delete</a>]</small></h1>
+    <h1>Server Detail <small>[<a href="{% url 'client:server-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'client:server-delete' object.pk %}">delete</a>]</small></h1>
 </div>
 
 {% render_breadcrumbs object %}
@@ -12,54 +12,54 @@
     <tbody>
         <tr>
             <th width="100">Template</th>
-            <td><a href="{% url 'servertemplate-detail' object.template.pk %}">{{ object.template.name }}</a></td>
+            <td><a href="{% url 'client:servertemplate-detail' object.template.pk %}">{{ object.template.name }}</a></td>
         </tr>
         <tr>
             <th width="100">Basket</th>
-            <td>{% if object.basket %}<a href="{% url 'basket-detail' object.basket.pk %}">{{ object.basket.name }}</a>{% else %}---{% endif %}</td>
+            <td>{% if object.basket %}<a href="{% url 'client:basket-detail' object.basket.pk %}">{{ object.basket.name }}</a>{% else %}---{% endif %}</td>
         </tr>
         {% with rack=object.get_rack %}
         <tr>
             <th width="100">Rack</th>
-            <td>{% if rack %}<a href="{% url 'rack-detail' rack.pk %}">{{ rack.name }}</a>{% else %}---{% endif %}</td>
+            <td>{% if rack %}<a href="{% url 'client:rack-detail' rack.pk %}">{{ rack.name }}</a>{% else %}---{% endif %}</td>
         </tr>
         <tr>
             <th width="100">Row</th>
-            <td>{% if rack %}<a href="{% url 'row-detail' rack.row.pk %}">{{ rack.row.name }}</a>{% else %}---{% endif %}</td>
+            <td>{% if rack %}<a href="{% url 'client:row-detail' rack.row.pk %}">{{ rack.row.name }}</a>{% else %}---{% endif %}</td>
         </tr>
         <tr>
             <th width="100">Room</th>
-            <td>{% if rack %}<a href="{% url 'room-detail' rack.row.room.pk %}">{{ rack.row.room.name }}</a>{% else %}---{% endif %}</td>
+            <td>{% if rack %}<a href="{% url 'client:room-detail' rack.row.room.pk %}">{{ rack.row.room.name }}</a>{% else %}---{% endif %}</td>
         </tr>
         <tr>
             <th width="100">Floor</th>
-            <td>{% if rack %}<a href="{% url 'floor-detail' rack.row.room.floor.pk %}">{{ rack.row.room.floor.name }}</a>{% else %}---{% endif %}</td>
+            <td>{% if rack %}<a href="{% url 'client:floor-detail' rack.row.room.floor.pk %}">{{ rack.row.room.floor.name }}</a>{% else %}---{% endif %}</td>
         </tr>
         <tr>
             <th width="100">Node</th>
-            <td>{% if rack %}<a href="{% url 'node-detail' object.node.pk %}">{{ object.node.name }}</a>{% else %}---{% endif %}</td>
+            <td>{% if rack %}<a href="{% url 'client:node-detail' object.node.pk %}">{{ object.node.name }}</a>{% else %}---{% endif %}</td>
         </tr>
         {% endwith %}
         <tr>
             <th>Actions</th>
             <td>
                 {% if object.basket %}
-                <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'basket-actions' object.basket.pk %}?action=uninstall_server&amp;server_id={{ object.pk }}">{% csrf_token %}
+                <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'client:basket-actions' object.basket.pk %}?action=uninstall_server&amp;server_id={{ object.pk }}">{% csrf_token %}
                     [<button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link">uninstall</button>]
                 </form>
                 {% elif object.rack %}
-                <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'rack-actions' object.rack.pk %}?action=unmount_server&amp;server_id={{ object.pk }}">{% csrf_token %}
+                <form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'client:rack-actions' object.rack.pk %}?action=unmount_server&amp;server_id={{ object.pk }}">{% csrf_token %}
                     [<button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link">unmount</button>]
                 </form>
                 {% else %}
-                [<a href="{% url 'server-actions' object.pk %}?action=mount">mount</a>]
+                [<a href="{% url 'client:server-actions' object.pk %}?action=mount">mount</a>]
                 {% endif %}
             </td>
         </tr>
     </tbody>
 </table>
 
-<h2>Component List <small>[<a href="{% url 'server-actions' object.pk %}?action=install_component">install component</a>]</small></h2>
+<h2>Component List <small>[<a href="{% url 'client:server-actions' object.pk %}?action=install_component">install component</a>]</small></h2>
 
 {% if messages %}
     {% for message in messages %}
@@ -110,7 +110,7 @@
             {% endfor %}
             </ul>
         </td>
-        <td><form method="post" action="{% url 'server-actions' object.pk %}?action=uninstall_component&amp;component_id={{ component.pk }}">{% csrf_token %}<input class="btn btn-link" type="submit" value="uninstall"></form></td>
+        <td><form method="post" action="{% url 'client:server-actions' object.pk %}?action=uninstall_component&amp;component_id={{ component.pk }}">{% csrf_token %}<input class="btn btn-link" type="submit" value="uninstall"></form></td>
     </tr>
     {% endfor %}
     </tbody>
