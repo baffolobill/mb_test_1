@@ -14,13 +14,14 @@ class JsonApiMixin(object):
                                                parser_context=parser_context)
 
         view = parser_context.get("view", None)
+
         model = self.model_from_obj(view)
         resource_type = self.model_to_resource_type(model)
 
         resource = {}
 
-        if resource_type in data:
-            resource = data[resource_type]
+        if "data" in data:
+            resource = data["data"]
 
         if isinstance(resource, list):
             resource = [self.convert_resource(r, view) for r in resource]
@@ -83,7 +84,7 @@ class JsonApiMixin(object):
         return model_from_obj(obj)
 
     def model_to_resource_type(self, model):
-        return model_to_resource_type(model).replace(' ', '')
+        return model_to_resource_type(model)
 
 
 class JsonApiParser(JsonApiMixin, parsers.JSONParser):

@@ -50,7 +50,7 @@ class JsonApiMixin(object):
         Tries each of the methods in `wrappers`, using the first successful
         one, or raises `WrapperNotApplicable`.
         """
-        #import pdb; pdb.set_trace()
+
         wrapper = None
         success = False
 
@@ -269,7 +269,17 @@ class JsonApiMixin(object):
         model = self.model_from_obj(view)
         resource_type = self.model_to_resource_type(model)
 
-        results = data["results"]
+        try:
+            from rest_framework.utils.serializer_helpers import ReturnList
+
+            results = ReturnList(
+                data["results"],
+                serializer=data.serializer.fields["results"],
+            )
+        except ImportError:
+            results = data["results"]
+        except AttributeError:
+            results = data["results"]
 
         # Use default wrapper for results
         wrapper = self.wrap_default(results, renderer_context)
@@ -277,12 +287,11 @@ class JsonApiMixin(object):
         # Add pagination metadata
         pagination = self.dict_class()
 
-        pagination['previous'] = data['previous']
-        pagination['next'] = data['next']
-        pagination['count'] = data['count']
+        pagination["prev"] = data['previous']
+        pagination["next"] = data['next']
 
-        wrapper.setdefault('links', self.dict_class())
-        wrapper['links'].update(pagination)
+        wrapper.setdefault("links", self.dict_class())
+        wrapper["links"].update(pagination)
 
         return wrapper
 
@@ -293,7 +302,7 @@ class JsonApiMixin(object):
         object with a `fields` dict-like attribute), or a list of
         such data objects.
         """
-
+        #import pdb; pdb.set_trace()
         wrapper = self.dict_class()
         view = renderer_context.get("view", None)
         request = renderer_context.get("request", None)
@@ -309,55 +318,40 @@ class JsonApiMixin(object):
             resources = [data]
 
         items = []
-        links = self.dict_class()
-        included = self.dict_class()
-        meta = self.dict_class()
+        included = {}
 
-        #import pdb; pdb.set_trace()
         for resource in resources:
-            if not resource:
-                continue
             converted = self.convert_resource(resource, data, request)
-            item = converted.get('data', {})
-            item["type"] = resource_type
-            included_ids = converted.get('included_ids', {})
-            if included_ids:
-                item["links"] = included_ids
-            items.append(item)
 
-            links.update(converted.get('links', {}))
-            included = self.update_nested(included, converted.get('included', {}))
-            meta.update(converted.get('meta', {}))
+            converted_data = converted.get("data", {})
+            items.append(converted_data)
+
+            converted_included = converted.get("included", {})
+            included.update(converted_included)
 
         if many:
             wrapper["data"] = items
         else:
             wrapper["data"] = items[0]
 
-        if links:
-            links = self.prepend_links_with_name(links, resource_type)
-            wrapper["links"] = links
-
+        #if included:
+        #    wrapper["included"] = included.items()
         if included:
-            new_included = []
+            included_flatten = []
             for key, values in included.iteritems():
-                new_included.extend(values)
-            wrapper["included"] = new_included
-
-        if meta:
-            wrapper["meta"] = meta
+                #for key, value in values.iteritems():
+                included_flatten.extend(values.values())
+            wrapper["included"] = included_flatten
 
         return wrapper
 
-    def convert_resource(self, resource, data, request):
-        fields = self.fields_from_resource(resource, data)
+    def convert_resource(self, resource, resource_data, request):
+        fields = self.fields_from_resource(resource, resource_data)
 
         if not fields:
             raise WrapperNotApplicable('Items must have a fields attribute.')
 
         data = self.dict_class()
-        included_ids = self.dict_class()
-        links = self.dict_class()
         included = self.dict_class()
         meta = self.dict_class()
 
@@ -380,55 +374,54 @@ class JsonApiMixin(object):
                         break
 
             if converted:
-                #data.update(converted.pop("data", {}))
-                #included_ids.update(converted.pop("included_ids", {}))
-                #links.update(converted.get("links", {}))
-                #included = self.update_nested(included,
-                #                            converted.get('included', {}))
-                #meta.update(converted.get("meta", {}))
                 data = self.update_nested(
                     data,
-                    converted.pop('data', {})
-                )
-                included_ids = self.update_nested(
-                    included_ids,
-                    converted.pop('included_ids', {})
-                )
-                links = self.update_nested(
-                    links,
-                    converted.pop('links', {})
+                    converted.pop("data", {})
                 )
                 included = self.update_nested(
                     included,
-                    converted.get('included', {})
+                    converted.get("included", {}),
+                    recursive=True
                 )
                 meta = self.update_nested(
                     meta,
-                    converted.pop('meta', {})
+                    converted.get("meta", {})
                 )
             else:
-                data[field_name] = resource[field_name] if resource else None
+                data[field_name] = resource[field_name]
+
+        if hasattr(resource, "serializer"):
+            serializer = resource.serializer
+            model = serializer.Meta.model
+
+            resource_type = self.model_to_resource_type(model)
+
+            data["type"] = resource_type
 
         return {
-            'data': data,
-            'included_ids': included_ids,
-            'links': links,
-            'included': included,
-            'meta': meta,
+            "data": data,
+            "included": included,
+            "meta": meta,
         }
 
     def convert_to_text(self, resource, field, field_name, request):
         data = self.dict_class()
-        if resource:
-            data[field_name] = encoding.force_text(resource[field_name])
-        else:
-            data[field_name] = None
-        return {"data": data}
+
+        data[field_name] = encoding.force_text(resource[field_name])
+
+        return {
+            "data": data,
+        }
 
     def rename_to_href(self, resource, field, field_name, request):
         data = self.dict_class()
-        data['href'] = resource[field_name]
-        return {"data": data}
+
+        data["links"] = self.dict_class()
+        data["links"]["self"] = resource[field_name]
+
+        return {
+            "data": data,
+        }
 
     def prepend_links_with_name(self, links, name):
         changed_links = links.copy()
@@ -450,122 +443,133 @@ class JsonApiMixin(object):
         return changed_links
 
     def handle_nested_serializer(self, resource, field, field_name, request):
-        if not resource:
-            return {}
-
-        serializer_field = get_related_field(field)
-
-        if hasattr(serializer_field, "opts"):
-            model = serializer_field.opts.model
+        related_field = get_related_field(field)
+        if hasattr(related_field, "opts"):
+            model = related_field.opts.model
         else:
-            model = serializer_field.Meta.model
-
+            model = related_field.Meta.model
         resource_type = self.model_to_resource_type(model)
 
-        included_ids = self.dict_class()
-        links = self.dict_class()
+        data = self.dict_class()
+        meta = self.dict_class()
         included = self.dict_class()
-        included[resource_type] = []
+        included[resource_type] = self.dict_class()
+        linkage = None
 
-        if is_related_many(field):
-            items = resource[field_name]
-        else:
-            items = [resource[field_name]]
+        resource.serializer = related_field
 
-        obj_ids = []
+        if field_name in resource:
+            if is_related_many(field):
+                linkage = []
+                for item in resource[field_name]:
+                    converted = self.convert_resource(item, resource, request)
+                    linkage.append({
+                        "type": resource_type,
+                        "id": converted["data"]["id"],
+                    })
+                    included_obj = converted['data']
+                    included_obj['type'] = resource_type
+                    included[resource_type][included_obj['id']] = included_obj
+                    included = self.update_nested(included, converted['included'], recursive=True)
+                    #included.append(included_obj)
+                    #for included_value in converted['included'].values():
+                    #    included.extend(included_value)
 
-        resource.serializer = serializer_field
+            elif resource[field_name]:
+                converted = self.convert_resource(resource[field_name], resource, request)
+                linkage = {
+                    "type": resource_type,
+                    "id": converted["data"]["id"],
+                }
+                included_obj = converted['data']
+                included_obj['type'] = resource_type
+                included[resource_type][included_obj['id']] = included_obj
+                included = self.update_nested(included, converted['included'], recursive=True)
+                #included = [included_obj]
+                #for included_value in converted['included'].values():
+                #    included.extend(included_value)
 
-        for item in items:
-            if not item:
-                continue
-            converted = self.convert_resource(item, resource, request)
-            included_obj = converted["data"]
-            included_ids = converted.pop("included_ids", {})
-
-            if included_ids:
-                included_obj["links"] = included_ids
-
-            obj_ids.append(converted["data"]["id"])
-
-            field_links = self.prepend_links_with_name(
-                converted.get("links", {}), resource_type)
-
-            included_obj["type"] = resource_type
-
-            field_links[field_name] = {
-                "type": resource_type,
-            }
-
-            if "href" in converted["data"]:
-                url_field_name = api_settings.URL_FIELD_NAME
-                url_field = serializer_field.fields[url_field_name]
-
-                if isinstance(url_field, serializers.ReadOnlyField):
-                    continue
-                field_links[field_name]["href"] = self.url_to_template(
-                    url_field.view_name, request, field_name,
-                )
-
-            links.update(field_links)
-
-            included[resource_type].append(included_obj)
-            included.update(converted.pop('included', {}))
-
-        if is_related_many(field):
-            included_ids[field_name] = obj_ids
-        elif len(obj_ids):
-            included_ids[field_name] = obj_ids[0]
-
-        return {"included_ids": included_ids, "links": links, "included": included}
+        data['links'] = {
+            field_name: {
+                'linkage': linkage,
+            },
+        }
+        return {'data': data, 'included': included, 'meta': meta}
 
     def handle_related_field(self, resource, field, field_name, request):
-        links = self.dict_class()
-        included_ids = self.dict_class()
-
         related_field = get_related_field(field)
 
         model = self.model_from_obj(related_field)
         resource_type = self.model_to_resource_type(model)
+
+        linkage = None
 
         if field_name in resource:
-            links[field_name] = {
-                "type": resource_type,
-            }
-
             if is_related_many(field):
-                link_data = [
-                    encoding.force_text(pk) for pk in resource[field_name]]
+                linkage = []
+
+                pks = [encoding.force_text(pk) for pk in resource[field_name]]
+                for pk in pks:
+                    link = {
+                        "type": resource_type,
+                        "id": pk,
+                    }
+                    linkage.append(link)
             elif resource[field_name]:
-                link_data = encoding.force_text(resource[field_name])
-            else:
-                link_data = None
+                linkage = {
+                    "type": resource_type,
+                    "id": encoding.force_text(resource[field_name]),
+                }
 
-            included_ids[field_name] = link_data
-
-        return {"included_ids": included_ids, "links": links}
-
-    def handle_url_field(self, resource, field, field_name, request):
-        links = self.dict_class()
-        included_ids = self.dict_class()
-
-        related_field = get_related_field(field)
-
-        model = self.model_from_obj(related_field)
-        resource_type = self.model_to_resource_type(model)
-
-        links[field_name] = {
-            "href": self.url_to_template(related_field.view_name,
-                                         request,
-                                         field_name),
-            "type": resource_type,
+        return {
+            "data": {
+                "links": {
+                    field_name: {
+                        "linkage": linkage,
+                    },
+                },
+            },
         }
 
-        if field_name in resource:
-            included_ids[field_name] = self.url_to_pk(
-                resource[field_name], field)
+    def handle_url_field(self, resource, field, field_name, request):
+        if field_name not in resource:
+            return {}
 
-        return {"included_ids": included_ids, "links": links}
+        related_field = get_related_field(field)
+
+        model = self.model_from_obj(related_field)
+        resource_type = self.model_to_resource_type(model)
+
+        linkage = None
+
+        pks = self.url_to_pk(resource[field_name], field)
+
+        if not isinstance(pks, list):
+            if pks:
+                linkage = {
+                    "type": resource_type,
+                    "id": pks,
+                }
+        else:
+            linkage = []
+
+            for pk in pks:
+                link = {
+                    "type": resource_type,
+                    "id": pk,
+                }
+
+                linkage.append(link)
+
+        return {
+            "data": {
+                "links": {
+                    field_name: {
+                        "linkage": linkage,
+                    },
+                },
+            },
+        }
 
     def url_to_pk(self, url_data, field):
         if is_related_many(field):
@@ -616,15 +620,19 @@ class JsonApiMixin(object):
     def model_from_obj(self, obj):
         return model_from_obj(obj)
 
-    def update_nested(self, original, update):
+    def update_nested(self, original, update, recursive=False):
         for key, value in update.items():
             if key in original:
                 if isinstance(original[key], list):
                     original[key].extend(update[key])
                 elif isinstance(original[key], dict):
-                    original[key].update(update[key])
+                    if recursive:
+                        original[key] = self.update_nested(original[key], value, recursive=recursive)
+                    else:
+                        original[key].update(update[key])
             else:
                 original[key] = value
+
         return original
 
 
