@@ -2,7 +2,7 @@
 from django.db.models import Q
 from rest_framework import generics
 
-from ..models import Property, PropertyGroup
+from ..models import Property, PropertyOption, PropertyGroup
 from ..serializers import (
     PropertySerializer, PropertyGroupSerializer,
     SimplePropertyGroupSerializer,
@@ -36,12 +36,11 @@ class PropertyDetail(generics.RetrieveAPIView):
 
 
 class PropertyOptionList(generics.ListAPIView):
-    queryset = Property.objects.all()
+    queryset = PropertyOption.objects.all()
     serializer_class = PropertyOptionSerializer
 
     def get_queryset(self):
-        prop = Property.objects.get(name=self.kwargs['name'])
-        return prop.options.all()
+        return PropertyOption.objects.filter(property__name=self.kwargs['name'])
 
 
 class PropertyGroupList(generics.ListAPIView):

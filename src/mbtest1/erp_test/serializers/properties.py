@@ -27,7 +27,7 @@ class PropertyGroupSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'properties')
 
 
-class PropertyOptionSerializer(serializers.ModelSerializer):
+class PropertyOptionSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = PropertyOption

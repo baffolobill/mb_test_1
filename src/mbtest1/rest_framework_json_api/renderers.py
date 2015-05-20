@@ -305,6 +305,7 @@ class JsonApiMixin(object):
         #import pdb; pdb.set_trace()
         wrapper = self.dict_class()
         view = renderer_context.get("view", None)
+        serializer_class = getattr(view, 'serializer_class', None)
         request = renderer_context.get("request", None)
 
         model = self.model_from_obj(view)
@@ -324,6 +325,8 @@ class JsonApiMixin(object):
             converted = self.convert_resource(resource, data, request)
 
             converted_data = converted.get("data", {})
+            if 'type' not in converted_data:
+                converted_data['type'] = resource_type
             items.append(converted_data)
 
             converted_included = converted.get("included", {})

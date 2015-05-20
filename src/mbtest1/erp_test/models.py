@@ -678,8 +678,8 @@ class PropertyOption(models.Model):
 
     class Meta:
         ordering = ["position"]
-        verbose_name = 'Propepty Option'
-        verbose_name_plural = 'Propepty Options'
+        verbose_name = _(u'Property Option')
+        verbose_name_plural = _(u'Property Options')
 
     def __str__(self):
         return "{} property:{}".format(self.name, self.property)
