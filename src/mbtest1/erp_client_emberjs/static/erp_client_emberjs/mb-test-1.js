@@ -14821,7 +14821,7 @@ define('mb-test-1/templates/results/server-components-table', ['exports'], funct
           var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),0,0);
           var morph1 = dom.createMorphAt(element0,3,3);
           content(env, morph0, context, "component.id");
-          inline(env, morph1, context, "view", ["tables/cells/titled-linked-cell"], {"routeName": "component", "item": get(env, context, "component"), "labelText": get(env, context, "component.name")});
+          inline(env, morph1, context, "view", ["tables/cells/titled-linked-cell"], {"routeName": "component", "item": get(env, context, "component.id"), "labelText": get(env, context, "component.name")});
           return fragment;
         }
       };
