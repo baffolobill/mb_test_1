@@ -19779,7 +19779,7 @@ define('mb-test-1/tests/views/modals/node-add-modal.jshint', function () {
 
   module('JSHint - views/modals');
   test('views/modals/node-add-modal.js should pass jshint', function() { 
-    ok(false, 'views/modals/node-add-modal.js should pass jshint.\nviews/modals/node-add-modal.js: line 21, col 9, \'controller\' is not defined.\n\n1 error'); 
+    ok(true, 'views/modals/node-add-modal.js should pass jshint.'); 
   });
 
 });
@@ -21739,6 +21739,7 @@ define('mb-test-1/views/modals/node-add-modal', ['exports', 'mb-test-1/views/mod
         }).property(),
 
         onModelSaved: function onModelSaved(model) {
+            var controller = this.get("controller");
             controller.transitionToRoute("node", model.__json.id);
         },
 
@@ -21751,12 +21752,7 @@ define('mb-test-1/views/modals/node-add-modal', ['exports', 'mb-test-1/views/mod
 
     AddNodeModal.reopenClass({
         open: function open() {
-            var view = this.create({});
-            //var store = view.container.lookup('store:main');
-            //var model = store.createRecord('node', {});
-            //view.set('model', model);
-            //Ember.Logger.debug(model);
-            return view;
+            return this.create();
         } });
 
     exports['default'] = AddNodeModal;
