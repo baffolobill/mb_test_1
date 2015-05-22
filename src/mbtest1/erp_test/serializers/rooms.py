@@ -9,7 +9,7 @@ class RoomFloorSerializer(FloorSerializer):
 
     class Meta:
         model = Floor
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'href')
 
 
 class RoomSerializer(serializers.HyperlinkedModelSerializer):

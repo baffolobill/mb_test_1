@@ -9,7 +9,7 @@ class RackRowSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Row
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'href')
 
 
 class RackSerializer(serializers.HyperlinkedModelSerializer):

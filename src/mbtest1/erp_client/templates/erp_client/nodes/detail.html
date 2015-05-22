@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="page-header">
-  <h1>Node Detail <small>[<a href="{% url 'client:node-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'client:node-delete' object.pk %}">delete</a>]</small></h1>
+  <h1>Node Detail <small>[<a href="{% url 'node-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'node-delete' object.pk %}">delete</a>]</small></h1>
 </div>
 
 {% render_breadcrumbs object %}
@@ -42,15 +42,15 @@
             {% for server in node.get_server_list %}
             <tr>
                 <td>{{ server.pk }}</td>
-                <td><a href="{% url 'client:server-detail' server.pk %}">{{ server.name }}</a></td>
+                <td><a href="{% url 'server-detail' server.pk %}">{{ server.name }}</a></td>
 
-                <td>{% if server.basket %}<a href="{% url 'client:basket-detail' server.basket.pk %}">{{ server.basket.get_name }}</a>{% else %}---{% endif %}</td>
+                <td>{% if server.basket %}<a href="{% url 'basket-detail' server.basket.pk %}">{{ server.basket.get_name }}</a>{% else %}---{% endif %}</td>
 
                 {% with rack=server.get_rack %}
-                <td><a href="{% url 'client:rack-detail' rack.pk %}">{{ rack.name }}</a></td>
-                <td><a href="{% url 'client:row-detail' rack.row.pk %}">{{ rack.row.name }}</a></td>
-                <td><a href="{% url 'client:room-detail' rack.row.room.pk %}">{{ rack.row.room.name }}</a></td>
-                <td><a href="{% url 'client:floor-detail' rack.row.room.floor.pk %}">{{ rack.row.room.floor }}</a></td>
+                <td><a href="{% url 'rack-detail' rack.pk %}">{{ rack.name }}</a></td>
+                <td><a href="{% url 'row-detail' rack.row.pk %}">{{ rack.row.name }}</a></td>
+                <td><a href="{% url 'room-detail' rack.row.room.pk %}">{{ rack.row.room.name }}</a></td>
+                <td><a href="{% url 'floor-detail' rack.row.room.floor.pk %}">{{ rack.row.room.floor }}</a></td>
                 {% endwith %}
                 <td>Not Implemented</td>
             </tr>

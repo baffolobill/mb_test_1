@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Room Detail <small>[<a href="{% url 'client:room-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'client:room-delete' object.pk %}">delete</a>]</small></h1>
+    <h1>Room Detail <small>[<a href="{% url 'room-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'room-delete' object.pk %}">delete</a>]</small></h1>
 </div>
 
 {% render_breadcrumbs object %}
@@ -12,15 +12,15 @@
     <tbody>
         <tr>
             <th width="100">Floor</th>
-            <td><a href="{% url 'client:floor-detail' object.floor.pk %}">{{ object.floor.name }}</a></td>
+            <td><a href="{% url 'floor-detail' object.floor.pk %}">{{ object.floor.name }}</a></td>
         </tr>
         <tr>
             <th width="100">Node</th>
-            <td><a href="{% url 'client:node-detail' object.floor.node.pk %}">{{ object.floor.node.name }}</a></td>
+            <td><a href="{% url 'node-detail' object.floor.node.pk %}">{{ object.floor.node.name }}</a></td>
         </tr>
         <tr>
             <th>Rows</th>
-            <td>{% for obj in object.row_set.all %}<a href="{% url 'client:row-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% endfor %}</td>
+            <td>{% for obj in object.row_set.all %}<a href="{% url 'row-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% endfor %}</td>
         </tr>
     </tbody>
 </table>

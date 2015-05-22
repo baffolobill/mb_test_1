@@ -31,3 +31,9 @@ class ComponentState(object):
     @staticmethod
     def show_all(value):
         return value == ComponentState._ALL
+
+
+# Если True, то при создании/обновлении компомента через API
+# будут требоваться соответсвующие параметры. Если их не передать
+# будет возвращаться ошибка "{'properties': 'This field is required.'}".
+COMPONENT_REQUIRES_WITH_PROPERTIES = False

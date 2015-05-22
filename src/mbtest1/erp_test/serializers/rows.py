@@ -7,13 +7,13 @@ from .nodes import NodeSerializer
 class RowFloorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Floor
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'href')
 
 
 class RowRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'href')
 
 
 class RowSerializer(serializers.HyperlinkedModelSerializer):

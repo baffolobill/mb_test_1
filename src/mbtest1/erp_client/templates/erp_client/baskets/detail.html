@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Basket Detail <small>[<a href="{% url 'client:basket-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'client:basket-delete' object.pk %}">delete</a>]</small></h1>
+    <h1>Basket Detail <small>[<a href="{% url 'basket-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'basket-delete' object.pk %}">delete</a>]</small></h1>
 </div>
 
 {% render_breadcrumbs object %}
@@ -12,27 +12,27 @@
     <tbody>
         <tr>
             <th width="100">Rack</th>
-            <td>{% if object.rack %}<a href="{% url 'client:rack-detail' object.rack.pk %}">{{ object.rack.name }}</a> [<a href="{% url 'client:basket-actions' object.pk %}?action=mount_to_rack">change</a>]&nbsp;<form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'client:basket-actions' object.pk %}?action=unmount_from_rack">{% csrf_token %}[<button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link">unmount</button>]</form>{% else %}[<a href="{% url 'client:basket-actions' object.pk %}?action=mount_to_rack">mount</a>]{% endif %}</td>
+            <td>{% if object.rack %}<a href="{% url 'rack-detail' object.rack.pk %}">{{ object.rack.name }}</a> [<a href="{% url 'basket-actions' object.pk %}?action=mount_to_rack">change</a>]&nbsp;<form style="margin:0;padding:0;display:inline;" method="post" action="{% url 'basket-actions' object.pk %}?action=unmount_from_rack">{% csrf_token %}[<button type="submit" style="display:inline;margin:0;padding:0;" class="btn btn-link">unmount</button>]</form>{% else %}[<a href="{% url 'basket-actions' object.pk %}?action=mount_to_rack">mount</a>]{% endif %}</td>
         </tr>
         <tr>
             <th width="100">Row</th>
-            <td>{% if object.rack %}<a href="{% url 'client:row-detail' object.rack.row.pk %}">{{ object.rack.row.name }}</a>{% else %}---{% endif %}</td>
+            <td>{% if object.rack %}<a href="{% url 'row-detail' object.rack.row.pk %}">{{ object.rack.row.name }}</a>{% else %}---{% endif %}</td>
         </tr>
         <tr>
             <th width="100">Room</th>
-            <td>{% if object.rack %}<a href="{% url 'client:room-detail' object.rack.row.room.pk %}">{{ object.rack.row.room.name }}</a>{% else %}---{% endif %}</td>
+            <td>{% if object.rack %}<a href="{% url 'room-detail' object.rack.row.room.pk %}">{{ object.rack.row.room.name }}</a>{% else %}---{% endif %}</td>
         </tr>
         <tr>
             <th width="100">Floor</th>
-            <td>{% if object.rack %}<a href="{% url 'client:floor-detail' object.rack.row.room.floor.pk %}">{{ object.rack.row.room.floor.name }}</a>{% else %}---{% endif %}</td>
+            <td>{% if object.rack %}<a href="{% url 'floor-detail' object.rack.row.room.floor.pk %}">{{ object.rack.row.room.floor.name }}</a>{% else %}---{% endif %}</td>
         </tr>
         <tr>
             <th width="100">Node</th>
-            <td>{% if object.rack %}<a href="{% url 'client:node-detail' object.node.pk %}">{{ object.node.name }}</a>{% else %}---{% endif %}</td>
+            <td>{% if object.rack %}<a href="{% url 'node-detail' object.node.pk %}">{{ object.node.name }}</a>{% else %}---{% endif %}</td>
         </tr>
         <tr>
             <th>Servers</th>
-            <td>{% for obj in object.servers.all %}<a href="{% url 'client:server-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% empty %}No servers assigned yet.{% endfor %}</td>
+            <td>{% for obj in object.servers.all %}<a href="{% url 'server-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% empty %}No servers assigned yet.{% endfor %}</td>
         </tr>
     </tbody>
 </table>

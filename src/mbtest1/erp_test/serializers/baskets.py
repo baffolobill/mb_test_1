@@ -9,7 +9,7 @@ from .racks import RackRowSerializer
 class BasketRackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rack
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'href')
 
 
 class BasketSerializer(serializers.HyperlinkedModelSerializer):

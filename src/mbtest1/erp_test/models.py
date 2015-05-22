@@ -7,6 +7,7 @@ from django.db.models import F, Q, Count
 from django.db.models.query import QuerySet
 from django.db.models.signals import post_save, pre_delete, m2m_changed
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils import timezone
 from django.utils.translation import ugettext as _
 
 from model_utils.managers import PassThroughManager
@@ -20,6 +21,15 @@ from .defaults import (
     PROPERTY_TEXT_FIELD, PROPERTY_SELECT_FIELD,
     PROPERTY_NUMBER_FIELD, PROPERTY_FIELD_CHOICES,
     ComponentState)
+
+
+class CreatedModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+        ordering = ['-updated_at']
 
 
 @python_2_unicode_compatible
@@ -40,26 +50,29 @@ class NamedModel(models.Model):
         return self.name
 
 
-class Node(NamedModel):
+class Node(CreatedModel, NamedModel):
     """
         Узел (дата-центр)
     """
     address = models.TextField(
         blank=True)
+    servers_count = models.PositiveIntegerField(
+        default=0,
+        editable=False)
 
     class Meta:
         verbose_name = _('Node')
         verbose_name_plural = _('Nodes')
 
+    @property
+    def href(self):
+        return reverse('api:node-detail', args=[self.pk])
+
     def get_server_list(self):
         return self.servers.all()
 
-    @property
-    def servers_count(self):
-        return self.servers.count()
 
-
-class Floor(NamedModel):
+class Floor(CreatedModel, NamedModel):
     """
         Этаж
     """
@@ -69,18 +82,18 @@ class Floor(NamedModel):
         verbose_name = _('Floor')
         verbose_name_plural = _('Floors')
 
-    def get_node(self):
-        return self.node
-
     @property
     def href(self):
         return reverse('api:floor-detail', args=[self.pk])
+
+    def get_node(self):
+        return self.node
 
     def get_server_list(self):
         return self.servers.all()
 
 
-class Room(NamedModel):
+class Room(CreatedModel, NamedModel):
     """
         Помещение
     """
@@ -111,7 +124,7 @@ class Room(NamedModel):
         return self.servers.all()
 
 
-class Row(NamedModel):
+class Row(CreatedModel, NamedModel):
     """
         Ряд
     """
@@ -175,7 +188,7 @@ class RackQuerySet(QuerySet):
                          'all | empty | has_empty | filled | has_empty_height.')
 
 
-class Rack(NamedModel):
+class Rack(CreatedModel, NamedModel):
     """
         Стойка
     """
@@ -336,7 +349,7 @@ class Rack(NamedModel):
         unit_entity.save()
 
 
-class Unit(models.Model):
+class Unit(CreatedModel, models.Model):
     """
         Описывает юнит
     """
@@ -397,7 +410,7 @@ class ComponentQuerySet(QuerySet):
         return self.filter(state=state)
 
 
-class Component(NamedModel):
+class Component(CreatedModel, NamedModel):
     manufacturer = models.CharField(max_length=200)
     model_name = models.CharField(max_length=200)
     serial_number = models.CharField(max_length=200)
@@ -759,7 +772,7 @@ class ComponentPropertyValue(models.Model):
             return self.value
 
 
-class ServerTemplate(NamedModel):
+class ServerTemplate(CreatedModel, NamedModel):
     cpu_socket = models.ForeignKey(
         PropertyOption,
         related_name='cpu_socket_opts',
@@ -778,6 +791,10 @@ class ServerTemplate(NamedModel):
         verbose_name=_('height in units'),
         default=1)
 
+    servers_uses = models.PositiveIntegerField(
+        default=0,
+        editable=False)
+
 
     class Meta:
         verbose_name = _('Server Template')
@@ -786,10 +803,6 @@ class ServerTemplate(NamedModel):
     @property
     def href(self):
         return reverse('api:server-template-detail', args=[self.pk])
-
-    @property
-    def servers_uses(self):
-        return self.servers.count()
 
     def get_height(self):
         return self.unit_takes
@@ -860,7 +873,7 @@ class ServerQuerySet(QuerySet):
         return self.filter(basket__isnull=True, rack__isnull=True)
 
 
-class Server(NamedModel):
+class Server(CreatedModel, NamedModel):
     node = models.ForeignKey(Node,
         related_name='servers',
         blank=True, null=True)
@@ -932,13 +945,18 @@ class Server(NamedModel):
         """
         return 1
 
+    def get_node(self):
+        return self.node
+
+    def get_template(self):
+        return self.template
+
     def get_rack(self):
         if self.rack:
             return self.rack
 
         if self.basket:
             return self.basket.rack
-
         return None
 
     def get_height(self):
@@ -1113,7 +1131,7 @@ class BasketQuerySet(QuerySet):
                    .filter(slots_taken__lt=F('slot_qty'))
 
 
-class Basket(NamedModel):
+class Basket(CreatedModel, NamedModel):
     node = models.ForeignKey(Node,
         related_name='baskets',
         blank=True, null=True)
@@ -1298,3 +1316,15 @@ def unit_saved(sender, instance, **kwargs):
     rack.save()
 post_save.connect(unit_saved, sender=Unit)
 pre_delete.connect(unit_saved, sender=Unit)
+
+
+def server_saved(sender, instance, **kwargs):
+    node = instance.get_node()
+    node.servers_count = node.servers.count()
+    node.save()
+
+    template = instance.get_template()
+    template.servers_uses = template.servers.count()
+    template.save()
+post_save.connect(server_saved, sender=Server)
+pre_delete.connect(server_saved, sender=Server)

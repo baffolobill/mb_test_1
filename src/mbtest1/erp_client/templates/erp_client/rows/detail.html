@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Row Detail <small>[<a href="{% url 'client:row-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'client:row-delete' object.pk %}">delete</a>]</small></h1>
+    <h1>Row Detail <small>[<a href="{% url 'row-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'row-delete' object.pk %}">delete</a>]</small></h1>
 </div>
 
 {% render_breadcrumbs object %}
@@ -12,19 +12,19 @@
     <tbody>
         <tr>
             <th width="100">Room</th>
-            <td><a href="{% url 'client:room-detail' object.room.pk %}">{{ object.room.name }}</a></td>
+            <td><a href="{% url 'room-detail' object.room.pk %}">{{ object.room.name }}</a></td>
         </tr>
         <tr>
             <th width="100">Floor</th>
-            <td><a href="{% url 'client:floor-detail' object.room.floor.pk %}">{{ object.room.floor.name }}</a></td>
+            <td><a href="{% url 'floor-detail' object.room.floor.pk %}">{{ object.room.floor.name }}</a></td>
         </tr>
         <tr>
             <th width="100">Node</th>
-            <td><a href="{% url 'client:node-detail' object.room.floor.node.pk %}">{{ object.room.floor.node.name }}</a></td>
+            <td><a href="{% url 'node-detail' object.room.floor.node.pk %}">{{ object.room.floor.node.name }}</a></td>
         </tr>
         <tr>
             <th>Racks</th>
-            <td>{% for obj in object.rack_set.all %}<a href="{% url 'client:rack-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% endfor %}</td>
+            <td>{% for obj in object.rack_set.all %}<a href="{% url 'rack-detail' obj.pk %}">{{ obj.name }}</a>{% if not forloop.last %},{% endif %}{% endfor %}</td>
         </tr>
     </tbody>
 </table>

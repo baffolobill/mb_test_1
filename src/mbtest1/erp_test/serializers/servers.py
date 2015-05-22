@@ -1,7 +1,7 @@
 # coding: utf-8
 from rest_framework import serializers
 
-from ..models import Server, ServerTemplate
+from ..models import Server, ServerTemplate, Basket
 from .nodes import NodeSerializer
 from .rows import RowFloorSerializer, RowRoomSerializer
 from .racks import RackRowSerializer
@@ -11,15 +11,15 @@ from .baskets import BasketRackSerializer
 class ServerBasketSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Server
-        fields = ('id', 'name')
+        model = Basket
+        fields = ('id', 'name', 'href')
 
 
 class ServerServerTemplateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ServerTemplate
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'href')
 
 
 class ServerSerializer(serializers.HyperlinkedModelSerializer):

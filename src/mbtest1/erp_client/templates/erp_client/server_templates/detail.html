@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Server Template Detail <small>[<a href="{% url 'client:servertemplate-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'client:servertemplate-delete' object.pk %}">delete</a>]</small></h1>
+    <h1>Server Template Detail <small>[<a href="{% url 'servertemplate-update' object.pk %}">edit</a>]</small> <small>[<a class="text-danger" href="{% url 'servertemplate-delete' object.pk %}">delete</a>]</small></h1>
 </div>
 
 {% render_breadcrumbs object %}
@@ -91,7 +91,7 @@
     {% for server in object.servers.all %}
     <tr>
         <td>{{ server.pk }}</td>
-        <td><a href="{% url 'client:server-detail' server.pk %}">{{ server.get_name }}</a></td>
+        <td><a href="{% url 'server-detail' server.pk %}">{{ server.get_name }}</a></td>
     </tr>
     {% empty %}
     <tr>

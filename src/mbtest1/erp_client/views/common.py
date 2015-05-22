@@ -23,19 +23,19 @@ class BaseDeleteView(CreateUpdateDeleteMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super(BaseDeleteView, self).get_context_data(**kwargs)
-        context['cancel_url'] = reverse('client:{}-detail'.format(self.get_model_name()),
+        context['cancel_url'] = reverse('{}-detail'.format(self.get_model_name()),
                                         args=[self.object.pk])
         return context
 
     def get_success_url(self):
-        return reverse('client:{}-list'.format(self.get_model_name()))
+        return reverse('{}-list'.format(self.get_model_name()))
 
 
 class BaseUpdateView(CreateUpdateDeleteMixin, UpdateView):
     template_name = 'erp_client/common/update.html'
 
     def get_success_url(self):
-        return reverse('client:{}-detail'.format(self.get_model_name()),
+        return reverse('{}-detail'.format(self.get_model_name()),
                        args=[self.object.pk])
 
 
@@ -43,7 +43,7 @@ class BaseCreateView(CreateUpdateDeleteMixin, CreateView):
     template_name = 'erp_client/common/create.html'
 
     def get_success_url(self):
-        return reverse('client:{}-detail'.format(self.get_model_name()),
+        return reverse('{}-detail'.format(self.get_model_name()),
                        args=[self.object.pk])
 
     def get_form(self, *args, **kwargs):

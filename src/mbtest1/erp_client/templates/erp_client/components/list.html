@@ -7,7 +7,7 @@
 
 <div class="row-fluid clearfix">
     <div class="col-xs-6 pull-left">
-        <a href="{% url 'client:component-create' %}" class="btn btn-primary">Create Component</a>
+        <a href="{% url 'component-create' %}" class="btn btn-primary">Create Component</a>
     </div>
 
     <div class="col-xs-6 pull-right">
@@ -39,14 +39,14 @@
     {% for component in object_list %}
     <tr class="{% if component.is_free %}success{% elif component.is_installed %}info{% elif component.is_broken %}danger{% endif %}">
         <td>{{ component.pk }}</td>
-        <td><a href="{% url 'client:component-detail' component.pk %}">{{ component.name }}</a></td>
+        <td><a href="{% url 'component-detail' component.pk %}">{{ component.name }}</a></td>
         <td>{{ component.kind.name }}</td>
         <td>{{ component.manufacturer }}</td>
         <td>{{ component.model_name }}</td>
         <td>{{ component.serial_number }}</td>
         <td>{{ component.get_state_display }}</td>
         <td>{% if component.is_installed and component.server %}
-            <a href="{% url 'client:server-detail' component.server.pk %}">{{ component.server.get_name }}</a>
+            <a href="{% url 'server-detail' component.server.pk %}">{{ component.server.get_name }}</a>
             {% else %}
             ---
             {% endif %}

@@ -9,6 +9,6 @@
 
 {% render_breadcrumbs object %}
 <p>What do you want to mount to the Rack?</p>
-<a href="{% url 'client:rack-actions' object.pk %}?action=mount_basket&amp;position={{ position|default:'' }}">Basket</a> OR
-<a href="{% url 'client:rack-actions' object.pk %}?action=mount_server&amp;position={{ position|default:'' }}">Server</a>
+<a href="{% url 'rack-actions' object.pk %}?action=mount_basket&amp;position={{ position|default:'' }}">Basket</a> OR
+<a href="{% url 'rack-actions' object.pk %}?action=mount_server&amp;position={{ position|default:'' }}">Server</a>
 {% endblock %}

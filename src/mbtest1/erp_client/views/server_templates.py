@@ -98,7 +98,7 @@ class ServerTemplateCreateView(ServerTemplateModelMixin, FormSetMixin, CreateUpd
     formset_class = ServerTemplateHddFormSet
 
     def get_success_url(self):
-        return reverse('client:{}-detail'.format(self.get_model_name()),
+        return reverse('{}-detail'.format(self.get_model_name()),
                        args=[self.object.pk])
 
     def get_context_data(self, **kwargs):

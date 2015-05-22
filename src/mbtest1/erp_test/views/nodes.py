@@ -1,5 +1,5 @@
 # coding: utf-8
-from rest_framework import generics
+from rest_framework import generics, filters
 
 from ..models import Node
 from ..serializers import NodeSerializer, NodeServerSerializer
@@ -9,6 +9,7 @@ class NodeList(generics.ListCreateAPIView):
     queryset = Node.objects.all()
     serializer_class = NodeSerializer
     resource_name = 'node'
+    filter_backends = (filters.OrderingFilter,)
 
 
 class NodeDetail(generics.RetrieveUpdateDestroyAPIView):

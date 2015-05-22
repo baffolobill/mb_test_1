@@ -1,3 +1,4 @@
+import copy
 from rest_framework import relations, renderers, serializers, status
 from rest_framework.settings import api_settings
 from rest_framework_json_api import encoders
@@ -329,16 +330,17 @@ class JsonApiMixin(object):
                 converted_data['type'] = resource_type
             items.append(converted_data)
 
-            converted_included = converted.get("included", {})
-            included.update(converted_included)
+            included = self.update_nested(
+                included,
+                converted.get("included", {}),
+                recursive=True
+            )
 
         if many:
             wrapper["data"] = items
         else:
             wrapper["data"] = items[0]
 
-        #if included:
-        #    wrapper["included"] = included.items()
         if included:
             included_flatten = []
             for key, values in included.iteritems():
@@ -348,8 +350,11 @@ class JsonApiMixin(object):
 
         return wrapper
 
-    def convert_resource(self, resource, resource_data, request):
-        fields = self.fields_from_resource(resource, resource_data)
+    def convert_resource(self, resource, resource_data, request, serializer=None):
+        if serializer:
+            fields = self.fields_from_serializer(serializer)
+        else:
+            fields = self.fields_from_resource(resource, resource_data)
 
         if not fields:
             raise WrapperNotApplicable('Items must have a fields attribute.')
@@ -396,9 +401,11 @@ class JsonApiMixin(object):
         if hasattr(resource, "serializer"):
             serializer = resource.serializer
             model = serializer.Meta.model
-
             resource_type = self.model_to_resource_type(model)
-
+            data["type"] = resource_type
+        elif serializer is not None:
+            model = serializer.Meta.model
+            resource_type = self.model_to_resource_type(model)
             data["type"] = resource_type
 
         return {
@@ -459,13 +466,11 @@ class JsonApiMixin(object):
         included[resource_type] = self.dict_class()
         linkage = None
 
-        resource.serializer = related_field
-
         if field_name in resource:
             if is_related_many(field):
                 linkage = []
                 for item in resource[field_name]:
-                    converted = self.convert_resource(item, resource, request)
+                    converted = self.convert_resource(item, resource, request, serializer=related_field)
                     linkage.append({
                         "type": resource_type,
                         "id": converted["data"]["id"],
@@ -474,12 +479,8 @@ class JsonApiMixin(object):
                     included_obj['type'] = resource_type
                     included[resource_type][included_obj['id']] = included_obj
                     included = self.update_nested(included, converted['included'], recursive=True)
-                    #included.append(included_obj)
-                    #for included_value in converted['included'].values():
-                    #    included.extend(included_value)
-
             elif resource[field_name]:
-                converted = self.convert_resource(resource[field_name], resource, request)
+                converted = self.convert_resource(resource[field_name], resource, request, serializer=related_field)
                 linkage = {
                     "type": resource_type,
                     "id": converted["data"]["id"],
@@ -488,9 +489,6 @@ class JsonApiMixin(object):
                 included_obj['type'] = resource_type
                 included[resource_type][included_obj['id']] = included_obj
                 included = self.update_nested(included, converted['included'], recursive=True)
-                #included = [included_obj]
-                #for included_value in converted['included'].values():
-                #    included.extend(included_value)
 
         data['links'] = {
             field_name: {
@@ -611,11 +609,13 @@ class JsonApiMixin(object):
     def fields_from_resource(self, resource, data):
         if hasattr(data, "serializer"):
             resource = data.serializer
-
             if hasattr(resource, "child"):
                 resource = resource.child
 
-        return getattr(resource, "fields", None)
+        return self.fields_from_serializer(resource)
+
+    def fields_from_serializer(self, serializer):
+        return getattr(serializer, "fields", None)
 
     def model_to_resource_type(self, model):
         return model_to_resource_type(model)
@@ -627,12 +627,16 @@ class JsonApiMixin(object):
         for key, value in update.items():
             if key in original:
                 if isinstance(original[key], list):
-                    original[key].extend(update[key])
+                    original[key].extend(value)
                 elif isinstance(original[key], dict):
                     if recursive:
                         original[key] = self.update_nested(original[key], value, recursive=recursive)
                     else:
-                        original[key].update(update[key])
+                        original[key].update(value)
+                # in this case value is model's instance
+                # and we are here only in recursive mode
+                elif recursive:
+                    original[key] = value
             else:
                 original[key] = value
 

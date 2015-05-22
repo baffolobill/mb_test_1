@@ -217,4 +217,4 @@ class RackActionsView(RackModelMixin, DetailView):
         return redirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse('client:rack-detail', args=[self.kwargs['pk']])
+        return reverse('rack-detail', args=[self.kwargs['pk']])

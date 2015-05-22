@@ -8,5 +8,6 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/v1/', include('erp_test.urls', namespace='api', app_name='erp_test')),
-    url(r'^client/', include('erp_client.urls', namespace='client', app_name='erp_client')),
+    url(r'^client/', include('erp_client.urls')),
+    url(r'^', include('erp_client_emberjs.urls')),
 ]

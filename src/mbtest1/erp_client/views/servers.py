@@ -96,7 +96,7 @@ class ServerActionsView(ServerModelMixin, DetailView):
         else:
             messages.success(self.request, u'Component "{}" has been installed.'.format(component.get_name()))
 
-        return redirect(reverse('client:server-detail', args=[self.kwargs['pk']]))
+        return redirect(reverse('server-detail', args=[self.kwargs['pk']]))
 
     def _process_uninstall_component(self):
         server = self.get_object()
@@ -228,4 +228,4 @@ class ServerActionsView(ServerModelMixin, DetailView):
         return redirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse('client:server-detail', args=[self.kwargs['pk']])
+        return reverse('server-detail', args=[self.kwargs['pk']])

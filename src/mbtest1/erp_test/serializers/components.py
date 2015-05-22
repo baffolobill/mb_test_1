@@ -7,8 +7,9 @@ from rest_framework.exceptions import ValidationError
 from ..models import (
     Component, PropertyOption, PropertyGroup,
     ComponentPropertyValue, Property)
-from ..defaults import ComponentState
+from ..defaults import ComponentState, COMPONENT_REQUIRES_WITH_PROPERTIES
 from .servers import ServerSerializer
+
 
 class ComponentPropertySerializer(serializers.Serializer):
     id = serializers.IntegerField()
@@ -16,6 +17,9 @@ class ComponentPropertySerializer(serializers.Serializer):
     title = serializers.CharField()
     type = serializers.CharField()
     value = serializers.CharField()
+
+    class Meta:
+        model = Property
 
     #def to_representation(self, instance):
     #    pass
@@ -35,6 +39,9 @@ class ComponentKindSerializer(serializers.ModelSerializer):
         model = PropertyOption
         fields = ('id', 'name')
 
+    def to_internal_value(self, data):
+        return PropertyOption.objects.get(id=data)
+
 
 class ComponentSerializer(serializers.HyperlinkedModelSerializer):
     kind = ComponentKindSerializer(many=False, read_only=False)
@@ -45,7 +52,9 @@ class ComponentSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'name', 'manufacturer', 'model_name',
                   'serial_number', 'kind', 'state', 'server', 'href')
         extra_kwargs = {
+            'id': {'read_only': True},
             'kind': {'required': False},
+            'state': {'required': False, 'read_only': True},
             'href': {'read_only': True},
         }
 
@@ -137,86 +146,88 @@ class ComponentSerializer(serializers.HyperlinkedModelSerializer):
                 'kind': str(exc)
                 })
 
-        # validate properties
-        is_properties_required = self.context['request'].method.lower() in ('post', 'put')
         valid_properties = []
-        properties = data.pop('properties', None)
-        if is_properties_required:
-            if not properties:
-                raise ValidationError({
-                    'properties': 'This field is required.'
-                    })
-            if not isinstance(properties, (list, tuple)):
-                raise ValidationError({
-                    'properties': 'Invalid format. Must be: [{property_id: ..., value: ...}, ...]'
-                    })
+        if COMPONENT_REQUIRES_WITH_PROPERTIES:
+            # validate properties
+            is_properties_required = self.context['request'].method.lower() in ('post', 'put')
+            properties = data.pop('properties', None)
+            if is_properties_required:
+                if not properties:
+                    raise ValidationError({
+                        'properties': 'This field is required.'
+                        })
+                if not isinstance(properties, (list, tuple)):
+                    raise ValidationError({
+                        'properties': 'Invalid format. Must be: [{property_id: ..., value: ...}, ...]'
+                        })
 
-            ## performance improvement
-            property_bulk = dict([(p.pk, p) for p in self._get_properties_for_kind(kind)])
-            options = PropertyOption.objects.filter(property__in=property_bulk.keys())
-            option_bulk = {}
-            for option in options:
-                option_bulk.setdefault(option.property_id, {})[option.pk] = option
+                ## performance improvement
+                property_bulk = dict([(p.pk, p) for p in self._get_properties_for_kind(kind)])
+                options = PropertyOption.objects.filter(property__in=property_bulk.keys())
+                option_bulk = {}
+                for option in options:
+                    option_bulk.setdefault(option.property_id, {})[option.pk] = option
 
-            for item in properties:
-                if not isinstance(item, dict):
-                    raise ValidationError({
-                        'properties': 'Invalid item format. Must be: {property_id: ..., value: ...}'
-                    })
-                if 'property_id' not in item:
-                    raise ValidationError({
-                        'properties': 'Item must contain <propety_id> key/value.'
-                    })
-                if 'value' not in item:
-                    raise ValidationError({
-                        'properties': 'Item must contain <avlue> key/value.'
-                    })
-                try:
-                    property_id = int(item['property_id'])
-                except ValueError:
-                    raise ValidationError({
-                        'properties': '<property_id> must be valid integer type.'
+                for item in properties:
+                    if not isinstance(item, dict):
+                        raise ValidationError({
+                            'properties': 'Invalid item format. Must be: {property_id: ..., value: ...}'
                         })
-                prop = property_bulk.get(property_id, None)
-                if not prop:
-                    raise ValidationError({
-                        'properties': 'Specified property <{}> is not in the list of Component:{} properties.'.format(
-                                            prop.name, kind.name)
+                    if 'property_id' not in item:
+                        raise ValidationError({
+                            'properties': 'Item must contain <propety_id> key/value.'
                         })
-                value = item['value']
-                if prop.required and not value:
-                    raise ValidationError({
-                        'properties': 'Property:{} is required.'.format(prop.name)
+                    if 'value' not in item:
+                        raise ValidationError({
+                            'properties': 'Item must contain <avlue> key/value.'
                         })
-                if prop.is_text_field:
-                    valid_properties.append({'property': prop, 'value': value})
-                elif prop.is_number_field:
                     try:
-                        value = int(value)
+                        property_id = int(item['property_id'])
                     except ValueError:
                         raise ValidationError({
-                            'properties': 'Property:{} require valid number value.'.format(prop.name)
+                            'properties': '<property_id> must be valid integer type.'
                             })
-                    else:
+                    prop = property_bulk.get(property_id, None)
+                    if not prop:
+                        raise ValidationError({
+                            'properties': 'Specified property <{}> is not in the list of Component:{} properties.'.format(
+                                                prop.name, kind.name)
+                            })
+                    value = item['value']
+                    if prop.required and not value:
+                        raise ValidationError({
+                            'properties': 'Property:{} is required.'.format(prop.name)
+                            })
+                    if prop.is_text_field:
                         valid_properties.append({'property': prop, 'value': value})
-                elif prop.is_select_field:
-                    try:
-                        value = int(value)
-                    except ValueError:
+                    elif prop.is_number_field:
+                        try:
+                            value = int(value)
+                        except ValueError:
+                            raise ValidationError({
+                                'properties': 'Property:{} require valid number value.'.format(prop.name)
+                                })
+                        else:
+                            valid_properties.append({'property': prop, 'value': value})
+                    elif prop.is_select_field:
+                        try:
+                            value = int(value)
+                        except ValueError:
+                            raise ValidationError({
+                                'properties': 'Value of fields with select type must be valid integer.'
+                                })
+                        if value not in option_bulk[prop.pk]:
+                            raise ValidationError({
+                                'properties': 'Specified value is not in the list of the property options.'
+                                })
+                        value = option_bulk[prop.pk][value]
+                        valid_properties.append({'property': prop, 'value': value})
+                    else:
                         raise ValidationError({
-                            'properties': 'Value of fields with select type must be valid integer.'
+                            'properties': 'Serializer does not support the Property:{} type.'.format(prop.name)
                             })
-                    if value not in option_bulk[prop.pk]:
-                        raise ValidationError({
-                            'properties': 'Specified value is not in the list of the property options.'
-                            })
-                    value = option_bulk[prop.pk][value]
-                    valid_properties.append({'property': prop, 'value': value})
-                else:
-                    raise ValidationError({
-                        'properties': 'Serializer does not support the Property:{} type.'.format(prop.name)
-                        })
 
+        #import pdb; pdb.set_trace()
         ret = super(ComponentSerializer, self).to_internal_value(data)
         ret['properties'] = valid_properties
         return ret
@@ -238,34 +249,35 @@ class ComponentSerializer(serializers.HyperlinkedModelSerializer):
                     'kind': 'This field is required.'
                 })
 
-        if properties is None:
+        if properties is None and COMPONENT_REQUIRES_WITH_PROPERTIES:
             raise ValidationError({
                 'properties': 'This field is required.'
                 })
 
         instance = super(ComponentSerializer, self).create(validated_data)
-        prop_bulk_create = []
-        property_group = PropertyGroup.objects.get(name=validated_data['kind'].name)
-        for item in properties:
-            kwargs = {
-                'component': instance,
-                'property': item['property'],
-                'property_group': property_group,
-            }
-            if item['property'].is_select_field:
-                kwargs.update({
-                    'option': item['value'],
-                    'value': item['value'].pk,
-                    'value_as_float': item['value'].pk
-                })
-            else:
-                kwargs.update({
-                    'value': item['value'],
-                    'value_as_float': item['value']
-                })
-            prop_bulk_create.append(ComponentPropertyValue(**kwargs))
-        if len(prop_bulk_create):
-            ComponentPropertyValue.objects.bulk_create(prop_bulk_create)
+        if COMPONENT_REQUIRES_WITH_PROPERTIES:
+            prop_bulk_create = []
+            property_group = PropertyGroup.objects.get(name=validated_data['kind'].name)
+            for item in properties:
+                kwargs = {
+                    'component': instance,
+                    'property': item['property'],
+                    'property_group': property_group,
+                }
+                if item['property'].is_select_field:
+                    kwargs.update({
+                        'option': item['value'],
+                        'value': item['value'].pk,
+                        'value_as_float': item['value'].pk
+                    })
+                else:
+                    kwargs.update({
+                        'value': item['value'],
+                        'value_as_float': item['value']
+                    })
+                prop_bulk_create.append(ComponentPropertyValue(**kwargs))
+            if len(prop_bulk_create):
+                ComponentPropertyValue.objects.bulk_create(prop_bulk_create)
         return instance
 
     def update(self, instance, validated_data):

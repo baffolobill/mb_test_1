@@ -42,6 +42,7 @@ INSTALLED_APPS = (
 
     # client requirements
     'erp_client',
+    'erp_client_emberjs',
     'crispy_forms',
     'corsheaders',
 )
@@ -120,6 +121,7 @@ REST_FRAMEWORK = {
     'PAGINATE_BY_PARAM': 'page_size',
     'MAX_PAGINATE_BY': 100,
     'URL_FIELD_NAME': 'href',
+    'ORDERING_PARAM': 'sort',
     # DRF v3.1+
     #'DEFAULT_PAGINATION_CLASS':
     #    'rest_framework_ember.pagination.PageNumberPagination',

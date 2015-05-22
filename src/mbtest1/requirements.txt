@@ -1,4 +1,4 @@
-django==1.8
+django==1.8.2
 Unipath==0.2.1
 psycopg2==2.5.1
 gunicorn==18.0
@@ -11,7 +11,4 @@ git+https://github.com/maraujop/django-crispy-forms.git
 
 # erp_client_ember
 git+https://github.com/ottoyiu/django-cors-headers.git
-
-#git+https://github.com/django-json-api/rest_framework_ember.git
-#git+https://github.com/kevin-brown/drf-json-api.git
-git+https://github.com/lucacorti/drf-json-api.git
+#git+https://github.com/baffolobill/drf-json-api.git
