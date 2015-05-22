@@ -5,6 +5,7 @@ from . import views
 
 
 urlpatterns = [
+    url(r'^$', views.NodeListView.as_view(), name='client-index'),
     url(r'^nodes/', include([
         url(r'^$', views.NodeListView.as_view(), name='node-list'),
         url(r'^create/$', views.NodeCreateView.as_view(), name='node-create'),
