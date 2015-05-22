@@ -19779,7 +19779,7 @@ define('mb-test-1/tests/views/modals/node-add-modal.jshint', function () {
 
   module('JSHint - views/modals');
   test('views/modals/node-add-modal.js should pass jshint', function() { 
-    ok(true, 'views/modals/node-add-modal.js should pass jshint.'); 
+    ok(false, 'views/modals/node-add-modal.js should pass jshint.\nviews/modals/node-add-modal.js: line 21, col 9, \'controller\' is not defined.\n\n1 error'); 
   });
 
 });
@@ -21263,7 +21263,6 @@ define('mb-test-1/views/modals/floor-add-modal', ['exports', 'ember', 'mb-test-1
 
         onModelSaved: function onModelSaved(model) {
             var controller = this.get("controller");
-            Ember['default'].Logger.debug("FloorAddModal.onModelSaved: model=", model);
             controller.transitionToRoute("floor", model.__json.id);
         },
 
@@ -21740,12 +21739,7 @@ define('mb-test-1/views/modals/node-add-modal', ['exports', 'mb-test-1/views/mod
         }).property(),
 
         onModelSaved: function onModelSaved(model) {
-            //var Node = this.get("container").lookupFactory("model:node");
-            //var controller = this.container.lookup("controller:marketplace");
-            var controller = this.get("controller");
-            //return Node.find(model.get("id")).then(function(m) {
-            controller.transitionToRoute("node", model);
-            //});
+            controller.transitionToRoute("node", model.__json.id);
         },
 
         actions: {
