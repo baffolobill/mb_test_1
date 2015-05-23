@@ -1,35 +1,34 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.http import Http404
 
-from rest_framework import generics, status
+from rest_framework import generics, status, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .base import SimpleServerList
+from ..filters import BasketFilter
 from ..models import Basket, Server, Rack
 from ..serializers import BasketSerializer
-from ..serializers.generics import SimpleServerHyperlinkedModelSerializer
 
 
 class BasketList(generics.ListCreateAPIView):
     queryset = Basket.objects.all()
     serializer_class = BasketSerializer
-    resource_name = 'basket'
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend]
+    filter_class = BasketFilter
+    ordering_fields = '__all__'
+    search_fields = ['name']
 
 
 class BasketDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Basket.objects.all()
     serializer_class = BasketSerializer
-    resource_name = 'basket'
 
 
-class BasketServerList(generics.ListAPIView):
+class BasketServerList(SimpleServerList):
     queryset = Basket.objects.all()
-    serializer_class = SimpleServerHyperlinkedModelSerializer
-    resource_name = 'server'
-
-    def get_queryset(self):
-        basket = Basket.objects.get(pk=self.kwargs['pk'])
-        return basket.get_server_list()
 
 
 class BasketActions(APIView):

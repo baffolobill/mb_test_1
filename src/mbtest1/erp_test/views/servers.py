@@ -1,10 +1,13 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.http import Http404
 
-from rest_framework import generics, status, mixins
+from rest_framework import generics, status, mixins, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from ..filters import ServerFilter, ComponentFilter
 from ..models import Server, Component, Basket, Rack
 from ..serializers import ServerSerializer, ComponentSerializer
 from ..exceptions import ComponentPlugFailed
@@ -13,20 +16,24 @@ from ..exceptions import ComponentPlugFailed
 class ServerList(generics.ListCreateAPIView):
     queryset = Server.objects.all()
     serializer_class = ServerSerializer
-    resource_name = 'server'
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend]
+    filter_class = ServerFilter
+    ordering_fields = '__all__'
+    search_fields = ['name']
 
 
 class ServerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Server.objects.all()
     serializer_class = ServerSerializer
-    resource_name = 'server'
 
 
-class ServerComponentList(mixins.DestroyModelMixin,
-                          generics.ListCreateAPIView):
+class ServerComponentList(mixins.DestroyModelMixin, generics.ListCreateAPIView):
     queryset = Server.objects
     serializer_class = ComponentSerializer
-    resource_name = 'component'
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend]
+    filter_class = ComponentFilter
+    ordering_fields = '__all__'
+    search_fields = ['name', 'manufacturer', 'serial_number', 'model_name']
 
     def get_queryset(self):
         server = self.queryset.get(pk=self.kwargs['pk'])

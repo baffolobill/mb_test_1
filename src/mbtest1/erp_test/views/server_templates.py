@@ -1,28 +1,27 @@
-# coding: utf-8
-from rest_framework import generics
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
+from rest_framework import generics, filters
+
+from .base import SimpleServerList
+from ..filters import ServerTemplateFilter
 from ..models import ServerTemplate
 from ..serializers import ServerTemplateSerializer
-from ..serializers.generics import SimpleServerHyperlinkedModelSerializer
 
 
 class ServerTemplateList(generics.ListCreateAPIView):
     queryset = ServerTemplate.objects.all()
     serializer_class = ServerTemplateSerializer
-    resource_name = 'server-template'
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend]
+    filter_class = ServerTemplateFilter
+    ordering_fields = '__all__'
+    search_fields = ['name']
 
 
 class ServerTemplateDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = ServerTemplate.objects.all()
     serializer_class = ServerTemplateSerializer
-    resource_name = 'server-template'
 
 
-class ServerTemplateServerList(generics.ListAPIView):
+class ServerTemplateServerList(SimpleServerList):
     queryset = ServerTemplate.objects.all()
-    serializer_class = SimpleServerHyperlinkedModelSerializer
-    resource_name = 'server'
-
-    def get_queryset(self):
-        instance = ServerTemplate.objects.get(pk=self.kwargs['pk'])
-        return instance.get_server_list()

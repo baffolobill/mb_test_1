@@ -1,27 +1,27 @@
-# coding: utf-8
-from rest_framework import generics
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
+from rest_framework import generics, filters
+
+from .base import SimpleServerList
+from ..filters import FloorFilter
 from ..models import Floor
 from ..serializers import FloorSerializer
-from ..serializers.generics import SimpleServerHyperlinkedModelSerializer
 
 
 class FloorList(generics.ListCreateAPIView):
     queryset = Floor.objects.all()
     serializer_class = FloorSerializer
-    resource_name = 'floor'
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend]
+    filter_class = FloorFilter
+    ordering_fields = '__all__'
+    search_fields = ['name']
 
 
 class FloorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Floor.objects.all()
     serializer_class = FloorSerializer
-    resource_name = 'floor'
 
 
-class FloorServerList(generics.ListAPIView):
+class FloorServerList(SimpleServerList):
     queryset = Floor.objects.all()
-    serializer_class = SimpleServerHyperlinkedModelSerializer
-
-    def get_queryset(self):
-        obj = Floor.objects.get(id=self.kwargs['pk'])
-        return obj.get_server_list()

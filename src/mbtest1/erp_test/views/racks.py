@@ -1,15 +1,21 @@
-# coding: utf-8
-from rest_framework import generics
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
+from rest_framework import generics, filters
+
+from .base import SimpleServerList
+from ..filters import RackFilter
 from ..models import Rack
 from ..serializers import RackSerializer
-from ..serializers.generics import SimpleServerHyperlinkedModelSerializer
 
 
 class RackList(generics.ListCreateAPIView):
     queryset = Rack.objects.all()
     serializer_class = RackSerializer
-    resource_name = 'rack'
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend]
+    filter_class = RackFilter
+    ordering_fields = '__all__'
+    search_fields = ['name']
 
     def get_queryset(self):
         fullness = self.request.query_params.get('fullness', None)
@@ -20,13 +26,7 @@ class RackList(generics.ListCreateAPIView):
 class RackDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Rack.objects.all()
     serializer_class = RackSerializer
-    resource_name = 'rack'
 
 
-class RackServerList(generics.ListAPIView):
+class RackServerList(SimpleServerList):
     queryset = Rack.objects.all()
-    serializer_class = SimpleServerHyperlinkedModelSerializer
-
-    def get_queryset(self):
-        obj = Rack.objects.get(id=self.kwargs['pk'])
-        return obj.get_server_list()

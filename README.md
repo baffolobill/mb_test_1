@@ -5,6 +5,7 @@
 ## Требования
 - Django 1.8
 - Django Rest Framework 3.1.1
+- django-filter (https://github.com/alex/django-filter)
 
 
 ## Установка

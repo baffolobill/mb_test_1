@@ -1,28 +1,27 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from rest_framework import generics, filters
 
+from .base import SimpleServerList
+from ..filters import NodeFilter
 from ..models import Node
 from ..serializers import NodeSerializer
-from ..serializers.generics import SimpleServerHyperlinkedModelSerializer
 
 
 class NodeList(generics.ListCreateAPIView):
     queryset = Node.objects.all()
     serializer_class = NodeSerializer
-    resource_name = 'node'
-    filter_backends = (filters.OrderingFilter,)
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend]
+    filter_class = NodeFilter
+    ordering_fields = ['id', 'name', 'servers_count', 'created_at', 'updated_at']
+    search_fields = ['name', 'address']
 
 
 class NodeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Node.objects.all()
     serializer_class = NodeSerializer
-    resource_name = 'node'
 
 
-class NodeServerList(generics.ListAPIView):
+class NodeServerList(SimpleServerList):
     queryset = Node.objects.all()
-    serializer_class = SimpleServerHyperlinkedModelSerializer
-
-    def get_queryset(self):
-        node = Node.objects.get(pk=self.kwargs['pk'])
-        return node.get_server_list()

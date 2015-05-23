@@ -1,27 +1,27 @@
-# coding: utf-8
-from rest_framework import generics
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
+from rest_framework import generics, filters
+
+from .base import SimpleServerList
+from ..filters import RowFilter
 from ..models import Row
 from ..serializers import RowSerializer
-from ..serializers.generics import SimpleServerHyperlinkedModelSerializer
 
 
 class RowList(generics.ListCreateAPIView):
     queryset = Row.objects.all()
     serializer_class = RowSerializer
-    resource_name = 'row'
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend]
+    filter_class = RowFilter
+    ordering_fields = '__all__'
+    search_fields = ['name']
 
 
 class RowDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Row.objects.all()
     serializer_class = RowSerializer
-    resource_name = 'row'
 
 
-class RowServerList(generics.ListAPIView):
+class RowServerList(SimpleServerList):
     queryset = Row.objects.all()
-    serializer_class = SimpleServerHyperlinkedModelSerializer
-
-    def get_queryset(self):
-        obj = Row.objects.get(id=self.kwargs['pk'])
-        return obj.get_server_list()
