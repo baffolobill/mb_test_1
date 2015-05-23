@@ -11,7 +11,7 @@ class SimpleServerList(generics.ListAPIView):
     serializer_class = SimpleServerHyperlinkedModelSerializer
     filter_backends = [filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend]
     filter_class = SimpleServerFilter
-    ordering_fields = ['id', 'name', 'created_at', 'updated_at']
+    ordering_fields = ['id', 'name', 'basket', 'template', 'rack', 'created_at', 'updated_at']
     search_fields = ['name']
 
     def get_queryset(self):
