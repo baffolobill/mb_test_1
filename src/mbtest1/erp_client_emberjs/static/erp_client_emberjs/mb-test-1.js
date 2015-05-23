@@ -514,7 +514,18 @@ define('mb-test-1/controllers/basket', ['exports', 'ember'], function (exports, 
         needs: ['notification_center'],
         serversResultsLoader: (function () {
             return this.get('model').getServersLoader();
-        }).property('model')
+        }).property('model'),
+
+        sortField: Ember['default'].computed.oneWay('serversResultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('serversResultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('serversResultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -525,7 +536,17 @@ define('mb-test-1/controllers/baskets', ['exports', 'ember'], function (exports,
     exports['default'] = Ember['default'].Controller.extend({
         needs: ['application'],
 
-        resultsLoader: Ember['default'].computed.oneWay('model')
+        resultsLoader: Ember['default'].computed.oneWay('model'),
+        sortField: Ember['default'].computed.oneWay('resultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('resultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('resultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -537,7 +558,18 @@ define('mb-test-1/controllers/component', ['exports', 'ember'], function (export
         needs: ['notification_center'],
         propertiesResultsLoader: (function () {
             return this.get('model').getPropertiesLoader();
-        }).property('model')
+        }).property('model'),
+
+        sortField: Ember['default'].computed.oneWay('propertiesResultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('propertiesResultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('propertiesResultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -548,7 +580,17 @@ define('mb-test-1/controllers/components', ['exports', 'ember'], function (expor
     exports['default'] = Ember['default'].Controller.extend({
         needs: ['application'],
 
-        resultsLoader: Ember['default'].computed.oneWay('model')
+        resultsLoader: Ember['default'].computed.oneWay('model'),
+        sortField: Ember['default'].computed.oneWay('resultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('resultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('resultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -560,7 +602,18 @@ define('mb-test-1/controllers/floor', ['exports', 'ember'], function (exports, E
         needs: ['notification_center'],
         serversResultsLoader: (function () {
             return this.get('model').getServersLoader();
-        }).property('model')
+        }).property('model'),
+
+        sortField: Ember['default'].computed.oneWay('serversResultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('serversResultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('serversResultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -571,7 +624,17 @@ define('mb-test-1/controllers/floors', ['exports', 'ember'], function (exports, 
     exports['default'] = Ember['default'].Controller.extend({
         needs: ['application'],
 
-        resultsLoader: Ember['default'].computed.oneWay('model')
+        resultsLoader: Ember['default'].computed.oneWay('model'),
+        sortField: Ember['default'].computed.oneWay('resultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('resultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('resultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -651,7 +714,18 @@ define('mb-test-1/controllers/node', ['exports', 'ember'], function (exports, Em
         needs: ['notification_center'],
         serversResultsLoader: (function () {
             return this.get('model').getServersLoader();
-        }).property('model')
+        }).property('model'),
+
+        sortField: Ember['default'].computed.oneWay('serversResultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('serversResultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('serversResultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -662,7 +736,17 @@ define('mb-test-1/controllers/nodes', ['exports', 'ember'], function (exports, E
     exports['default'] = Ember['default'].Controller.extend({
         needs: ['application'],
 
-        resultsLoader: Ember['default'].computed.oneWay('model')
+        resultsLoader: Ember['default'].computed.oneWay('model'),
+        sortField: Ember['default'].computed.oneWay('resultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('resultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('resultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -742,7 +826,18 @@ define('mb-test-1/controllers/rack', ['exports', 'ember'], function (exports, Em
         needs: ['notification_center'],
         serversResultsLoader: (function () {
             return this.get('model').getServersLoader();
-        }).property('model')
+        }).property('model'),
+
+        sortField: Ember['default'].computed.oneWay('serversResultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('serversResultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('serversResultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -753,7 +848,17 @@ define('mb-test-1/controllers/racks', ['exports', 'ember'], function (exports, E
     exports['default'] = Ember['default'].Controller.extend({
         needs: ['application'],
 
-        resultsLoader: Ember['default'].computed.oneWay('model')
+        resultsLoader: Ember['default'].computed.oneWay('model'),
+        sortField: Ember['default'].computed.oneWay('resultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('resultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('resultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -765,7 +870,18 @@ define('mb-test-1/controllers/room', ['exports', 'ember'], function (exports, Em
         needs: ['notification_center'],
         serversResultsLoader: (function () {
             return this.get('model').getServersLoader();
-        }).property('model')
+        }).property('model'),
+
+        sortField: Ember['default'].computed.oneWay('serversResultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('serversResultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('serversResultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -776,7 +892,17 @@ define('mb-test-1/controllers/rooms', ['exports', 'ember'], function (exports, E
     exports['default'] = Ember['default'].Controller.extend({
         needs: ['application'],
 
-        resultsLoader: Ember['default'].computed.oneWay('model')
+        resultsLoader: Ember['default'].computed.oneWay('model'),
+        sortField: Ember['default'].computed.oneWay('resultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('resultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('resultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -788,7 +914,18 @@ define('mb-test-1/controllers/row', ['exports', 'ember'], function (exports, Emb
         needs: ['notification_center'],
         serversResultsLoader: (function () {
             return this.get('model').getServersLoader();
-        }).property('model')
+        }).property('model'),
+
+        sortField: Ember['default'].computed.oneWay('serversResultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('serversResultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('serversResultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -799,7 +936,17 @@ define('mb-test-1/controllers/rows', ['exports', 'ember'], function (exports, Em
     exports['default'] = Ember['default'].Controller.extend({
         needs: ['application'],
 
-        resultsLoader: Ember['default'].computed.oneWay('model')
+        resultsLoader: Ember['default'].computed.oneWay('model'),
+        sortField: Ember['default'].computed.oneWay('resultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('resultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('resultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -822,7 +969,17 @@ define('mb-test-1/controllers/servers', ['exports', 'ember'], function (exports,
     exports['default'] = Ember['default'].Controller.extend({
         needs: ['application'],
 
-        resultsLoader: Ember['default'].computed.oneWay('model')
+        resultsLoader: Ember['default'].computed.oneWay('model'),
+        sortField: Ember['default'].computed.oneWay('resultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('resultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('resultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -834,7 +991,18 @@ define('mb-test-1/controllers/servertemplate', ['exports', 'ember'], function (e
         needs: ['notification_center'],
         serversResultsLoader: (function () {
             return this.get('model').getServersLoader();
-        }).property('model')
+        }).property('model'),
+
+        sortField: Ember['default'].computed.oneWay('serversResultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('serversResultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('serversResultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -845,7 +1013,17 @@ define('mb-test-1/controllers/servertemplates', ['exports', 'ember'], function (
     exports['default'] = Ember['default'].Controller.extend({
         needs: ['application'],
 
-        resultsLoader: Ember['default'].computed.oneWay('model')
+        resultsLoader: Ember['default'].computed.oneWay('model'),
+        sortField: Ember['default'].computed.oneWay('resultsLoader.sortField'),
+        sortOrder: Ember['default'].computed.oneWay('resultsLoader.sortDirection'),
+        actions: {
+            changeSortOrder: function changeSortOrder(field, direction) {
+                this.get('resultsLoader').setProperties({
+                    sortField: field,
+                    sortDirection: direction
+                });
+            }
+        }
     });
 
 });
@@ -2720,7 +2898,8 @@ define('mb-test-1/models/core/search-model-array', ['exports', 'ember', 'mb-test
         return Ember['default'].computed.readOnly("counts." + type);
     };
 
-    var SearchModelArray = ModelArray['default'].extend(Ember['default'].SortableMixin, {});
+    //var SearchModelArray = ModelArray.extend(Ember.SortableMixin, {
+    var SearchModelArray = ModelArray['default'].extend({});
 
     exports['default'] = SearchModelArray;
 
@@ -2832,25 +3011,12 @@ define('mb-test-1/models/node', ['exports', 'ember', 'mb-test-1/models/core/mode
         type_name: "Node",
         type_plural: "Nodes",
 
-        //name: DS.attr('string'),
-        //address: DS.attr('string'),
-
-        //floors: DS.hasMany('floor', { async: true }),
-        //racks: DS.hasMany('rack', { async: true }),
-        //servers: DS.hasMany('server', { async: true }),
-
-        /*servers_count: function(){
-            return this.get('servers').get('length');
-        }.property('servers'),*/
-
-        servers: Model['default'].hasMany("servers", "server"),
-
         getServersLoader: utils__model.generateResultsLoader("servers", "servers_uri"),
         getResultsLoader: utils__model.generateResultsLoader("nodes", "uri"),
 
         servers_uri: (function () {
-            return "/nodes/" + this.get("id") + "/servers";
-        }).property("uri", "id") });
+            return this.get("uri") + "/servers";
+        }).property("uri") });
 
 });
 define('mb-test-1/models/property', ['exports', 'ember', 'mb-test-1/models/core/model', 'mb-test-1/utils/model'], function (exports, Ember, Model, utils__model) {
@@ -3022,14 +3188,15 @@ define('mb-test-1/models/results-loaders/base', ['exports', 'mb-test-1/lib/utils
     exports['default'] = Ember['default'].Object.extend({
         limit: 50,
         sort: (function () {
-            return this.get("sortDirection") + this.get("sortField");
+            var direction = this.get("sortDirection") === "asc" ? "" : "-";
+            return direction + this.get("sortField");
         }).property("sortField", "sortDirection"),
 
         setSortField: function setSortField(field) {
             var oldValue = this.get("sortField");
-            var direction = "";
+            var direction = "desc";
             if (field === oldValue) {
-                direction = this.get("sortDirection") === "asc" ? "-" : "";
+                direction = this.get("sortDirection") === "asc" ? "desc" : "asc";
             }
             this.setProperties({
                 sortDirection: direction,
@@ -3037,7 +3204,7 @@ define('mb-test-1/models/results-loaders/base', ['exports', 'mb-test-1/lib/utils
             });
         },
 
-        sortDirection: "-",
+        sortDirection: "desc",
         sortField: "updated_at",
 
         resultsUri: (function () {
@@ -3059,7 +3226,7 @@ define('mb-test-1/models/results-loaders/base', ['exports', 'mb-test-1/lib/utils
             var uri = this.get("resultsUri");
             var type = this.get("resultsType");
 
-            Ember['default'].Logger.debug("results-loaders.base.results: uri=", uri);
+            //Ember.Logger.debug("results-loaders.base.results: uri=", uri);
 
             if (Ember['default'].isBlank(uri)) {
                 return ModelArray['default'].create({
@@ -3595,8 +3762,11 @@ define('mb-test-1/routes/application', ['exports', 'ember'], function (exports, 
             this.set('errorTimestamps', []);
         },
 
-        redirect: function redirect() {
-            this.transitionTo('nodes');
+        redirect: function redirect(model, transition) {
+            //Ember.Logger.debug('ApplicationRoute.redirect:', model, transition);
+            if (transition.targetName === 'index') {
+                this.transitionTo('nodes');
+            }
         },
 
         actions: {
@@ -6685,7 +6855,7 @@ define('mb-test-1/templates/modals/basket-add-modal', ['exports'], function (exp
           inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
           inline(env, morph1, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Height in units", "field": "unit_takes", "name": "unit_takes"});
           inline(env, morph2, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Total slots Qty", "field": "slot_qty", "name": "slot_qty"});
-          inline(env, morph3, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.racksForSelect"), "value": get(env, context, "view.parentView.selectedRack"), "labelText": "Rack", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "rack", "field": "rack", "prompt": "---"});
+          inline(env, morph3, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.racksForSelect"), "value": get(env, context, "view.model.rack"), "labelText": "Rack", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "rack", "field": "rack", "prompt": "---"});
           return fragment;
         }
       };
@@ -6868,7 +7038,7 @@ define('mb-test-1/templates/modals/basket-update-modal', ['exports'], function (
           inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name"});
           inline(env, morph1, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Height in units", "field": "unit_takes"});
           inline(env, morph2, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Total slots Qty", "field": "slot_qty"});
-          inline(env, morph3, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.racksForSelect"), "value": get(env, context, "view.parentView.selectedRack"), "labelText": "Rack", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "rack", "field": "rack", "prompt": "---"});
+          inline(env, morph3, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.racksForSelect"), "value": get(env, context, "view.model.rack"), "labelText": "Rack", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "rack", "field": "rack", "prompt": "---"});
           return fragment;
         }
       };
@@ -6983,7 +7153,7 @@ define('mb-test-1/templates/modals/component-add-modal', ['exports'], function (
           inline(env, morph1, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Manufacturer", "field": "manufacturer", "name": "manufacturer"});
           inline(env, morph2, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Model name", "field": "model_name", "name": "model_name"});
           inline(env, morph3, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Serial number", "field": "serial_number", "name": "serial_number"});
-          inline(env, morph4, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.kindsForSelect"), "value": get(env, context, "view.parentView.selectedKind"), "labelText": "Kind", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "kind", "field": "kind"});
+          inline(env, morph4, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.kindsForSelect"), "value": get(env, context, "view.model.kind"), "labelText": "Kind", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "kind", "field": "kind"});
           return fragment;
         }
       };
@@ -7172,7 +7342,7 @@ define('mb-test-1/templates/modals/component-update-modal', ['exports'], functio
           inline(env, morph1, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Manufacturer", "field": "manufacturer", "name": "manufacturer"});
           inline(env, morph2, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Model name", "field": "model_name", "name": "model_name"});
           inline(env, morph3, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Serial number", "field": "serial_number", "name": "serial_number"});
-          inline(env, morph4, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.kindsForSelect"), "value": get(env, context, "view.parentView.selectedKind"), "labelText": "Kind", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "kind", "field": "kind", "disabled": true});
+          inline(env, morph4, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.kindsForSelect"), "value": get(env, context, "view.model.kind"), "labelText": "Kind", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "kind", "field": "kind", "disabled": true});
           return fragment;
         }
       };
@@ -7267,7 +7437,7 @@ define('mb-test-1/templates/modals/floor-add-modal', ['exports'], function (expo
           }
           var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
           var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
-          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "inputClassNames": "full", "labelText": "Name", "field": "name", "name": "name"});
+          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
           inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.nodesForSelect"), "value": get(env, context, "view.model.node"), "labelText": "Node", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "node", "field": "node"});
           return fragment;
         }
@@ -7438,8 +7608,8 @@ define('mb-test-1/templates/modals/floor-update-modal', ['exports'], function (e
           }
           var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
           var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
-          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name"});
-          inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.nodesForSelect"), "value": get(env, context, "view.parentView.selectedNode"), "labelText": "Node", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "node", "field": "node"});
+          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
+          inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.nodesForSelect"), "value": get(env, context, "view.model.node"), "labelText": "Node", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "node", "field": "node"});
           return fragment;
         }
       };
@@ -8077,7 +8247,7 @@ define('mb-test-1/templates/modals/node-add-modal', ['exports'], function (expor
           }
           var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
           var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
-          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "inputClassNames": "full", "labelText": "Name", "field": "name", "name": "name"});
+          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
           inline(env, morph1, context, "view", ["form-fields/textarea-form-field"], {"model": get(env, context, "view.model"), "inputClassNames": "full", "labelText": "Address", "field": "address", "name": "address"});
           return fragment;
         }
@@ -8248,8 +8418,8 @@ define('mb-test-1/templates/modals/node-update-modal', ['exports'], function (ex
           }
           var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
           var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
-          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name"});
-          inline(env, morph1, context, "view", ["form-fields/textarea-form-field"], {"model": get(env, context, "view.model"), "labelText": "Address", "field": "address", "maxlength": 434});
+          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
+          inline(env, morph1, context, "view", ["form-fields/textarea-form-field"], {"model": get(env, context, "view.model"), "labelText": "Address", "field": "address", "name": "address", "maxlength": 434});
           return fragment;
         }
       };
@@ -8350,9 +8520,9 @@ define('mb-test-1/templates/modals/rack-add-modal', ['exports'], function (expor
           var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
           var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
           var morph2 = dom.createMorphAt(fragment,5,5,contextualElement);
-          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "inputClassNames": "full", "labelText": "Name", "field": "name", "name": "name"});
+          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
           inline(env, morph1, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "inputClassNames": "full", "labelText": "Total units", "field": "total_units", "name": "total_units"});
-          inline(env, morph2, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.rowsForSelect"), "value": get(env, context, "view.parentView.selectedRow"), "labelText": "Row", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "row", "field": "row"});
+          inline(env, morph2, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.rowsForSelect"), "value": get(env, context, "view.model.row"), "labelText": "Row", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "row", "field": "row"});
           return fragment;
         }
       };
@@ -8527,9 +8697,9 @@ define('mb-test-1/templates/modals/rack-update-modal', ['exports'], function (ex
           var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
           var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
           var morph2 = dom.createMorphAt(fragment,5,5,contextualElement);
-          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name"});
-          inline(env, morph1, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Total units", "field": "total_units"});
-          inline(env, morph2, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.rowsForSelect"), "value": get(env, context, "view.parentView.selectedRow"), "labelText": "Row", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "row", "field": "row"});
+          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
+          inline(env, morph1, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Total units", "field": "total_units", "name": "total_units"});
+          inline(env, morph2, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.rowsForSelect"), "value": get(env, context, "view.model.row"), "labelText": "Row", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "row", "field": "row"});
           return fragment;
         }
       };
@@ -8625,7 +8795,7 @@ define('mb-test-1/templates/modals/room-add-modal', ['exports'], function (expor
           }
           var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
           var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
-          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "inputClassNames": "full", "labelText": "Name", "field": "name", "name": "name"});
+          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
           inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.floorsForSelect"), "value": get(env, context, "view.model.floor"), "labelText": "Floor", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "floor", "field": "floor"});
           return fragment;
         }
@@ -8796,8 +8966,8 @@ define('mb-test-1/templates/modals/room-update-modal', ['exports'], function (ex
           }
           var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
           var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
-          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name"});
-          inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.floorsForSelect"), "value": get(env, context, "view.parentView.selectedFloor"), "labelText": "Floor", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "floor", "field": "floor"});
+          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
+          inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.floorsForSelect"), "value": get(env, context, "view.model.floor"), "labelText": "Floor", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "floor", "field": "floor"});
           return fragment;
         }
       };
@@ -8893,8 +9063,8 @@ define('mb-test-1/templates/modals/row-add-modal', ['exports'], function (export
           }
           var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
           var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
-          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "inputClassNames": "full", "labelText": "Name", "field": "name", "name": "name"});
-          inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.roomsForSelect"), "value": get(env, context, "view.parentView.selectedRoom"), "labelText": "Room", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "room", "field": "room"});
+          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
+          inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.roomsForSelect"), "value": get(env, context, "view.model.room"), "labelText": "Room", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "room", "field": "room"});
           return fragment;
         }
       };
@@ -9064,8 +9234,8 @@ define('mb-test-1/templates/modals/row-update-modal', ['exports'], function (exp
           }
           var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
           var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
-          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name"});
-          inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.roomsForSelect"), "value": get(env, context, "view.parentView.selectedRoom"), "labelText": "Room", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "room", "field": "room"});
+          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
+          inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.roomsForSelect"), "value": get(env, context, "view.model.room"), "labelText": "Room", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "room", "field": "room"});
           return fragment;
         }
       };
@@ -9162,7 +9332,7 @@ define('mb-test-1/templates/modals/server-add-modal', ['exports'], function (exp
           var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
           var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
           inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
-          inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.templatesForSelect"), "value": get(env, context, "view.parentView.selectedTemplate"), "labelText": "Server template", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "template", "field": "template"});
+          inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.templatesForSelect"), "value": get(env, context, "view.model.template"), "labelText": "Server template", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "template", "field": "template"});
           return fragment;
         }
       };
@@ -9332,8 +9502,8 @@ define('mb-test-1/templates/modals/server-update-modal', ['exports'], function (
           }
           var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
           var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
-          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name"});
-          inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.templatesForSelect"), "value": get(env, context, "view.parentView.selectedTemplate"), "labelText": "Server Template", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "template", "field": "template", "disabled": true});
+          inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
+          inline(env, morph1, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.templatesForSelect"), "value": get(env, context, "view.model.template"), "labelText": "Server Template", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "template", "field": "template", "disabled": true});
           return fragment;
         }
       };
@@ -9543,9 +9713,9 @@ define('mb-test-1/templates/modals/servertemplate-add-modal', ['exports'], funct
           var morph6 = dom.createMorphAt(element1,1,1);
           inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
           inline(env, morph1, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Unit takes", "field": "unit_takes", "name": "unit_takes"});
-          inline(env, morph2, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.cpuSocketsForSelect"), "value": get(env, context, "view.parentView.selectedCPUSocket"), "labelText": "CPU Socket", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "cpu_socket", "field": "cpu_socket"});
+          inline(env, morph2, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.cpuSocketsForSelect"), "value": get(env, context, "view.model.cpu_socket"), "labelText": "CPU Socket", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "cpu_socket", "field": "cpu_socket"});
           inline(env, morph3, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "CPU Quantity", "field": "cpu_qty", "name": "cpu_qty"});
-          inline(env, morph4, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.ramStandardsForSelect"), "value": get(env, context, "view.parentView.selectedRAMStandard"), "labelText": "RAM Standard", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "ram_standard", "field": "ram_standard"});
+          inline(env, morph4, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.ramStandardsForSelect"), "value": get(env, context, "view.model.ram_standard"), "labelText": "RAM Standard", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "ram_standard", "field": "ram_standard"});
           inline(env, morph5, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "RAM Quantity", "field": "ram_qty", "name": "ram_qty"});
           block(env, morph6, context, "each", [get(env, context, "view.model.hdds")], {"keyword": "hdd"}, child0, null);
           element(env, element2, context, "action", ["addHdd"], {"on": "click", "target": get(env, context, "view.parentView")});
@@ -9832,9 +10002,9 @@ define('mb-test-1/templates/modals/servertemplate-update-modal', ['exports'], fu
           var morph6 = dom.createMorphAt(element1,1,1);
           inline(env, morph0, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Name", "field": "name", "name": "name"});
           inline(env, morph1, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "Unit takes", "field": "unit_takes", "name": "unit_takes"});
-          inline(env, morph2, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.cpuSocketsForSelect"), "value": get(env, context, "view.parentView.selectedCPUSocket"), "labelText": "CPU Socket", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "cpu_socket", "field": "cpu_socket"});
+          inline(env, morph2, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.cpuSocketsForSelect"), "value": get(env, context, "view.model.cpu_socket"), "labelText": "CPU Socket", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "cpu_socket", "field": "cpu_socket"});
           inline(env, morph3, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "CPU Quantity", "field": "cpu_qty", "name": "cpu_qty"});
-          inline(env, morph4, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.ramStandardsForSelect"), "value": get(env, context, "view.parentView.selectedRAMStandard"), "labelText": "RAM Standard", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "ram_standard", "field": "ram_standard"});
+          inline(env, morph4, context, "view", ["form-fields/select-form-field"], {"model": get(env, context, "view.model"), "content": get(env, context, "view.parentView.ramStandardsForSelect"), "value": get(env, context, "view.model.ram_standard"), "labelText": "RAM Standard", "optionValuePath": "content.value", "optionLabelPath": "content.label", "name": "ram_standard", "field": "ram_standard"});
           inline(env, morph5, context, "view", ["form-fields/text-form-field"], {"model": get(env, context, "view.model"), "labelText": "RAM Quantity", "field": "ram_qty", "name": "ram_qty"});
           block(env, morph6, context, "each", [get(env, context, "view.model.hdds")], {"keyword": "hdd"}, child0, null);
           element(env, element2, context, "action", ["addHdd"], {"on": "click", "target": get(env, context, "view.parentView")});
@@ -11087,6 +11257,348 @@ define('mb-test-1/templates/results/baskets-table', ['exports'], function (expor
         hasRendered: false,
         build: function build(dom) {
           var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("ID");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child1 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Name");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child2 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Slot Qty");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child3 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Unit Takes");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child4 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Rack");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child5 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Row");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child6 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Room");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child7 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Floor");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child8 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Node");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child9 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
           var el1 = dom.createTextNode("    ");
           dom.appendChild(el0, el1);
           var el1 = dom.createComment("");
@@ -11121,7 +11633,7 @@ define('mb-test-1/templates/results/baskets-table', ['exports'], function (expor
         }
       };
     }());
-    var child1 = (function() {
+    var child10 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -11225,7 +11737,7 @@ define('mb-test-1/templates/results/baskets-table', ['exports'], function (expor
         }
       };
     }());
-    var child2 = (function() {
+    var child11 = (function() {
       var child0 = (function() {
         return {
           isHTMLBars: true,
@@ -11369,76 +11881,64 @@ define('mb-test-1/templates/results/baskets-table', ['exports'], function (expor
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("ID");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Name");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Slot Qty");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Unit Takes");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Rack");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Row");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Room");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Floor");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Node");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-2 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
@@ -11465,7 +11965,7 @@ define('mb-test-1/templates/results/baskets-table', ['exports'], function (expor
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
+        var hooks = env.hooks, block = hooks.block, get = hooks.get;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -11483,10 +11983,29 @@ define('mb-test-1/templates/results/baskets-table', ['exports'], function (expor
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(fragment,2,2,contextualElement);
-        var morph1 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
-        block(env, morph0, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child0, null);
-        block(env, morph1, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child1, child2);
+        var element1 = dom.childAt(fragment, [0, 1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element1, [1]),0,0);
+        var morph1 = dom.createMorphAt(dom.childAt(element1, [3]),0,0);
+        var morph2 = dom.createMorphAt(dom.childAt(element1, [5]),0,0);
+        var morph3 = dom.createMorphAt(dom.childAt(element1, [7]),0,0);
+        var morph4 = dom.createMorphAt(dom.childAt(element1, [9]),0,0);
+        var morph5 = dom.createMorphAt(dom.childAt(element1, [11]),0,0);
+        var morph6 = dom.createMorphAt(dom.childAt(element1, [13]),0,0);
+        var morph7 = dom.createMorphAt(dom.childAt(element1, [15]),0,0);
+        var morph8 = dom.createMorphAt(dom.childAt(element1, [17]),0,0);
+        var morph9 = dom.createMorphAt(fragment,2,2,contextualElement);
+        var morph10 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
+        block(env, morph0, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "id"}, child0, null);
+        block(env, morph1, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "name"}, child1, null);
+        block(env, morph2, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "slot_qty"}, child2, null);
+        block(env, morph3, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "unit_takes"}, child3, null);
+        block(env, morph4, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "rack"}, child4, null);
+        block(env, morph5, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "row"}, child5, null);
+        block(env, morph6, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "room"}, child6, null);
+        block(env, morph7, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "floor"}, child7, null);
+        block(env, morph8, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "node"}, child8, null);
+        block(env, morph9, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child9, null);
+        block(env, morph10, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child10, child11);
         return fragment;
       }
     };
@@ -11633,7 +12152,7 @@ define('mb-test-1/templates/results/component-properties-table', ['exports'], fu
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-4");
+        dom.setAttribute(el3,"class","col-md-4");
         var el4 = dom.createElement("span");
         var el5 = dom.createTextNode("Title");
         dom.appendChild(el4, el5);
@@ -11642,7 +12161,7 @@ define('mb-test-1/templates/results/component-properties-table', ['exports'], fu
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-8");
+        dom.setAttribute(el3,"class","col-md-8");
         var el4 = dom.createElement("span");
         var el5 = dom.createTextNode("Value");
         dom.appendChild(el4, el5);
@@ -11708,6 +12227,310 @@ define('mb-test-1/templates/results/components-table', ['exports'], function (ex
         hasRendered: false,
         build: function build(dom) {
           var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("ID");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child1 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Name");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child2 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Manufacturer");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child3 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Model name");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child4 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Serial Number");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child5 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Kind");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child6 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("State");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child7 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Server");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child8 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
           var el1 = dom.createTextNode("    ");
           dom.appendChild(el0, el1);
           var el1 = dom.createComment("");
@@ -11742,7 +12565,7 @@ define('mb-test-1/templates/results/components-table', ['exports'], function (ex
         }
       };
     }());
-    var child1 = (function() {
+    var child9 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -11846,7 +12669,7 @@ define('mb-test-1/templates/results/components-table', ['exports'], function (ex
         }
       };
     }());
-    var child2 = (function() {
+    var child10 = (function() {
       var child0 = (function() {
         return {
           isHTMLBars: true,
@@ -11990,66 +12813,57 @@ define('mb-test-1/templates/results/components-table', ['exports'], function (ex
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("ID");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Name");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("th");
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Manufacturer");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Model name");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Serial Number");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Kind");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("State");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n        ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Server");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
@@ -12076,7 +12890,7 @@ define('mb-test-1/templates/results/components-table', ['exports'], function (ex
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
+        var hooks = env.hooks, block = hooks.block, get = hooks.get;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -12094,10 +12908,27 @@ define('mb-test-1/templates/results/components-table', ['exports'], function (ex
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(fragment,2,2,contextualElement);
-        var morph1 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
-        block(env, morph0, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child0, null);
-        block(env, morph1, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child1, child2);
+        var element1 = dom.childAt(fragment, [0, 1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element1, [1]),0,0);
+        var morph1 = dom.createMorphAt(dom.childAt(element1, [3]),0,0);
+        var morph2 = dom.createMorphAt(dom.childAt(element1, [5]),0,0);
+        var morph3 = dom.createMorphAt(dom.childAt(element1, [7]),0,0);
+        var morph4 = dom.createMorphAt(dom.childAt(element1, [9]),0,0);
+        var morph5 = dom.createMorphAt(dom.childAt(element1, [11]),0,0);
+        var morph6 = dom.createMorphAt(dom.childAt(element1, [13]),0,0);
+        var morph7 = dom.createMorphAt(dom.childAt(element1, [15]),0,0);
+        var morph8 = dom.createMorphAt(fragment,2,2,contextualElement);
+        var morph9 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
+        block(env, morph0, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "id"}, child0, null);
+        block(env, morph1, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "name"}, child1, null);
+        block(env, morph2, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "manufacturer"}, child2, null);
+        block(env, morph3, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "model_name"}, child3, null);
+        block(env, morph4, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "serial_number"}, child4, null);
+        block(env, morph5, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "kind"}, child5, null);
+        block(env, morph6, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "state"}, child6, null);
+        block(env, morph7, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "server"}, child7, null);
+        block(env, morph8, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child8, null);
+        block(env, morph9, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child9, child10);
         return fragment;
       }
     };
@@ -12110,6 +12941,120 @@ define('mb-test-1/templates/results/floors-table', ['exports'], function (export
 
   exports['default'] = Ember.HTMLBars.template((function() {
     var child0 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("ID");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child1 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Name");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child2 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Node");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child3 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -12152,7 +13097,7 @@ define('mb-test-1/templates/results/floors-table', ['exports'], function (export
         }
       };
     }());
-    var child1 = (function() {
+    var child4 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -12216,7 +13161,7 @@ define('mb-test-1/templates/results/floors-table', ['exports'], function (export
         }
       };
     }());
-    var child2 = (function() {
+    var child5 = (function() {
       var child0 = (function() {
         return {
           isHTMLBars: true,
@@ -12360,26 +13305,22 @@ define('mb-test-1/templates/results/floors-table', ['exports'], function (export
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("ID");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Name");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Node");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
@@ -12406,7 +13347,7 @@ define('mb-test-1/templates/results/floors-table', ['exports'], function (export
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
+        var hooks = env.hooks, block = hooks.block, get = hooks.get;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -12424,10 +13365,17 @@ define('mb-test-1/templates/results/floors-table', ['exports'], function (export
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(fragment,2,2,contextualElement);
-        var morph1 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
-        block(env, morph0, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child0, null);
-        block(env, morph1, context, "each", [get(env, context, "view.loader.results")], {"keyword": "floor"}, child1, child2);
+        var element1 = dom.childAt(fragment, [0, 1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element1, [1]),0,0);
+        var morph1 = dom.createMorphAt(dom.childAt(element1, [3]),0,0);
+        var morph2 = dom.createMorphAt(dom.childAt(element1, [5]),0,0);
+        var morph3 = dom.createMorphAt(fragment,2,2,contextualElement);
+        var morph4 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
+        block(env, morph0, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "id"}, child0, null);
+        block(env, morph1, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "name"}, child1, null);
+        block(env, morph2, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "node"}, child2, null);
+        block(env, morph3, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child3, null);
+        block(env, morph4, context, "each", [get(env, context, "view.loader.results")], {"keyword": "floor"}, child4, child5);
         return fragment;
       }
     };
@@ -12440,6 +13388,196 @@ define('mb-test-1/templates/results/node-servers-table', ['exports'], function (
 
   exports['default'] = Ember.HTMLBars.template((function() {
     var child0 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("ID");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child1 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Name");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child2 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Template");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child3 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Basket");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child4 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Rack");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child5 = (function() {
       var child0 = (function() {
         return {
           isHTMLBars: true,
@@ -12478,7 +13616,7 @@ define('mb-test-1/templates/results/node-servers-table', ['exports'], function (
               fragment = this.build(dom);
             }
             var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
-            inline(env, morph0, context, "view", ["tables/cells/titled-linked-cell"], {"routeName": "basket", "item": get(env, context, "server.basket.id"), "labelText": get(env, context, "server.basket.name")});
+            inline(env, morph0, context, "view", ["tables/cells/titled-linked-cell"], {"routeName": "servertemplate", "item": get(env, context, "server.template.id"), "labelText": get(env, context, "server.template.name")});
             return fragment;
           }
         };
@@ -12563,7 +13701,7 @@ define('mb-test-1/templates/results/node-servers-table', ['exports'], function (
               fragment = this.build(dom);
             }
             var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
-            inline(env, morph0, context, "view", ["tables/cells/titled-linked-cell"], {"routeName": "rack", "item": get(env, context, "server.rack.id"), "labelText": get(env, context, "server.rack.name")});
+            inline(env, morph0, context, "view", ["tables/cells/titled-linked-cell"], {"routeName": "basket", "item": get(env, context, "server.basket.id"), "labelText": get(env, context, "server.basket.name")});
             return fragment;
           }
         };
@@ -12648,182 +13786,12 @@ define('mb-test-1/templates/results/node-servers-table', ['exports'], function (
               fragment = this.build(dom);
             }
             var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
-            inline(env, morph0, context, "view", ["tables/cells/titled-linked-cell"], {"routeName": "row", "item": get(env, context, "server.row.id"), "labelText": get(env, context, "server.row.name")});
+            inline(env, morph0, context, "view", ["tables/cells/titled-linked-cell"], {"routeName": "rack", "item": get(env, context, "server.rack.id"), "labelText": get(env, context, "server.rack.name")});
             return fragment;
           }
         };
       }());
       var child5 = (function() {
-        return {
-          isHTMLBars: true,
-          revision: "Ember@1.11.1",
-          blockParams: 0,
-          cachedFragment: null,
-          hasRendered: false,
-          build: function build(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode("            ");
-            dom.appendChild(el0, el1);
-            var el1 = dom.createElement("td");
-            var el2 = dom.createTextNode("---");
-            dom.appendChild(el1, el2);
-            dom.appendChild(el0, el1);
-            var el1 = dom.createTextNode("\n");
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          render: function render(context, env, contextualElement) {
-            var dom = env.dom;
-            dom.detectNamespace(contextualElement);
-            var fragment;
-            if (env.useFragmentCache && dom.canClone) {
-              if (this.cachedFragment === null) {
-                fragment = this.build(dom);
-                if (this.hasRendered) {
-                  this.cachedFragment = fragment;
-                } else {
-                  this.hasRendered = true;
-                }
-              }
-              if (this.cachedFragment) {
-                fragment = dom.cloneNode(this.cachedFragment, true);
-              }
-            } else {
-              fragment = this.build(dom);
-            }
-            return fragment;
-          }
-        };
-      }());
-      var child6 = (function() {
-        return {
-          isHTMLBars: true,
-          revision: "Ember@1.11.1",
-          blockParams: 0,
-          cachedFragment: null,
-          hasRendered: false,
-          build: function build(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode("            ");
-            dom.appendChild(el0, el1);
-            var el1 = dom.createComment("");
-            dom.appendChild(el0, el1);
-            var el1 = dom.createTextNode("\n");
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          render: function render(context, env, contextualElement) {
-            var dom = env.dom;
-            var hooks = env.hooks, get = hooks.get, inline = hooks.inline;
-            dom.detectNamespace(contextualElement);
-            var fragment;
-            if (env.useFragmentCache && dom.canClone) {
-              if (this.cachedFragment === null) {
-                fragment = this.build(dom);
-                if (this.hasRendered) {
-                  this.cachedFragment = fragment;
-                } else {
-                  this.hasRendered = true;
-                }
-              }
-              if (this.cachedFragment) {
-                fragment = dom.cloneNode(this.cachedFragment, true);
-              }
-            } else {
-              fragment = this.build(dom);
-            }
-            var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
-            inline(env, morph0, context, "view", ["tables/cells/titled-linked-cell"], {"routeName": "room", "item": get(env, context, "server.room.id"), "labelText": get(env, context, "server.room.name")});
-            return fragment;
-          }
-        };
-      }());
-      var child7 = (function() {
-        return {
-          isHTMLBars: true,
-          revision: "Ember@1.11.1",
-          blockParams: 0,
-          cachedFragment: null,
-          hasRendered: false,
-          build: function build(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode("            ");
-            dom.appendChild(el0, el1);
-            var el1 = dom.createElement("td");
-            var el2 = dom.createTextNode("---");
-            dom.appendChild(el1, el2);
-            dom.appendChild(el0, el1);
-            var el1 = dom.createTextNode("\n");
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          render: function render(context, env, contextualElement) {
-            var dom = env.dom;
-            dom.detectNamespace(contextualElement);
-            var fragment;
-            if (env.useFragmentCache && dom.canClone) {
-              if (this.cachedFragment === null) {
-                fragment = this.build(dom);
-                if (this.hasRendered) {
-                  this.cachedFragment = fragment;
-                } else {
-                  this.hasRendered = true;
-                }
-              }
-              if (this.cachedFragment) {
-                fragment = dom.cloneNode(this.cachedFragment, true);
-              }
-            } else {
-              fragment = this.build(dom);
-            }
-            return fragment;
-          }
-        };
-      }());
-      var child8 = (function() {
-        return {
-          isHTMLBars: true,
-          revision: "Ember@1.11.1",
-          blockParams: 0,
-          cachedFragment: null,
-          hasRendered: false,
-          build: function build(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode("            ");
-            dom.appendChild(el0, el1);
-            var el1 = dom.createComment("");
-            dom.appendChild(el0, el1);
-            var el1 = dom.createTextNode("\n");
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          render: function render(context, env, contextualElement) {
-            var dom = env.dom;
-            var hooks = env.hooks, get = hooks.get, inline = hooks.inline;
-            dom.detectNamespace(contextualElement);
-            var fragment;
-            if (env.useFragmentCache && dom.canClone) {
-              if (this.cachedFragment === null) {
-                fragment = this.build(dom);
-                if (this.hasRendered) {
-                  this.cachedFragment = fragment;
-                } else {
-                  this.hasRendered = true;
-                }
-              }
-              if (this.cachedFragment) {
-                fragment = dom.cloneNode(this.cachedFragment, true);
-              }
-            } else {
-              fragment = this.build(dom);
-            }
-            var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
-            inline(env, morph0, context, "view", ["tables/cells/titled-linked-cell"], {"routeName": "floor", "item": get(env, context, "server.floor.id"), "labelText": get(env, context, "server.floor.name")});
-            return fragment;
-          }
-        };
-      }());
-      var child9 = (function() {
         return {
           isHTMLBars: true,
           revision: "Ember@1.11.1",
@@ -12886,15 +13854,7 @@ define('mb-test-1/templates/results/node-servers-table', ['exports'], function (
           dom.appendChild(el1, el2);
           var el2 = dom.createComment("");
           dom.appendChild(el1, el2);
-          var el2 = dom.createTextNode("\n");
-          dom.appendChild(el1, el2);
-          var el2 = dom.createComment("");
-          dom.appendChild(el1, el2);
-          var el2 = dom.createTextNode("\n");
-          dom.appendChild(el1, el2);
-          var el2 = dom.createComment("");
-          dom.appendChild(el1, el2);
-          var el2 = dom.createTextNode("\n");
+          var el2 = dom.createTextNode("\n\n");
           dom.appendChild(el1, el2);
           var el2 = dom.createComment("");
           dom.appendChild(el1, el2);
@@ -12939,20 +13899,16 @@ define('mb-test-1/templates/results/node-servers-table', ['exports'], function (
           var morph2 = dom.createMorphAt(element0,5,5);
           var morph3 = dom.createMorphAt(element0,7,7);
           var morph4 = dom.createMorphAt(element0,9,9);
-          var morph5 = dom.createMorphAt(element0,11,11);
-          var morph6 = dom.createMorphAt(element0,13,13);
           content(env, morph0, context, "server.id");
           inline(env, morph1, context, "view", ["tables/cells/titled-linked-cell"], {"routeName": "server", "item": get(env, context, "server.id"), "labelText": get(env, context, "server.name")});
-          block(env, morph2, context, "if", [get(env, context, "server.basket")], {}, child0, child1);
-          block(env, morph3, context, "if", [get(env, context, "server.rack")], {}, child2, child3);
-          block(env, morph4, context, "if", [get(env, context, "server.row")], {}, child4, child5);
-          block(env, morph5, context, "if", [get(env, context, "server.room")], {}, child6, child7);
-          block(env, morph6, context, "if", [get(env, context, "server.floor")], {}, child8, child9);
+          block(env, morph2, context, "if", [get(env, context, "server.template")], {}, child0, child1);
+          block(env, morph3, context, "if", [get(env, context, "server.basket")], {}, child2, child3);
+          block(env, morph4, context, "if", [get(env, context, "server.rack")], {}, child4, child5);
           return fragment;
         }
       };
     }());
-    var child1 = (function() {
+    var child6 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -12967,7 +13923,7 @@ define('mb-test-1/templates/results/node-servers-table', ['exports'], function (
           var el2 = dom.createTextNode("\n            ");
           dom.appendChild(el1, el2);
           var el2 = dom.createElement("td");
-          dom.setAttribute(el2,"colspan","7");
+          dom.setAttribute(el2,"colspan","5");
           dom.setAttribute(el2,"class","no-results");
           var el3 = dom.createTextNode("\n                ");
           dom.appendChild(el2, el3);
@@ -13023,58 +13979,36 @@ define('mb-test-1/templates/results/node-servers-table', ['exports'], function (
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("ID");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Name");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Basket");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-2 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Rack");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-2 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Row");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n        ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Room");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n        ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Floor");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-2 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
@@ -13097,7 +14031,7 @@ define('mb-test-1/templates/results/node-servers-table', ['exports'], function (
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
+        var hooks = env.hooks, block = hooks.block, get = hooks.get;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -13115,8 +14049,19 @@ define('mb-test-1/templates/results/node-servers-table', ['exports'], function (
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(dom.childAt(fragment, [2]),1,1);
-        block(env, morph0, context, "each", [get(env, context, "view.loader.results")], {"keyword": "server"}, child0, child1);
+        var element1 = dom.childAt(fragment, [0, 1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element1, [1]),0,0);
+        var morph1 = dom.createMorphAt(dom.childAt(element1, [3]),0,0);
+        var morph2 = dom.createMorphAt(dom.childAt(element1, [5]),0,0);
+        var morph3 = dom.createMorphAt(dom.childAt(element1, [7]),0,0);
+        var morph4 = dom.createMorphAt(dom.childAt(element1, [9]),0,0);
+        var morph5 = dom.createMorphAt(dom.childAt(fragment, [2]),1,1);
+        block(env, morph0, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "id"}, child0, null);
+        block(env, morph1, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "name"}, child1, null);
+        block(env, morph2, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "template"}, child2, null);
+        block(env, morph3, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "basket"}, child3, null);
+        block(env, morph4, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "rack"}, child4, null);
+        block(env, morph5, context, "each", [get(env, context, "view.loader.results")], {"keyword": "server"}, child5, child6);
         return fragment;
       }
     };
@@ -13129,6 +14074,120 @@ define('mb-test-1/templates/results/nodes-table', ['exports'], function (exports
 
   exports['default'] = Ember.HTMLBars.template((function() {
     var child0 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("ID");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child1 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Name");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child2 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Server Qty");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child3 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -13171,7 +14230,7 @@ define('mb-test-1/templates/results/nodes-table', ['exports'], function (exports
         }
       };
     }());
-    var child1 = (function() {
+    var child4 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -13237,7 +14296,7 @@ define('mb-test-1/templates/results/nodes-table', ['exports'], function (exports
         }
       };
     }());
-    var child2 = (function() {
+    var child5 = (function() {
       var child0 = (function() {
         return {
           isHTMLBars: true,
@@ -13381,27 +14440,22 @@ define('mb-test-1/templates/results/nodes-table', ['exports'], function (exports
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("ID");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Name");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-2");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Server Qty");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
@@ -13428,7 +14482,7 @@ define('mb-test-1/templates/results/nodes-table', ['exports'], function (exports
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
+        var hooks = env.hooks, block = hooks.block, get = hooks.get;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -13446,10 +14500,17 @@ define('mb-test-1/templates/results/nodes-table', ['exports'], function (exports
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(fragment,2,2,contextualElement);
-        var morph1 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
-        block(env, morph0, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child0, null);
-        block(env, morph1, context, "each", [get(env, context, "view.loader.results")], {"keyword": "node"}, child1, child2);
+        var element1 = dom.childAt(fragment, [0, 1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element1, [1]),0,0);
+        var morph1 = dom.createMorphAt(dom.childAt(element1, [3]),0,0);
+        var morph2 = dom.createMorphAt(dom.childAt(element1, [5]),0,0);
+        var morph3 = dom.createMorphAt(fragment,2,2,contextualElement);
+        var morph4 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
+        block(env, morph0, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "id"}, child0, null);
+        block(env, morph1, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "name"}, child1, null);
+        block(env, morph2, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "servers_count"}, child2, null);
+        block(env, morph3, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child3, null);
+        block(env, morph4, context, "each", [get(env, context, "view.loader.results")], {"keyword": "node"}, child4, child5);
         return fragment;
       }
     };
@@ -13462,6 +14523,310 @@ define('mb-test-1/templates/results/racks-table', ['exports'], function (exports
 
   exports['default'] = Ember.HTMLBars.template((function() {
     var child0 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("ID");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child1 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Name");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child2 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Units");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child3 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Max gap");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child4 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Row");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child5 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Room");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child6 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Floor");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child7 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Node");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child8 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -13504,7 +14869,7 @@ define('mb-test-1/templates/results/racks-table', ['exports'], function (exports
         }
       };
     }());
-    var child1 = (function() {
+    var child9 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -13602,7 +14967,7 @@ define('mb-test-1/templates/results/racks-table', ['exports'], function (exports
         }
       };
     }());
-    var child2 = (function() {
+    var child10 = (function() {
       var child0 = (function() {
         return {
           isHTMLBars: true,
@@ -13746,68 +15111,57 @@ define('mb-test-1/templates/results/racks-table', ['exports'], function (exports
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("ID");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Name");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Units");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Max gap");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Row");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Room");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Floor");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-2 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Node");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-2 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
@@ -13834,7 +15188,7 @@ define('mb-test-1/templates/results/racks-table', ['exports'], function (exports
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
+        var hooks = env.hooks, block = hooks.block, get = hooks.get;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -13852,10 +15206,27 @@ define('mb-test-1/templates/results/racks-table', ['exports'], function (exports
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(fragment,2,2,contextualElement);
-        var morph1 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
-        block(env, morph0, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child0, null);
-        block(env, morph1, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child1, child2);
+        var element1 = dom.childAt(fragment, [0, 1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element1, [1]),0,0);
+        var morph1 = dom.createMorphAt(dom.childAt(element1, [3]),0,0);
+        var morph2 = dom.createMorphAt(dom.childAt(element1, [5]),0,0);
+        var morph3 = dom.createMorphAt(dom.childAt(element1, [7]),0,0);
+        var morph4 = dom.createMorphAt(dom.childAt(element1, [9]),0,0);
+        var morph5 = dom.createMorphAt(dom.childAt(element1, [11]),0,0);
+        var morph6 = dom.createMorphAt(dom.childAt(element1, [13]),0,0);
+        var morph7 = dom.createMorphAt(dom.childAt(element1, [15]),0,0);
+        var morph8 = dom.createMorphAt(fragment,2,2,contextualElement);
+        var morph9 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
+        block(env, morph0, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "id"}, child0, null);
+        block(env, morph1, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "name"}, child1, null);
+        block(env, morph2, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "total_units"}, child2, null);
+        block(env, morph3, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "max_gap"}, child3, null);
+        block(env, morph4, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "row"}, child4, null);
+        block(env, morph5, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "room"}, child5, null);
+        block(env, morph6, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "floor"}, child6, null);
+        block(env, morph7, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "node"}, child7, null);
+        block(env, morph8, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child8, null);
+        block(env, morph9, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child9, child10);
         return fragment;
       }
     };
@@ -14075,6 +15446,158 @@ define('mb-test-1/templates/results/rooms-table', ['exports'], function (exports
         hasRendered: false,
         build: function build(dom) {
           var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("ID");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child1 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Name");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child2 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Floor");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child3 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Node");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child4 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
           var el1 = dom.createTextNode("    ");
           dom.appendChild(el0, el1);
           var el1 = dom.createComment("");
@@ -14109,7 +15632,7 @@ define('mb-test-1/templates/results/rooms-table', ['exports'], function (exports
         }
       };
     }());
-    var child1 = (function() {
+    var child5 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -14179,7 +15702,7 @@ define('mb-test-1/templates/results/rooms-table', ['exports'], function (exports
         }
       };
     }());
-    var child2 = (function() {
+    var child6 = (function() {
       var child0 = (function() {
         return {
           isHTMLBars: true,
@@ -14323,34 +15846,29 @@ define('mb-test-1/templates/results/rooms-table', ['exports'], function (exports
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("ID");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Name");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Floor");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-3 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Node");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-3 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
@@ -14377,7 +15895,7 @@ define('mb-test-1/templates/results/rooms-table', ['exports'], function (exports
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
+        var hooks = env.hooks, block = hooks.block, get = hooks.get;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -14395,10 +15913,19 @@ define('mb-test-1/templates/results/rooms-table', ['exports'], function (exports
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(fragment,2,2,contextualElement);
-        var morph1 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
-        block(env, morph0, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child0, null);
-        block(env, morph1, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child1, child2);
+        var element1 = dom.childAt(fragment, [0, 1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element1, [1]),0,0);
+        var morph1 = dom.createMorphAt(dom.childAt(element1, [3]),0,0);
+        var morph2 = dom.createMorphAt(dom.childAt(element1, [5]),0,0);
+        var morph3 = dom.createMorphAt(dom.childAt(element1, [7]),0,0);
+        var morph4 = dom.createMorphAt(fragment,2,2,contextualElement);
+        var morph5 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
+        block(env, morph0, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "id"}, child0, null);
+        block(env, morph1, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "name"}, child1, null);
+        block(env, morph2, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "floor"}, child2, null);
+        block(env, morph3, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "node"}, child3, null);
+        block(env, morph4, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child4, null);
+        block(env, morph5, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child5, child6);
         return fragment;
       }
     };
@@ -14411,6 +15938,196 @@ define('mb-test-1/templates/results/rows-table', ['exports'], function (exports)
 
   exports['default'] = Ember.HTMLBars.template((function() {
     var child0 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("ID");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child1 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Name");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child2 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Room");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child3 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Floor");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child4 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Node");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child5 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -14453,7 +16170,7 @@ define('mb-test-1/templates/results/rows-table', ['exports'], function (exports)
         }
       };
     }());
-    var child1 = (function() {
+    var child6 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -14529,7 +16246,7 @@ define('mb-test-1/templates/results/rows-table', ['exports'], function (exports)
         }
       };
     }());
-    var child2 = (function() {
+    var child7 = (function() {
       var child0 = (function() {
         return {
           isHTMLBars: true,
@@ -14673,42 +16390,36 @@ define('mb-test-1/templates/results/rows-table', ['exports'], function (exports)
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("ID");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Name");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Room");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-2 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Floor");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-2 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Node");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-2 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
@@ -14735,7 +16446,7 @@ define('mb-test-1/templates/results/rows-table', ['exports'], function (exports)
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
+        var hooks = env.hooks, block = hooks.block, get = hooks.get;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -14753,10 +16464,21 @@ define('mb-test-1/templates/results/rows-table', ['exports'], function (exports)
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(fragment,2,2,contextualElement);
-        var morph1 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
-        block(env, morph0, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child0, null);
-        block(env, morph1, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child1, child2);
+        var element1 = dom.childAt(fragment, [0, 1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element1, [1]),0,0);
+        var morph1 = dom.createMorphAt(dom.childAt(element1, [3]),0,0);
+        var morph2 = dom.createMorphAt(dom.childAt(element1, [5]),0,0);
+        var morph3 = dom.createMorphAt(dom.childAt(element1, [7]),0,0);
+        var morph4 = dom.createMorphAt(dom.childAt(element1, [9]),0,0);
+        var morph5 = dom.createMorphAt(fragment,2,2,contextualElement);
+        var morph6 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
+        block(env, morph0, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "id"}, child0, null);
+        block(env, morph1, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "name"}, child1, null);
+        block(env, morph2, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "room"}, child2, null);
+        block(env, morph3, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "floor"}, child3, null);
+        block(env, morph4, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "node"}, child4, null);
+        block(env, morph5, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child5, null);
+        block(env, morph6, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child6, child7);
         return fragment;
       }
     };
@@ -14769,6 +16491,82 @@ define('mb-test-1/templates/results/server-components-table', ['exports'], funct
 
   exports['default'] = Ember.HTMLBars.template((function() {
     var child0 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("ID");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child1 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Name");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child2 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -14826,7 +16624,7 @@ define('mb-test-1/templates/results/server-components-table', ['exports'], funct
         }
       };
     }());
-    var child1 = (function() {
+    var child3 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -14897,18 +16695,15 @@ define('mb-test-1/templates/results/server-components-table', ['exports'], funct
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("ID");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Name");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
@@ -14931,7 +16726,7 @@ define('mb-test-1/templates/results/server-components-table', ['exports'], funct
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
+        var hooks = env.hooks, block = hooks.block, get = hooks.get;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -14949,8 +16744,13 @@ define('mb-test-1/templates/results/server-components-table', ['exports'], funct
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(dom.childAt(fragment, [2]),1,1);
-        block(env, morph0, context, "each", [get(env, context, "view.loader.results")], {"keyword": "component"}, child0, child1);
+        var element1 = dom.childAt(fragment, [0, 1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element1, [1]),0,0);
+        var morph1 = dom.createMorphAt(dom.childAt(element1, [3]),0,0);
+        var morph2 = dom.createMorphAt(dom.childAt(fragment, [2]),1,1);
+        block(env, morph0, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "id"}, child0, null);
+        block(env, morph1, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "name"}, child1, null);
+        block(env, morph2, context, "each", [get(env, context, "view.loader.results")], {"keyword": "component"}, child2, child3);
         return fragment;
       }
     };
@@ -14963,6 +16763,310 @@ define('mb-test-1/templates/results/servers-table', ['exports'], function (expor
 
   exports['default'] = Ember.HTMLBars.template((function() {
     var child0 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("ID");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child1 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Name");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child2 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Template");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child3 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Rack");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child4 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Row");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child5 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Room");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child6 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Floor");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child7 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Node");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child8 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -15005,7 +17109,7 @@ define('mb-test-1/templates/results/servers-table', ['exports'], function (expor
         }
       };
     }());
-    var child1 = (function() {
+    var child9 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -15099,7 +17203,7 @@ define('mb-test-1/templates/results/servers-table', ['exports'], function (expor
         }
       };
     }());
-    var child2 = (function() {
+    var child10 = (function() {
       var child0 = (function() {
         return {
           isHTMLBars: true,
@@ -15243,66 +17347,57 @@ define('mb-test-1/templates/results/servers-table', ['exports'], function (expor
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("ID");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Name");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Template");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-2 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Rack");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Row");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Room");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Floor");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Node");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-2 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
@@ -15329,7 +17424,7 @@ define('mb-test-1/templates/results/servers-table', ['exports'], function (expor
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
+        var hooks = env.hooks, block = hooks.block, get = hooks.get;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -15347,10 +17442,27 @@ define('mb-test-1/templates/results/servers-table', ['exports'], function (expor
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(fragment,2,2,contextualElement);
-        var morph1 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
-        block(env, morph0, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child0, null);
-        block(env, morph1, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child1, child2);
+        var element1 = dom.childAt(fragment, [0, 1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element1, [1]),0,0);
+        var morph1 = dom.createMorphAt(dom.childAt(element1, [3]),0,0);
+        var morph2 = dom.createMorphAt(dom.childAt(element1, [5]),0,0);
+        var morph3 = dom.createMorphAt(dom.childAt(element1, [7]),0,0);
+        var morph4 = dom.createMorphAt(dom.childAt(element1, [9]),0,0);
+        var morph5 = dom.createMorphAt(dom.childAt(element1, [11]),0,0);
+        var morph6 = dom.createMorphAt(dom.childAt(element1, [13]),0,0);
+        var morph7 = dom.createMorphAt(dom.childAt(element1, [15]),0,0);
+        var morph8 = dom.createMorphAt(fragment,2,2,contextualElement);
+        var morph9 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
+        block(env, morph0, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "id"}, child0, null);
+        block(env, morph1, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "name"}, child1, null);
+        block(env, morph2, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "template"}, child2, null);
+        block(env, morph3, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "rack"}, child3, null);
+        block(env, morph4, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "row"}, child4, null);
+        block(env, morph5, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "room"}, child5, null);
+        block(env, morph6, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "floor"}, child6, null);
+        block(env, morph7, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "node"}, child7, null);
+        block(env, morph8, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child8, null);
+        block(env, morph9, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child9, child10);
         return fragment;
       }
     };
@@ -15363,6 +17475,120 @@ define('mb-test-1/templates/results/servertemplates-table', ['exports'], functio
 
   exports['default'] = Ember.HTMLBars.template((function() {
     var child0 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("ID");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child1 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Name");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child2 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.11.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createElement("span");
+          var el2 = dom.createTextNode("Servers Uses");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child3 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -15405,7 +17631,7 @@ define('mb-test-1/templates/results/servertemplates-table', ['exports'], functio
         }
       };
     }());
-    var child1 = (function() {
+    var child4 = (function() {
       return {
         isHTMLBars: true,
         revision: "Ember@1.11.1",
@@ -15471,7 +17697,7 @@ define('mb-test-1/templates/results/servertemplates-table', ['exports'], functio
         }
       };
     }());
-    var child2 = (function() {
+    var child5 = (function() {
       var child0 = (function() {
         return {
           isHTMLBars: true,
@@ -15615,27 +17841,22 @@ define('mb-test-1/templates/results/servertemplates-table', ['exports'], functio
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-1");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("ID");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","col-md-1 label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Name");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n        ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("th");
-        dom.setAttribute(el3,"class","col-xs-2");
-        var el4 = dom.createElement("span");
-        var el5 = dom.createTextNode("Servers uses");
-        dom.appendChild(el4, el5);
+        dom.setAttribute(el3,"class","label6a has-filter");
+        var el4 = dom.createComment("");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
         var el3 = dom.createTextNode("\n    ");
@@ -15662,7 +17883,7 @@ define('mb-test-1/templates/results/servertemplates-table', ['exports'], functio
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
+        var hooks = env.hooks, block = hooks.block, get = hooks.get;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -15680,10 +17901,17 @@ define('mb-test-1/templates/results/servertemplates-table', ['exports'], functio
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(fragment,2,2,contextualElement);
-        var morph1 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
-        block(env, morph0, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child0, null);
-        block(env, morph1, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child1, child2);
+        var element1 = dom.childAt(fragment, [0, 1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element1, [1]),0,0);
+        var morph1 = dom.createMorphAt(dom.childAt(element1, [3]),0,0);
+        var morph2 = dom.createMorphAt(dom.childAt(element1, [5]),0,0);
+        var morph3 = dom.createMorphAt(fragment,2,2,contextualElement);
+        var morph4 = dom.createMorphAt(dom.childAt(fragment, [4]),1,1);
+        block(env, morph0, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "id"}, child0, null);
+        block(env, morph1, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "name"}, child1, null);
+        block(env, morph2, context, "view", ["results/results-sortable-column-header"], {"class": "sortable unsorted", "field": "servers_uses"}, child2, null);
+        block(env, morph3, context, "if", [get(env, context, "view.loader.results.hasNextPage")], {}, child3, null);
+        block(env, morph4, context, "each", [get(env, context, "view.loader.results")], {"keyword": "result"}, child4, child5);
         return fragment;
       }
     };
@@ -20063,6 +22291,16 @@ define('mb-test-1/tests/views/results/results-load-more.jshint', function () {
   });
 
 });
+define('mb-test-1/tests/views/results/results-sortable-column-header.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - views/results');
+  test('views/results/results-sortable-column-header.js should pass jshint', function() { 
+    ok(false, 'views/results/results-sortable-column-header.js should pass jshint.\nviews/results/results-sortable-column-header.js: line 22, col 21, \'e\' is defined but never used.\n\n1 error'); 
+  });
+
+});
 define('mb-test-1/tests/views/results/results-table.jshint', function () {
 
   'use strict';
@@ -20971,11 +23209,6 @@ define('mb-test-1/views/modals/basket-add-modal', ['exports', 'ember', 'mb-test-
             return { label: o.get("name"), value: o.get("id") };
         }),
 
-        /*preselect: function() {
-            var rack_id = this.get('racksForSelect.firstObject').value;
-            this.set('selectedRack', rack_id);
-        }.observes('racksForSelect.@each'),*/
-
         model: (function () {
             return Basket['default'].create();
         }).property(),
@@ -20994,9 +23227,7 @@ define('mb-test-1/views/modals/basket-add-modal', ['exports', 'ember', 'mb-test-
 
     BasketAddModal.reopenClass({
         open: function open() {
-            return this.create({
-                selectedRack: null
-            });
+            return this.create();
         } });
 
     exports['default'] = BasketAddModal;
@@ -21043,9 +23274,7 @@ define('mb-test-1/views/modals/basket-update-modal', ['exports', 'ember', 'mb-te
     var BasketUpdateModalView = ModalBaseView['default'].extend(Full['default'], Form['default'], Save['default'], {
         templateName: "modals/basket-update-modal",
         elementId: "basket-update",
-        title: (function () {
-            return "Edit basket information";
-        }).property(),
+        title: "Edit basket information",
 
         cancelButtonText: "Cancel",
         submitButtonText: "Save",
@@ -21059,15 +23288,16 @@ define('mb-test-1/views/modals/basket-update-modal', ['exports', 'ember', 'mb-te
         }),
 
         preselect: (function () {
-            var rack = this.get("model").__json.rack;
-            this.set("selectedRack", rack && rack.id || null);
-        }).observes("racks.@each"),
+            var model = this.get("model");
+            var current = model.__json.rack;
+            model.set("rack", current && current.id || null);
+        }).observes("racksForSelect.@each"),
 
         onModelSaved: function onModelSaved() {
             this.getNotificationController().alertSuccess("Basket has been saved.", {
                 expire: true
             });
-            this.get("originalModel").reload();
+            this.get("model").reload();
             this.close();
         },
 
@@ -21080,12 +23310,9 @@ define('mb-test-1/views/modals/basket-update-modal', ['exports', 'ember', 'mb-te
 
     BasketUpdateModalView.reopenClass({
         open: function open(model) {
-            var view = this.create({
-                originalModel: model,
-                model: model,
-                selectedRack: model.__json.rack && model.__json.rack.id || null
+            return this.create({
+                model: model
             });
-            return view;
         }
     });
 
@@ -21116,7 +23343,8 @@ define('mb-test-1/views/modals/component-add-modal', ['exports', 'ember', 'mb-te
 
         preselectKinds: (function () {
             var o_id = this.get("kindsForSelect.firstObject").value;
-            this.set("selectedKind", o_id);
+            var model = this.get("model");
+            model.set("kind", o_id);
         }).observes("kindsForSelect.@each"),
 
         model: (function () {
@@ -21136,9 +23364,7 @@ define('mb-test-1/views/modals/component-add-modal', ['exports', 'ember', 'mb-te
 
     ComponentAddModal.reopenClass({
         open: function open() {
-            return this.create({
-                selectedKind: null
-            });
+            return this.create();
         } });
 
     exports['default'] = ComponentAddModal;
@@ -21185,9 +23411,7 @@ define('mb-test-1/views/modals/component-update-modal', ['exports', 'ember', 'mb
     var ComponentUpdateModalView = ModalBaseView['default'].extend(Full['default'], Form['default'], Save['default'], {
         templateName: "modals/component-update-modal",
         elementId: "component-update",
-        title: (function () {
-            return "Edit component information";
-        }).property(),
+        title: "Edit component information",
 
         cancelButtonText: "Cancel",
         submitButtonText: "Save",
@@ -21204,15 +23428,16 @@ define('mb-test-1/views/modals/component-update-modal', ['exports', 'ember', 'mb
 
         preselectKinds: (function () {
             var o_id = this.get("kindsForSelect.firstObject").value;
-            var current = this.get("model").__json.kind;
-            this.set("selectedKind", current && current.id || o_id);
+            var model = this.get("model");
+            var current = model.__json.kind;
+            model.set("floor", current && current.id || o_id);
         }).observes("kindsForSelect.@each"),
 
         onModelSaved: function onModelSaved() {
             this.getNotificationController().alertSuccess("Component has been saved.", {
                 expire: true
             });
-            this.get("originalModel").reload();
+            this.get("model").reload();
             this.close();
         },
 
@@ -21225,12 +23450,8 @@ define('mb-test-1/views/modals/component-update-modal', ['exports', 'ember', 'mb
 
     ComponentUpdateModalView.reopenClass({
         open: function open(model) {
-            var view = this.create({
-                originalModel: model,
-                model: model,
-                selectedKind: model.__json.kind && model.__json.kind.id || null
-            });
-            return view;
+            return this.create({
+                model: model });
         }
     });
 
@@ -21256,6 +23477,12 @@ define('mb-test-1/views/modals/floor-add-modal', ['exports', 'ember', 'mb-test-1
         nodesForSelect: Ember['default'].computed.map("nodes", function (o) {
             return { label: o.get("name"), value: o.get("id") };
         }),
+
+        preselect: (function () {
+            var o_id = this.get("nodesForSelect.firstObject").value;
+            var model = this.get("model");
+            model.set("node", o_id);
+        }).observes("nodesForSelect.@each"),
 
         model: (function () {
             return Floor['default'].create();
@@ -21334,19 +23561,21 @@ define('mb-test-1/views/modals/floor-update-modal', ['exports', 'ember', 'mb-tes
         }).property(),
 
         nodesForSelect: Ember['default'].computed.map("nodes", function (o) {
-            return { label: o.get("name"), value: o.get("id") + "" };
+            return { label: o.get("name"), value: o.get("id") };
         }),
 
         preselect: (function () {
-            var node_id = this.get("model").__json.node.id;
-            this.set("selectedNode", node_id);
-        }).observes("nodes.@each"),
+            var o_id = this.get("nodesForSelect.firstObject").value;
+            var model = this.get("model");
+            var current = model.__json.node;
+            model.set("node", current && current.id || o_id);
+        }).observes("nodesForSelect.@each"),
 
         onModelSaved: function onModelSaved() {
             this.getNotificationController().alertSuccess("Floor has been saved.", {
                 expire: true
             });
-            this.get("originalModel").reload();
+            this.get("model").reload();
             this.close();
         },
 
@@ -21359,12 +23588,9 @@ define('mb-test-1/views/modals/floor-update-modal', ['exports', 'ember', 'mb-tes
 
     FloorUpdateModalView.reopenClass({
         open: function open(model) {
-            var view = this.create({
-                originalModel: model,
-                model: model,
-                selectedNode: null
+            return this.create({
+                model: model
             });
-            return view;
         }
     });
 
@@ -21734,8 +23960,7 @@ define('mb-test-1/views/modals/node-add-modal', ['exports', 'mb-test-1/views/mod
         successAlertText: "Your node was created successfully",
 
         model: (function () {
-            var node = Node['default'].create({});
-            return node;
+            return Node['default'].create();
         }).property(),
 
         onModelSaved: function onModelSaved(model) {
@@ -21799,10 +24024,7 @@ define('mb-test-1/views/modals/node-update-modal', ['exports', 'mb-test-1/views/
     var EditNodeDetailModalView = ModalBaseView['default'].extend(Full['default'], Form['default'], Save['default'], {
         templateName: "modals/node-update-modal",
         elementId: "edit-node-detail",
-        title: (function () {
-            return "Edit node information";
-        }).property(),
-
+        title: "Edit node information",
         cancelButtonText: "Cancel",
         submitButtonText: "Save",
 
@@ -21810,7 +24032,7 @@ define('mb-test-1/views/modals/node-update-modal', ['exports', 'mb-test-1/views/
             this.getNotificationController().alertSuccess("Node has been saved.", {
                 expire: true
             });
-            this.get("originalModel").reload();
+            this.get("model").reload();
             this.close();
         },
 
@@ -21823,10 +24045,8 @@ define('mb-test-1/views/modals/node-update-modal', ['exports', 'mb-test-1/views/
 
     EditNodeDetailModalView.reopenClass({
         open: function open(model) {
-            var view = this.create({
-                originalModel: model,
+            return this.create({
                 model: model });
-            return view;
         }
     });
 
@@ -21854,8 +24074,9 @@ define('mb-test-1/views/modals/rack-add-modal', ['exports', 'ember', 'mb-test-1/
         }),
 
         preselect: (function () {
-            var row_id = this.get("rowsForSelect.firstObject").value;
-            this.set("selectedRow", row_id);
+            var o_id = this.get("rowsForSelect.firstObject").value;
+            var model = this.get("model");
+            model.set("row", o_id);
         }).observes("rowsForSelect.@each"),
 
         model: (function () {
@@ -21876,10 +24097,9 @@ define('mb-test-1/views/modals/rack-add-modal', ['exports', 'ember', 'mb-test-1/
 
     RackAddModal.reopenClass({
         open: function open() {
-            return this.create({
-                selectedRow: null
-            });
-        } });
+            return this.create();
+        }
+    });
 
     exports['default'] = RackAddModal;
 
@@ -21925,10 +24145,7 @@ define('mb-test-1/views/modals/rack-update-modal', ['exports', 'ember', 'mb-test
     var RackUpdateModalView = ModalBaseView['default'].extend(Full['default'], Form['default'], Save['default'], {
         templateName: "modals/rack-update-modal",
         elementId: "rack-update",
-        title: (function () {
-            return "Edit rack information";
-        }).property(),
-
+        title: "Edit rack information",
         cancelButtonText: "Cancel",
         submitButtonText: "Save",
 
@@ -21941,15 +24158,17 @@ define('mb-test-1/views/modals/rack-update-modal', ['exports', 'ember', 'mb-test
         }),
 
         preselect: (function () {
-            var row_id = this.get("model").__json.row.id;
-            this.set("selectedRow", row_id);
-        }).observes("rows.@each"),
+            var o_id = this.get("rowsForSelect.firstObject").value;
+            var model = this.get("model");
+            var current = model.__json.row;
+            model.set("row", current && current.id || o_id);
+        }).observes("rowsForSelect.@each"),
 
         onModelSaved: function onModelSaved() {
             this.getNotificationController().alertSuccess("Rack has been saved.", {
                 expire: true
             });
-            this.get("originalModel").reload();
+            this.get("model").reload();
             this.close();
         },
 
@@ -21962,12 +24181,9 @@ define('mb-test-1/views/modals/rack-update-modal', ['exports', 'ember', 'mb-test
 
     RackUpdateModalView.reopenClass({
         open: function open(model) {
-            var view = this.create({
-                originalModel: model,
-                model: model,
-                selectedRow: model.json_row.id
+            return this.create({
+                model: model
             });
-            return view;
         }
     });
 
@@ -21993,6 +24209,12 @@ define('mb-test-1/views/modals/room-add-modal', ['exports', 'ember', 'mb-test-1/
         floorsForSelect: Ember['default'].computed.map("floors", function (o) {
             return { label: o.get("name"), value: o.get("id") };
         }),
+
+        preselect: (function () {
+            var o_id = this.get("floorsForSelect.firstObject").value;
+            var model = this.get("model");
+            model.set("floor", o_id);
+        }).observes("floorsForSelect.@each"),
 
         model: (function () {
             return Room['default'].create();
@@ -22071,19 +24293,21 @@ define('mb-test-1/views/modals/room-update-modal', ['exports', 'ember', 'mb-test
         }).property(),
 
         floorsForSelect: Ember['default'].computed.map("floors", function (o) {
-            return { label: o.get("name"), value: o.get("id") + "" };
+            return { label: o.get("name"), value: o.get("id") };
         }),
 
         preselect: (function () {
-            var floor_id = this.get("model").__json.floor.id;
-            this.set("selectedFloor", floor_id);
-        }).observes("floors.@each"),
+            var o_id = this.get("floorsForSelect.firstObject").value;
+            var model = this.get("model");
+            var current = model.__json.floor;
+            model.set("floor", current && current.id || o_id);
+        }).observes("floorsForSelect.@each"),
 
         onModelSaved: function onModelSaved() {
             this.getNotificationController().alertSuccess("Room has been saved.", {
                 expire: true
             });
-            this.get("originalModel").reload();
+            this.get("model").reload();
             this.close();
         },
 
@@ -22096,12 +24320,9 @@ define('mb-test-1/views/modals/room-update-modal', ['exports', 'ember', 'mb-test
 
     RoomUpdateModalView.reopenClass({
         open: function open(model) {
-            var view = this.create({
-                originalModel: model,
-                model: model,
-                selectedFloor: null
+            return this.create({
+                model: model
             });
-            return view;
         }
     });
 
@@ -22129,9 +24350,9 @@ define('mb-test-1/views/modals/row-add-modal', ['exports', 'ember', 'mb-test-1/v
         }),
 
         preselect: (function () {
-            var room_id = this.get("roomsForSelect.firstObject").value;
-            Ember['default'].Logger.debug("RowAddModal.preselect: room_id=", room_id);
-            this.set("selectedRoom", room_id);
+            var o_id = this.get("roomsForSelect.firstObject").value;
+            var model = this.get("model");
+            model.set("room", o_id);
         }).observes("roomsForSelect.@each"),
 
         model: (function () {
@@ -22152,10 +24373,9 @@ define('mb-test-1/views/modals/row-add-modal', ['exports', 'ember', 'mb-test-1/v
 
     RowAddModal.reopenClass({
         open: function open() {
-            return this.create({
-                selectedRoom: null
-            });
-        } });
+            return this.create();
+        }
+    });
 
     exports['default'] = RowAddModal;
 
@@ -22201,10 +24421,7 @@ define('mb-test-1/views/modals/row-update-modal', ['exports', 'ember', 'mb-test-
     var RowUpdateModalView = ModalBaseView['default'].extend(Full['default'], Form['default'], Save['default'], {
         templateName: "modals/row-update-modal",
         elementId: "row-update",
-        title: (function () {
-            return "Edit row information";
-        }).property(),
-
+        title: "Edit row information",
         cancelButtonText: "Cancel",
         submitButtonText: "Save",
 
@@ -22217,15 +24434,17 @@ define('mb-test-1/views/modals/row-update-modal', ['exports', 'ember', 'mb-test-
         }),
 
         preselect: (function () {
-            var room_id = this.get("model").__json.room.id;
-            this.set("selectedRoom", room_id);
-        }).observes("rooms.@each"),
+            var o_id = this.get("roomsForSelect.firstObject").value;
+            var model = this.get("model");
+            var current = model.__json.room;
+            model.set("room", current && current.id || o_id);
+        }).observes("roomsForSelect.@each"),
 
         onModelSaved: function onModelSaved() {
             this.getNotificationController().alertSuccess("Row has been saved.", {
                 expire: true
             });
-            this.get("originalModel").reload();
+            this.get("model").reload();
             this.close();
         },
 
@@ -22238,12 +24457,9 @@ define('mb-test-1/views/modals/row-update-modal', ['exports', 'ember', 'mb-test-
 
     RowUpdateModalView.reopenClass({
         open: function open(model) {
-            var view = this.create({
-                originalModel: model,
-                model: model,
-                selectedRoom: model.json_room.id
+            return this.create({
+                model: model
             });
-            return view;
         }
     });
 
@@ -22271,8 +24487,9 @@ define('mb-test-1/views/modals/server-add-modal', ['exports', 'ember', 'mb-test-
         }),
 
         preselect: (function () {
-            var template_id = this.get("templatesForSelect.firstObject").value;
-            this.set("selectedTemplate", template_id);
+            var o_id = this.get("templatesForSelect.firstObject").value;
+            var model = this.get("model");
+            model.set("template", o_id);
         }).observes("templatesForSelect.@each"),
 
         model: (function () {
@@ -22293,10 +24510,9 @@ define('mb-test-1/views/modals/server-add-modal', ['exports', 'ember', 'mb-test-
 
     ServerAddModal.reopenClass({
         open: function open() {
-            return this.create({
-                selectedTemplate: null
-            });
-        } });
+            return this.create();
+        }
+    });
 
     exports['default'] = ServerAddModal;
 
@@ -22342,10 +24558,7 @@ define('mb-test-1/views/modals/server-update-modal', ['exports', 'ember', 'mb-te
     var ServerUpdateModalView = ModalBaseView['default'].extend(Full['default'], Form['default'], Save['default'], {
         templateName: "modals/server-update-modal",
         elementId: "server-update",
-        title: (function () {
-            return "Edit server information";
-        }).property(),
-
+        title: "Edit server information",
         cancelButtonText: "Cancel",
         submitButtonText: "Save",
 
@@ -22358,15 +24571,17 @@ define('mb-test-1/views/modals/server-update-modal', ['exports', 'ember', 'mb-te
         }),
 
         preselect: (function () {
-            var template = this.get("model").__json.template;
-            this.set("selectedTemplate", template && template.id || null);
-        }).observes("templates.@each"),
+            var o_id = this.get("templatesForSelect.firstObject").value;
+            var model = this.get("model");
+            var current = model.__json.template;
+            model.set("template", current && current.id || o_id);
+        }).observes("templatesForSelect.@each"),
 
         onModelSaved: function onModelSaved() {
             this.getNotificationController().alertSuccess("Server has been saved.", {
                 expire: true
             });
-            this.get("originalModel").reload();
+            this.get("model").reload();
             this.close();
         },
 
@@ -22379,12 +24594,9 @@ define('mb-test-1/views/modals/server-update-modal', ['exports', 'ember', 'mb-te
 
     ServerUpdateModalView.reopenClass({
         open: function open(model) {
-            var view = this.create({
-                originalModel: model,
-                model: model,
-                selectedTemplate: model.__json.template && model.__json.template.id || null
+            return this.create({
+                model: model
             });
-            return view;
         }
     });
 
@@ -22415,7 +24627,8 @@ define('mb-test-1/views/modals/servertemplate-add-modal', ['exports', 'ember', '
 
         preselectCPUSockets: (function () {
             var o_id = this.get("cpuSocketsForSelect.firstObject").value;
-            this.set("selectedCPUSocket", o_id);
+            var model = this.get("model");
+            model.set("cpu_socket", o_id);
         }).observes("cpuSocketsForSelect.@each"),
 
         // ram standard
@@ -22430,7 +24643,8 @@ define('mb-test-1/views/modals/servertemplate-add-modal', ['exports', 'ember', '
 
         preselectRAMStandards: (function () {
             var o_id = this.get("ramStandardsForSelect.firstObject").value;
-            this.set("selectedRAMStandard", o_id);
+            var model = this.get("model");
+            model.set("ram_standard", o_id);
         }).observes("ramStandardsForSelect.@each"),
 
         // hdd form factor
@@ -22497,11 +24711,9 @@ define('mb-test-1/views/modals/servertemplate-add-modal', ['exports', 'ember', '
 
     ServerTemplateAddModal.reopenClass({
         open: function open() {
-            return this.create({
-                selectedCPUSocket: null,
-                selectedRAMStandard: null
-            });
-        } });
+            return this.create();
+        }
+    });
 
     exports['default'] = ServerTemplateAddModal;
 
@@ -22547,10 +24759,7 @@ define('mb-test-1/views/modals/servertemplate-update-modal', ['exports', 'ember'
     var ServerTemplateUpdateModalView = ModalBaseView['default'].extend(Full['default'], Form['default'], Save['default'], {
         templateName: "modals/servertemplate-update-modal",
         elementId: "servertemplate-update",
-        title: (function () {
-            return "Edit server template information";
-        }).property(),
-
+        title: "Edit server template information",
         cancelButtonText: "Cancel",
         submitButtonText: "Save",
 
@@ -22566,8 +24775,9 @@ define('mb-test-1/views/modals/servertemplate-update-modal', ['exports', 'ember'
 
         preselectCPUSockets: (function () {
             var o_id = this.get("cpuSocketsForSelect.firstObject").value;
-            var current = this.get("model").__json.cpu_socket;
-            this.set("selectedCPUSocket", current && current.id || o_id);
+            var model = this.get("model");
+            var current = model.__json.cpu_socket;
+            model.set("cpu_socket", current && current.id || o_id);
         }).observes("cpuSocketsForSelect.@each"),
 
         // ram standard
@@ -22582,8 +24792,9 @@ define('mb-test-1/views/modals/servertemplate-update-modal', ['exports', 'ember'
 
         preselectRAMStandards: (function () {
             var o_id = this.get("ramStandardsForSelect.firstObject").value;
-            var current = this.get("model").__json.ram_standard;
-            this.set("selectedRAMStandard", current && current.id || o_id);
+            var model = this.get("model");
+            var current = model.__json.ram_standard;
+            model.set("ram_standard", current && current.id || o_id);
         }).observes("ramStandardsForSelect.@each"),
 
         // hdd form factor
@@ -22648,7 +24859,7 @@ define('mb-test-1/views/modals/servertemplate-update-modal', ['exports', 'ember'
             this.getNotificationController().alertSuccess("Server template has been saved.", {
                 expire: true
             });
-            this.get("originalModel").reload();
+            this.get("model").reload();
             this.close();
         },
 
@@ -22670,14 +24881,9 @@ define('mb-test-1/views/modals/servertemplate-update-modal', ['exports', 'ember'
 
     ServerTemplateUpdateModalView.reopenClass({
         open: function open(model) {
-            var view = this.create({
-                originalModel: model,
-                model: model,
-                //selectedTemplate: model.__json.template && model.__json.template.id || null
-                selectedCPUSocket: model.__json.cpu_socket && model.__json.cpu_socket.id || null,
-                selectedRAMStandard: model.__json.ram_standard && model.__json.ram_standard.id || null
+            return this.create({
+                model: model
             });
-            return view;
         }
     });
 
@@ -22791,6 +24997,54 @@ define('mb-test-1/views/results/results-load-more', ['exports', 'ember'], functi
             loadMore: function loadMore(results) {
                 results.loadNextPage();
             }
+        }
+    });
+
+});
+define('mb-test-1/views/results/results-sortable-column-header', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].View.extend({
+        tagName: 'div',
+        classNameBindings: 'sortClass',
+
+        sortClass: (function () {
+            var SORTS = {
+                asc: 'ascending',
+                desc: 'descending'
+            };
+
+            var sortField = this.get('controller.sortField');
+            var sortOrder = this.get('controller.sortOrder');
+            if (sortField !== this.get('field')) {
+                return 'unsorted';
+            } else {
+                return SORTS[sortOrder] || 'unsorted';
+            }
+        }).property('controller.sortField', 'controller.sortOrder'),
+
+        click: function click(e) {
+            var sortField = this.get('controller.sortField');
+            var sortOrder = this.get('controller.sortOrder');
+            var allowSortByNone = this.get('controller.allowSortByNone');
+            var nextSortOrder = 'desc';
+
+            if (sortField === this.get('field')) {
+                switch (sortOrder) {
+                    case 'asc':
+                        nextSortOrder = 'desc';
+                        break;
+                    case 'desc':
+                        nextSortOrder = 'asc';
+                        if (allowSortByNone) {
+                            nextSortOrder = 'none';
+                        }
+                        break;
+                }
+            }
+
+            this.get('controller').send('changeSortOrder', this.get('field'), nextSortOrder);
         }
     });
 
@@ -22917,7 +25171,7 @@ catch(err) {
 if (runningTests) {
   require("mb-test-1/tests/test-helper");
 } else {
-  require("mb-test-1/app")["default"].create({"API_HOST":"http://46.101.149.14","API_NAMESPACE":"api/v1","API_ADD_TRAILING_SLASHES":false,"name":"mb-test-1","version":"0.0.0.9090aaaa"});
+  require("mb-test-1/app")["default"].create({"API_HOST":"http://localhost:8083","API_NAMESPACE":"api/v1","API_ADD_TRAILING_SLASHES":false,"name":"mb-test-1","version":"0.0.0.9090aaaa"});
 }
 
 /* jshint ignore:end */
