@@ -2,7 +2,8 @@
 from rest_framework import generics
 
 from ..models import Floor
-from ..serializers import FloorSerializer, NodeServerSerializer
+from ..serializers import FloorSerializer
+from ..serializers.generics import SimpleServerHyperlinkedModelSerializer
 
 
 class FloorList(generics.ListCreateAPIView):
@@ -19,7 +20,7 @@ class FloorDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class FloorServerList(generics.ListAPIView):
     queryset = Floor.objects.all()
-    serializer_class = NodeServerSerializer
+    serializer_class = SimpleServerHyperlinkedModelSerializer
 
     def get_queryset(self):
         obj = Floor.objects.get(id=self.kwargs['pk'])

@@ -2,7 +2,8 @@
 from rest_framework import generics
 
 from ..models import Room
-from ..serializers import RoomSerializer, NodeServerSerializer
+from ..serializers import RoomSerializer
+from ..serializers.generics import SimpleServerHyperlinkedModelSerializer
 
 
 class RoomList(generics.ListCreateAPIView):
@@ -19,7 +20,7 @@ class RoomDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class RoomServerList(generics.ListAPIView):
     queryset = Room.objects.all()
-    serializer_class = NodeServerSerializer
+    serializer_class = SimpleServerHyperlinkedModelSerializer
 
     def get_queryset(self):
         obj = Room.objects.get(id=self.kwargs['pk'])

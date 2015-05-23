@@ -2,7 +2,8 @@
 from rest_framework import generics, filters
 
 from ..models import Node
-from ..serializers import NodeSerializer, NodeServerSerializer
+from ..serializers import NodeSerializer
+from ..serializers.generics import SimpleServerHyperlinkedModelSerializer
 
 
 class NodeList(generics.ListCreateAPIView):
@@ -20,7 +21,7 @@ class NodeDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class NodeServerList(generics.ListAPIView):
     queryset = Node.objects.all()
-    serializer_class = NodeServerSerializer
+    serializer_class = SimpleServerHyperlinkedModelSerializer
 
     def get_queryset(self):
         node = Node.objects.get(pk=self.kwargs['pk'])

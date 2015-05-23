@@ -2,7 +2,8 @@
 from rest_framework import generics
 
 from ..models import Row
-from ..serializers import RowSerializer, NodeServerSerializer
+from ..serializers import RowSerializer
+from ..serializers.generics import SimpleServerHyperlinkedModelSerializer
 
 
 class RowList(generics.ListCreateAPIView):
@@ -19,7 +20,7 @@ class RowDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class RowServerList(generics.ListAPIView):
     queryset = Row.objects.all()
-    serializer_class = NodeServerSerializer
+    serializer_class = SimpleServerHyperlinkedModelSerializer
 
     def get_queryset(self):
         obj = Row.objects.get(id=self.kwargs['pk'])

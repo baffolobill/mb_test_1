@@ -1,11 +1,14 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from rest_framework import serializers
 
-from ..models import Floor, Node
-from .nodes import NodeSerializer
+from . import generics
+from ..models import Floor
 
 
 class FloorSerializer(serializers.HyperlinkedModelSerializer):
-    node = NodeSerializer(many=False, read_only=False)
+    node = generics.SimpleNodeModelSerializer(many=False, read_only=False)
 
     class Meta:
         model = Floor
@@ -15,22 +18,10 @@ class FloorSerializer(serializers.HyperlinkedModelSerializer):
             'href': {'read_only': True},
         }
 
-    def to_internal_value(self, data):
-        return {
-            'name': data.get('name'),
-            'node': data.get('node'),
-        }
-
     def create(self, validated_data):
-        return Floor.objects.create(
-            name=validated_data.get('name'),
-            node=Node.objects.get(id=validated_data.get('node')))
+        validated_data['node_id'] = validated_data.pop('node')['id']
+        return Floor.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        node_id = validated_data.pop('node', None)
-        instance.node = Node.objects.get(id=node_id)
-        for k,v in validated_data.items():
-            setattr(instance, k, v)
-
-        instance.save()
-        return instance
+        validated_data['node_id'] = validated_data.pop('node')['id']
+        return super(FloorSerializer, self).update(instance, validated_data)

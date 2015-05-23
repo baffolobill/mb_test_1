@@ -1320,11 +1320,13 @@ pre_delete.connect(unit_saved, sender=Unit)
 
 def server_saved(sender, instance, **kwargs):
     node = instance.get_node()
-    node.servers_count = node.servers.count()
-    node.save()
+    if node:
+        node.servers_count = node.servers.count()
+        node.save()
 
     template = instance.get_template()
-    template.servers_uses = template.servers.count()
-    template.save()
+    if template:
+        template.servers_uses = template.servers.count()
+        template.save()
 post_save.connect(server_saved, sender=Server)
 pre_delete.connect(server_saved, sender=Server)

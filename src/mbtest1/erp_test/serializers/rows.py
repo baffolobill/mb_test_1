@@ -1,25 +1,16 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from rest_framework import serializers
 
-from ..models import Row, Room, Floor, Node
-from .nodes import NodeSerializer
-
-
-class RowFloorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Floor
-        fields = ('id', 'name', 'href')
-
-
-class RowRoomSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Room
-        fields = ('id', 'name', 'href')
+from . import generics
+from ..models import Row, Room
 
 
 class RowSerializer(serializers.HyperlinkedModelSerializer):
-    node = NodeSerializer(many=False, read_only=False)
-    floor = RowFloorSerializer(many=False, read_only=False)
-    room = RowRoomSerializer(many=False, read_only=False)
+    node = generics.SimpleNodeModelSerializer(many=False, read_only=True)
+    floor = generics.SimpleFloorModelSerializer(many=False, read_only=True)
+    room = generics.SimpleRoomModelSerializer(many=False, read_only=False)
 
     class Meta:
         model = Row
@@ -29,24 +20,10 @@ class RowSerializer(serializers.HyperlinkedModelSerializer):
             'href': {'read_only': True},
         }
 
-    def to_internal_value(self, data):
-        return {
-            'name': data.get('name'),
-            'room': data.get('room'),
-        }
-
     def create(self, validated_data):
-        room = Room.objects.get(id=validated_data.get('room'))
-        return Row.objects.create(
-            name=validated_data.get('name'),
-            room=room,
-            floor=room.get_floor(),
-            node=room.get_node())
+        validated_data['room_id'] = validated_data.pop('room')['id']
+        return Row.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        room_id = validated_data.pop('room', None)
-        instance.room = Room.objects.get(id=room_id)
-        for k,v in validated_data.items():
-            setattr(instance, k, v)
-        instance.save()
-        return instance
+        validated_data['room_id'] = validated_data.pop('room')['id']
+        return super(RowSerializer, self).update(instance, validated_data)

@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from rest_framework import serializers
 
-from ..models import Property, PropertyGroup, PropertyOption
+from ..models import Property, PropertyGroup
 
 
 class PropertySerializer(serializers.ModelSerializer):
@@ -11,24 +14,9 @@ class PropertySerializer(serializers.ModelSerializer):
                   'type', 'required')
 
 
-class SimplePropertyGroupSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = PropertyGroup
-        fields = ('id', 'name')
-
-
-
 class PropertyGroupSerializer(serializers.ModelSerializer):
     properties = PropertySerializer(many=True)
 
     class Meta:
         model = PropertyGroup
         fields = ('id', 'name', 'properties')
-
-
-class PropertyOptionSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = PropertyOption
-        fields = ('id', 'name')

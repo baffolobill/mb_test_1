@@ -1,35 +1,35 @@
-from collections import OrderedDict
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 from rest_framework import serializers
 
-from ..models import ServerTemplate, ServerTemplateHdd, PropertyOption
-
-
-class ServerTemplatePropertyOptionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PropertyOption
-        fields = ('id', 'name')
+from . import generics
+from ..models import ServerTemplate, ServerTemplateHdd
 
 
 class ServerTemplateHddSerializer(serializers.ModelSerializer):
-    hdd_form_factor = ServerTemplatePropertyOptionSerializer(many=False, read_only=False)
-    hdd_connection_type = ServerTemplatePropertyOptionSerializer(many=False, read_only=False)
+    hdd_form_factor = generics.SimplePropertyOptionModelSerializer(many=False, read_only=False)
+    hdd_connection_type = generics.SimplePropertyOptionModelSerializer(many=False, read_only=False)
 
     class Meta:
         model = ServerTemplateHdd
         fields = ('id', 'hdd_form_factor', 'hdd_connection_type', 'hdd_qty')
+        extra_kwargs = {
+            'id': {'read_only': True},
+        }
 
 
 class ServerTemplateSerializer(serializers.HyperlinkedModelSerializer):
-    hdds = ServerTemplateHddSerializer(many=True)
-    cpu_socket = ServerTemplatePropertyOptionSerializer(many=False, read_only=False)
-    ram_standard = ServerTemplatePropertyOptionSerializer(many=False, read_only=False)
+    hdds = ServerTemplateHddSerializer(many=True, required=True)
+    cpu_socket = generics.SimplePropertyOptionModelSerializer(many=False, read_only=False)
+    ram_standard = generics.SimplePropertyOptionModelSerializer(many=False, read_only=False)
 
     class Meta:
         model = ServerTemplate
-        fields = ('id', 'name', 'servers_uses', 'href',
-                  'cpu_socket', 'cpu_qty', 'unit_takes',
-                  'ram_standard', 'ram_qty', 'hdds'
+        fields = ('id', 'name', 'servers_uses', 'href', 'unit_takes',
+                  'cpu_socket', 'cpu_qty',
+                  'ram_standard', 'ram_qty',
+                  'hdds'
                   )
         extra_kwargs = {
             'id': {'read_only': True},
@@ -38,45 +38,35 @@ class ServerTemplateSerializer(serializers.HyperlinkedModelSerializer):
         }
 
     def to_internal_value(self, data):
-        ret = {
-            'name': data.get('name'),
-            'unit_takes': data.get('unit_takes'),
-            'cpu_socket_id': data.get('cpu_socket'),
-            'cpu_qty': data.get('cpu_qty'),
-            'ram_standard_id': data.get('ram_standard'),
-            'ram_qty': data.get('ram_qty'),
-        }
+        ret = super(ServerTemplateSerializer, self).to_internal_value(data)
+        ret['cpu_socket_id'] = ret.pop('cpu_socket')['id']
+        ret['ram_standard_id'] = ret.pop('ram_standard')['id']
 
-        hdds = data.get('hdds')
-        if hdds:
-            for hdd in hdds:
-                hdd['hdd_form_factor_id'] = hdd['hdd_form_factor']
-                hdd['hdd_connection_type_id'] = hdd['hdd_connection_type']
-                del hdd['hdd_form_factor']
-                del hdd['hdd_connection_type']
-            ret['hdds'] = hdds
+        hdds = data.get('hdds', [])
+        for hdd in hdds:
+            hdd['hdd_form_factor_id'] = hdd.pop('hdd_form_factor')
+            hdd['hdd_connection_type_id'] = hdd.pop('hdd_connection_type')
+        ret['hdds'] = hdds
         return ret
 
-    def create(self, validated_data):
-        hdds = validated_data.pop('hdds', None)
-        server_template = ServerTemplate.objects.create(**validated_data)
+    def _create_hdds(self, server_template, hdds):
+        bulk_hdd_create = []
         for hdd in hdds:
             hdd['template'] = server_template
-            ServerTemplateHdd.objects.create(**hdd)
+            bulk_hdd_create.append(ServerTemplateHdd(**hdd))
+        if len(bulk_hdd_create):
+            ServerTemplateHdd.objects.bulk_create(bulk_hdd_create)
 
+    def create(self, validated_data):
+        hdds = validated_data.pop('hdds')
+        server_template = ServerTemplate.objects.create(**validated_data)
+        self._create_hdds(server_template, hdds)
         return server_template
 
     def update(self, instance, validated_data):
-        hdds = validated_data.pop('hdds', None)
-
-        for k,v in validated_data.items():
-            setattr(instance, k, v)
-
-        if hdds is not None:
-            instance.hdds.all().delete()
-            for hdd in hdds:
-                hdd['template'] = instance
-                ServerTemplateHdd.objects.create(**hdd)
-
+        hdds = validated_data.pop('hdds')
+        map(lambda (k,v): setattr(instance, k, v), validated_data.items())
         instance.save()
+        instance.hdds.all().delete()
+        self._create_hdds(instance, hdds)
         return instance

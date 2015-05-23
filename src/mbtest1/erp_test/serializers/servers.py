@@ -1,35 +1,20 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from rest_framework import serializers
 
-from ..models import Server, ServerTemplate, Basket
-from .nodes import NodeSerializer
-from .rows import RowFloorSerializer, RowRoomSerializer
-from .racks import RackRowSerializer
-from .baskets import BasketRackSerializer
-
-
-class ServerBasketSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Basket
-        fields = ('id', 'name', 'href')
-
-
-class ServerServerTemplateSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = ServerTemplate
-        fields = ('id', 'name', 'href')
+from . import generics
+from ..models import Server, ServerTemplate
 
 
 class ServerSerializer(serializers.HyperlinkedModelSerializer):
-    node = NodeSerializer(many=False, read_only=True)
-    floor = RowFloorSerializer(many=False, read_only=True)
-    room = RowRoomSerializer(many=False, read_only=True)
-    row = RackRowSerializer(many=False, read_only=True)
-    rack = BasketRackSerializer(many=False, read_only=True)
-    basket = ServerBasketSerializer(many=False, read_only=True)
-    template = ServerServerTemplateSerializer(many=False, read_only=False)
+    node = generics.SimpleNodeModelSerializer(many=False, read_only=True)
+    floor = generics.SimpleFloorModelSerializer(many=False, read_only=True)
+    room = generics.SimpleRoomModelSerializer(many=False, read_only=True)
+    row = generics.SimpleRowModelSerializer(many=False, read_only=True)
+    rack = generics.SimpleRackModelSerializer(many=False, read_only=True)
+    basket = generics.SimpleBasketModelSerializer(many=False, read_only=True)
+    template = generics.SimpleServerTemplateModelSerializer(many=False, read_only=False, required=True)
 
     class Meta:
         model = Server
@@ -40,26 +25,11 @@ class ServerSerializer(serializers.HyperlinkedModelSerializer):
             'href': {'read_only': True},
         }
 
-    def to_internal_value(self, data):
-        return {
-            'name': data.get('name'),
-            'template': data.get('template'),
-        }
-
     def create(self, validated_data):
-        template = ServerTemplate.objects.get(id=validated_data.get('template'))
-
-        server = Server(
-            name=validated_data.get('name'),
-            template=template)
-        server.save()
-        return server
+        validated_data['template_id'] = validated_data.pop('template')['id']
+        return Server.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         # изменение "шаблона" запрещено
         validated_data.pop('template', None)
-
-        for k,v in validated_data.items():
-            setattr(instance, k, v)
-        instance.save()
-        return instance
+        return super(ServerSerializer, self).update(instance, validated_data)

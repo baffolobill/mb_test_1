@@ -2,7 +2,8 @@
 from rest_framework import generics
 
 from ..models import ServerTemplate
-from ..serializers import ServerTemplateSerializer, NodeServerSerializer
+from ..serializers import ServerTemplateSerializer
+from ..serializers.generics import SimpleServerHyperlinkedModelSerializer
 
 
 class ServerTemplateList(generics.ListCreateAPIView):
@@ -19,7 +20,7 @@ class ServerTemplateDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class ServerTemplateServerList(generics.ListAPIView):
     queryset = ServerTemplate.objects.all()
-    serializer_class = NodeServerSerializer
+    serializer_class = SimpleServerHyperlinkedModelSerializer
     resource_name = 'server'
 
     def get_queryset(self):

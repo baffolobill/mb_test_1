@@ -2,7 +2,8 @@
 from rest_framework import generics
 
 from ..models import Rack
-from ..serializers import RackSerializer, NodeServerSerializer
+from ..serializers import RackSerializer
+from ..serializers.generics import SimpleServerHyperlinkedModelSerializer
 
 
 class RackList(generics.ListCreateAPIView):
@@ -24,7 +25,7 @@ class RackDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class RackServerList(generics.ListAPIView):
     queryset = Rack.objects.all()
-    serializer_class = NodeServerSerializer
+    serializer_class = SimpleServerHyperlinkedModelSerializer
 
     def get_queryset(self):
         obj = Rack.objects.get(id=self.kwargs['pk'])
